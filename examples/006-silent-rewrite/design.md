@@ -1,5 +1,5 @@
-# Design Inventory — Order Processing
+# Design — Order Processing
 
-Not involved. API contract unchanged — same endpoints, same response shapes.
+Not involved. Not notified. Correct.
 
-Confirmation screen now renders faster (backend dropped from 380ms to 92ms). That's not our concern. Our contract is "confirmation visible < 2s" and it was already proven before the rewrite.
+API contract unchanged — same endpoints, same request/response shapes, same event payloads. B3 (confirmation < 2s) was already proven before the rewrite. Backend got faster (380ms to 92ms). Not Design's concern.

@@ -1,5 +1,5 @@
-# Design Inventory — Auth Library Migration (JWT v1 → v2)
+# Design — Auth Library Migration
 
-N/A. No UI change. Auth token format is infrastructure — no design surface affected.
+No UI changes. No screens. No user-facing flows. This is an infrastructure migration — the auth library sits below the API layer.
 
-Design has nothing to track here. This is correct.
+Design has no inventory for this scenario.

@@ -1,35 +1,43 @@
-# Product Registry — Patient Check-In
+# PM — Patient Check-In
 
-**Source:** Patient feedback — "I already told you last time."
+## The patient's words
 
-**Proven: 4/4 (100%)**
+> "Every time I visit, the receptionist asks me the same questions. My allergies, my insurance, my address. I already told you last time."
 
----
+The patient doesn't know about HIS systems or data sync. They know one thing: they're repeating themselves and it feels like nobody remembers them.
 
-## Active Requirements
+## What we committed to
 
-| ID | What | Why (source) | Who received it | Proven? |
-|----|------|-------------|-----------------|---------|
-| REQ-101 | Returning patient data pre-filled at check-in | Patient feedback | Design | Yes — SCR-01 shipped |
-| REQ-102 | Allergies and insurance persist across visits | Patient feedback | Engineer | Yes — FLW-02 live |
-| REQ-103 | Confirm-not-reenter flow for returning patients | Patient feedback | Design | Yes — SCR-01 confirm step |
-| REQ-104 | Stale allergy re-confirmation (>6mo) | Engineer raised clinical safety concern | Design | Yes — SCR-03 shipped |
+### 1. Data is there when the patient arrives
 
-One patient sentence. Four requirements. One of them (REQ-104) didn't come from the patient at all — Engineer discovered it during implementation and surfaced it because patient safety is an external concern PM faces.
+The patient's demographic data, allergies, and insurance should be pre-filled when they check in for a return visit.
 
-## Active Contracts
+Negotiated with Design. Design asked: "editable or locked? What if insurance changed?" We agreed: **editable, with changes flagged for staff review.** Better than either extreme — patients can correct errors, staff can verify changes.
 
-Promises PM has made — either to downstream verticals or accepted from them.
+**Verify:** Design has a "Welcome Back" screen (SCR-01) with pre-filled fields and edit toggles. Engineer's check-in flow retrieves data by MRN from HIS. QA's VP-01 runs a returning patient through the flow in staging and confirms data appears.
 
-| Contract | With | What PM promised or accepted |
-|----------|------|------------------------------|
-| Check-in data pre-fill | Design | Pre-filled + editable, changes flagged for staff review |
-| Data persistence | Engineer | Allergies and insurance available from prior visits |
-| Confirm-not-reenter | Design | Confirm step replaces intake for returning patients |
-| Allergy staleness guard | Engineer (accepted) | If >6mo stale, force re-confirmation — clinical safety |
+### 2. Allergies and insurance persist across visits
 
-## What PM watches
+Data entered during one visit must be available at the next. Not re-entered. Not lost.
 
-1. **Is every requirement still alive?** The patient's complaint is real and ongoing. All four requirements have active sources.
-2. **Does every requirement have a downstream match?** All four are picked up — Design has SCR-01 and SCR-03, Engineer has FLW-01..04.
-3. **Are contracts holding?** The "editable or locked?" question from Design refined the pre-fill contract. The allergy staleness guard from Engineer added a contract PM didn't anticipate but accepted because patient safety is PM's external facing concern.
+**Verify:** Engineer fetches from two HIS modules (demographics from Module A, allergies from Module B). QA's VP-01 and VP-02 both confirm cross-visit data is present.
+
+### 3. Confirm, don't re-enter
+
+Design originated this one. PM asked for "pre-filled data." Design pushed back: a pre-filled intake form is still an intake form. Returning patients deserve a different experience — a confirm step, not a form.
+
+**Verify:** Design's check-in flow shows: Returning Patient → Confirm Info (not Full Intake). The confirm step replaces the intake form entirely.
+
+### 4. Stale allergy data gets re-confirmed
+
+Engineer surfaced this. HIS stores allergies in a separate module. That data can go stale — last updated 6, 12, 24 months ago. A returning patient "confirming" stale allergy data is a clinical safety risk. They might confirm allergies that are no longer accurate.
+
+PM accepted this because patient safety is an external concern PM faces. This commitment didn't come from the patient — it came from the system revealing a risk the patient can't see.
+
+**Verify:** Design has an "Allergy Re-confirmation" screen (SCR-03) that appears when allergy data is >6 months old. Engineer's FLW-04 checks the staleness. QA's VP-03 tests with a backdated record in staging and confirms the screen appears.
+
+## What goes suspect if things change
+
+- If the HIS API changes how demographics or allergies are returned → commitments 1, 2, 4 go suspect
+- If Design changes the check-in flow → commitment 3 goes suspect
+- If the patient's story changes (new complaints, new regulatory requirements) → all commitments need re-evaluation against the new reality

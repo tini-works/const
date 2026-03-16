@@ -1,25 +1,37 @@
-# PM — Product Registry
+# PM — Ghost Feature Closure
 
-## Active Requirements
+## What happened
 
-| ID | Requirement | Stakeholder | Last validated | Status |
-|----|-------------|-------------|----------------|--------|
-| REQ-12 | Dashboard reporting | Analytics team | 2026-01 | Active |
-| REQ-14 | Scheduled email digest | Ops lead | 2026-02 | Active |
-| ~~REQ-08~~ | ~~Monthly report PDF export~~ | ~~(none)~~ | ~~2024-09~~ | **Removed** |
+Engineer escalated during routine sanity reconciliation: "PDF export is broken, unused, and the library is dead. Fix or remove?"
 
-Registry count: 2 active. Down from 3. That's healthy.
+PM doesn't guess. PM checks the requirement's lineage.
 
-## REQ-08 Removal
+## The requirement was already dead
 
-Engineer escalated: "PDF export is broken, unused, and unfixable without a new library. Fix or remove?"
+REQ-08 — Monthly report PDF export. Originated 2 years ago from a monthly reporting workflow.
 
-Checked:
-- Original requirement tied to monthly reporting workflow
-- Workflow replaced by dashboard 18 months ago
-- No current stakeholder owns or needs PDF export
-- 3 uses in 90 days (one intern), all failed
+That workflow was replaced by a live dashboard 18 months ago. The dashboard was the replacement. Nobody formally closed REQ-08 when the workflow died. It sat in the system, unfunded, unstaffed, unowned.
 
-No stakeholder. No workflow. No users. **Removed.**
+**Checked:**
+- Original source: monthly reporting workflow (replaced 18 months ago by dashboard)
+- Current stakeholder: none. The reporting workflow owner moved teams. No one inherited it.
+- Usage: 3 invocations in 90 days, all from one intern, all produced 0-byte files, all abandoned
+- Active requests for PDF export: zero
 
-A requirement traced to a dead workflow with no active stakeholder is inventory rot. Removing it cleans the registry.
+No stakeholder. No workflow. No users. No requests.
+
+**Verify:** Search the ticket system for any open request mentioning PDF export or monthly report generation. There are none. The last related ticket was closed 18 months ago when the dashboard shipped.
+
+## Decision: remove
+
+The right answer isn't to find a new PDF library. It's to close REQ-08 as superseded and remove the feature from all inventories.
+
+**Verify:** After removal, the inventory is smaller: REQ-08 is gone. The remaining requirements (REQ-12 dashboard reporting, REQ-14 email digest) all have active stakeholders who validated them within the last 60 days.
+
+## Why shrinking is healthy
+
+The system had 3 requirements. Now it has 2. That's not a loss — it's honesty. REQ-08 was dead weight generating false confidence ("we support PDF export") and wasting engineering attention during code reviews and inventory walks.
+
+A smaller inventory where every item is real is better than a larger inventory where some items are ghosts.
+
+**Verify:** Every remaining requirement in the inventory has: (a) an active stakeholder, (b) validation within 60 days, (c) a working proof in QA's inventory. If any requirement fails these three checks, it's a candidate for the same treatment REQ-08 got.
