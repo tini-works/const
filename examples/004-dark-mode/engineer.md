@@ -1,28 +1,19 @@
-# Engineer Inventory — 004 Dark Mode
+# Engineer Inventory — Dark Mode
 
-**Boxes to match:** B1 (reduced brightness), B3 (persistent preference)
+## Matching
 
-**Not matching:** B2 (full dark mode — deferred), B4 (design tokens — roadmap)
+- Reduced-brightness mode (v1)
+- Persistent preference (cross-session + cross-device)
 
-## Flows
+## System
 
-| ID | Flow | Matches |
-|----|------|---------|
-| FLW-40 | CSS custom properties for 12 most-used color values | B1 |
-| FLW-41 | Media query `prefers-color-scheme: dark` + manual toggle | B1 |
-| FLW-42 | Opacity overlay (0.85 filter) for non-tokenized surfaces | B1 |
-| FLW-43 | Preference: localStorage (instant) + profile API sync (cross-device) | B3 |
+| ID | Component | Detail |
+|----|-----------|--------|
+| FLW-40 | 12 CSS custom properties | Primary bg, text, borders, accent — the most-used color values |
+| FLW-41 | Mode switching | `prefers-color-scheme: dark` media query + manual toggle override |
+| FLW-42 | Opacity overlay | `filter: brightness(0.85)` on non-tokenized surfaces |
+| FLW-43 | Preference sync | localStorage for instant switch, profile API for cross-device |
 
-## System Design
+## Explicit non-action
 
-| Item | Detail |
-|------|--------|
-| 12 CSS custom properties | Primary bg, text, borders, accent, etc. |
-| Opacity overlay | 0.85 filter on non-tokenized areas |
-| Toggle state | localStorage for instant switch + API sync for cross-device |
-
-## Explicit Non-Action
-
-Engineer does NOT refactor the 200+ hardcoded colors. That's B2/B4 (deferred). The overlay is ugly in the code. The boxes match. That's the deal.
-
-Freedom means matching what's asked, not gold-plating what isn't.
+Did NOT refactor the 200+ hardcoded colors. That's deferred scope (design token system). The overlay covers non-tokenized areas. It's ugly in the code. It matches what was asked for.

@@ -1,36 +1,27 @@
-# Design Inventory — 004 Dark Mode
+# Design Inventory — Dark Mode
 
-**Boxes received:** B1 (reduced brightness), B3 (persistent preference)
+## Received
 
-**Deferred:** B2 (full coverage — blocked by missing design tokens)
+- Reduced-brightness mode (v1)
+- Persistent preference toggle
 
-## Discovery: Architectural Gap
+## Deferred
+
+- Full-screen dark mode — blocked by missing design tokens
+
+## Architectural discovery
 
 Started mapping screens for dark mode. Found: **no design token system.** 200+ hardcoded color values throughout the codebase. Full dark mode isn't a toggle — it's a design system migration.
 
-Raised to PM: "B2 is a 3-month project. B1 can be matched in 2 weeks with reduced-brightness mode."
-
-This produced B4 (design token infrastructure) as a roadmap item.
+Raised to PM. Result: scope renegotiated to reduced-brightness v1 (2 weeks) + token system as roadmap item.
 
 ## Screens
 
-| ID | Screen | Regions | Matches |
-|----|--------|---------|---------|
-| SCR-40 | Settings → Appearance | Toggle: Light / Reduced Brightness | B3 |
-| SCR-41 | All screens — reduced brightness variant | 12 primary surfaces tokenized, remainder overlaid | B1 |
+| ID | Screen | Detail |
+|----|--------|--------|
+| SCR-40 | Settings > Appearance | Toggle: Light / Reduced Brightness. Auto-detect via `prefers-color-scheme` on first visit. No page reload on switch. |
+| SCR-41 | All screens, reduced-brightness variant | 12 primary surfaces use CSS custom properties. Remaining surfaces get opacity overlay. |
 
-## State Machine (modified)
+## Known gap
 
-```
-Settings → Appearance → Toggle →
-    Light mode (default)
-    Reduced brightness mode
-    (auto-detect: prefers-color-scheme on first visit)
-    (no page reload on switch)
-```
-
-**Hanging state check:** Binary toggle, both states stable. **No hanging states.**
-
-## Known Gap
-
-Non-tokenized surfaces use an opacity overlay. Meets WCAG AA but isn't ideal. Resolves when B4 (design tokens) lands.
+Non-tokenized surfaces use an opacity overlay. Meets WCAG AA but colors aren't individually tuned. Resolves when design tokens land.

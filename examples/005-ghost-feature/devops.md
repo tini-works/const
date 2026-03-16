@@ -1,26 +1,27 @@
-# DevOps Inventory — 005 Ghost Feature Removal
+# DevOps — Operations Registry
 
-**No infrastructure to remove.** The PDF export had no dedicated infrastructure.
+## Production Signals
 
-That's the problem.
+| Flow | Signal | Alert | Status |
+|------|--------|-------|--------|
+| FLW-12 Dashboard aggregation | Datadog latency + error rate | PagerDuty on p99 > 2s | Active |
+| FLW-15 Email digest | Delivery webhook + bounce rate | Slack on bounce > 5% | Active |
+| ~~FLW-99 PDF export~~ | ~~None~~ | ~~None~~ | **Gap discovered** |
 
-## Gap Discovered
+## FLW-99: Nothing to Remove
 
-The PDF export feature had:
-- No observability signal in production
-- No degradation alert
-- No way to detect that it silently broke
+No infrastructure to remove. PDF export had no dedicated infra.
 
-This is why it died without anyone noticing for 8 months.
+That's the problem. No observability signal. No degradation alert. No way to detect it silently broke. This is why it was dead for 8 months with nobody noticing.
 
-## Systemic Rule Added
+## New Rule
 
-**Observability audit:** Every flow in Engineer's inventory must map to at least one production signal.
+**Every flow in the system registry must map to at least one production signal.**
 
 | Rule | Detail |
 |------|--------|
-| Coverage requirement | Every Engineer flow → ≥1 production observability signal |
-| Audit frequency | Part of daily sanity reconciliation |
-| Violation response | Flag flow as unobservable, escalate to Engineer + QA |
+| Coverage | Every flow gets ≥1 production signal |
+| Audit | Part of sanity reconciliation |
+| Violation | Flag as unobservable, escalate to Engineer + QA |
 
-An unobservable flow is a ghost waiting to happen.
+An unobservable flow is a ghost waiting to happen. FLW-99 proved it.

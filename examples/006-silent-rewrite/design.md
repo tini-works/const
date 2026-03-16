@@ -1,13 +1,5 @@
-# Design Inventory — 006 Silent Service Rewrite
+# Design Inventory — Order Processing
 
-**Design was not involved.** Correct behavior.
+Not involved. API contract unchanged — same endpoints, same response shapes.
 
-## Box held by Engineer
-
-| Box | Content | Before rewrite | After rewrite |
-|-----|---------|----------------|---------------|
-| B3 | Order confirmation screen within 2s of payment | PROVEN | PROVEN (90ms backend now) |
-
-The API contract — which Design's screens depend on — was unchanged. Same endpoints, same response shapes. The backend got faster, but that doesn't change what Design owns.
-
-Design was not notified by the transition mechanic because none of Design's boxes depended on the changed item.
+Confirmation screen now renders faster (backend dropped from 380ms to 92ms). That's not our concern. Our contract is "confirmation visible < 2s" and it was already proven before the rewrite.

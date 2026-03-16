@@ -1,30 +1,36 @@
-# Design Inventory — 001 Patient Check-In
+# Screen Catalog — Patient Check-In
 
-**Boxes received:** B1 (pre-filled + editable), B2 (persistence), B3 (confirm flow), B4 (confirm step), B5 (allergy staleness)
+**Proven: 3/3 screens (100%)** | No hanging states
+
+---
 
 ## Screens
 
-| ID | Screen | Regions | Matches |
-|----|--------|---------|---------|
-| SCR-01 | "Welcome Back" | Pre-filled fields, edit toggles, confirm button | B1, B3, B4 |
-| SCR-02 | "Staff Review Queue" | Flagged-change list for receptionist review | B1 |
-| SCR-03 | "Allergy Re-confirmation" | Forced re-entry for stale allergy data | B5 |
+| ID | Screen | Key regions | Traces to |
+|----|--------|-------------|-----------|
+| SCR-01 | Welcome Back (returning patient) | Pre-filled demographic fields, edit toggles, confirm button | REQ-101, REQ-103 |
+| SCR-02 | Staff Review Queue | Flagged-change list for receptionist review | REQ-101 |
+| SCR-03 | Allergy Re-confirmation | Forced allergy re-entry when data >6mo stale | REQ-104 |
 
-## State Machine
+## User Flow
 
 ```
-New Patient → Full Intake → Ready
-
-Returning Patient → Confirm Info →
-    (allergies stale >6mo?) → Allergy Re-confirmation → back to Confirm Info
-    (edits made?) → Staff Review Queue → Ready
-    (no edits) → Ready
+Is returning patient?
+  No  → Full Intake Form → Ready
+  Yes → Welcome Back (SCR-01) →
+          Allergies stale (>6mo)? → Allergy Re-confirm (SCR-03) → back to SCR-01
+          Edits made? → Staff Review Queue (SCR-02) → Ready
+          No edits → Ready
 ```
 
-**Hanging state check:** Every path terminates at Ready. No dead ends.
+Every path terminates at Ready. No dead ends.
 
-## Negotiation contributions
+## Negotiations
 
-- Pushed back on B1: "editable or locked?" — produced better box (pre-filled + editable + flagged)
-- Originated B4: confirm step replaces intake form for returning patients
-- Accepted B5 from Engineer: added SCR-03 and conditional branch in state machine
+| With | What Design pushed back on | Result |
+|------|---------------------------|--------|
+| PM | "Pre-filled" — editable or locked? | Editable + change flagging for staff. Better than either extreme alone. |
+| PM | Confirm step for returning patients | Originated by Design — returning patients shouldn't see an intake form at all |
+| Engineer | Allergy staleness guard (>6mo) | Accepted — added SCR-03 and conditional branch in flow |
+
+Design originated the confirm step (SCR-01 replaces intake form). PM didn't ask for it — Design identified that a pre-filled intake form is still an intake form, and returning patients deserve a different experience.

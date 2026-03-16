@@ -1,36 +1,47 @@
-# DevOps Inventory — 001 Patient Check-In
+# Operations Registry — Patient Check-In
 
-**Engineer flows to cover:** FLW-01..04
+**Flow coverage: 4/4 (100%)** | 0 unobservable flows | Active alerts: 2
+
+---
 
 ## Infrastructure
 
-| Item | Detail |
-|------|--------|
-| HIS API integration | Demographics endpoint (Module A) + Allergies endpoint (Module B) |
-| SLA | HIS API response < 2s at check-in |
+| Service | Runtime | Deployment | SLA |
+|---------|---------|------------|-----|
+| Check-In Service | — | Standard CI/CD | HIS API response <2s |
 
-## Environment Parity
+| Integration | Detail |
+|-------------|--------|
+| HIS Module A | Demographics endpoint |
+| HIS Module B | Allergies endpoint |
 
-| Item | Detail |
-|------|--------|
-| Test patient data | Seeded with realistic records |
-| Staleness coverage | Fresh, 3mo, 6mo, 12mo, 24mo records in test env |
+## Monitoring & Alerts
 
-## Observability
+| ID | What | Threshold | Why it matters |
+|----|------|-----------|---------------|
+| OBS-01 | Allergy-fetch failure rate | >1% over 5min | Patients can't check in if allergy data unavailable |
+| OBS-02 | Check-in flow latency (P50/P95/P99) | Dashboard, alert if P95 >2s | SLA breach = patient waiting at kiosk |
+| OBS-03 | Staff review queue depth | >50 (anomaly) | Could mean false positive flood from bad diff logic |
 
-| ID | Signal | Monitor |
-|----|--------|---------|
-| OBS-01 | Allergy-fetch failure rate | Alert if >1% over 5min |
-| OBS-02 | Check-in flow latency | Dashboard: P50, P95, P99 |
-| OBS-03 | Staff review queue depth | Alert if >50 (anomaly) |
+## Flow → Signal Coverage
 
-## Flow Coverage
+| Flow | Signal(s) | Gap? |
+|------|-----------|------|
+| FLW-01 Check-in scan | OBS-02 | No |
+| FLW-02 Two-source fetch | OBS-01, OBS-02 | No |
+| FLW-03 Diff/populate | OBS-02 | No |
+| FLW-04 Staleness check | OBS-01, OBS-03 | No |
 
-| Engineer flow | Signal | Gap? |
-|--------------|--------|------|
-| FLW-01 (check-in scan) | OBS-02 | No |
-| FLW-02 (two-source fetch) | OBS-01, OBS-02 | No |
-| FLW-03 (diff/populate) | OBS-02 | No |
-| FLW-04 (staleness check) | OBS-01, OBS-03 | No |
+Every engineering flow has at least one production signal.
 
-**Full observability coverage.**
+## Environments
+
+| Environment | Purpose | Key detail |
+|-------------|---------|------------|
+| Staging | Integration testing | HIS API simulator for both modules |
+
+| Test data | Detail |
+|-----------|--------|
+| Patient records | Varying staleness: fresh, 3mo, 6mo, 12mo, 24mo |
+
+Staleness coverage is critical — without backdated records in the test environment, VP-03 can't run.

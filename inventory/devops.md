@@ -1,240 +1,110 @@
-# DevOps Inventory — Faces Operational Reality
+# Operations Registry
 
-Proves that the system **runs** as designed, not just that it was **built** as designed.
+What's deployed, where, how we'd know if it broke, and how we'd roll it back. If a flow doesn't have a signal in production, it's invisible — and invisible things die silently.
 
-**Contains:** Infrastructure state. Deployment pipelines. Environment parity. Observability coverage.
-
-**Proven means:** Every deployment path is reproducible. Environments match what QA needs. Observability covers every flow in Engineer's inventory. Incidents trace back to a broken match.
+**Flow coverage: 14/14 (100%)** | 0 unobservable flows | Active alerts: 9
 
 ---
 
-## Entry 001 — Patient Check-In
+## Infrastructure
 
-**Engineer flows to cover operationally:** FLW-01..04 (check-in scan, two-source fetch, diff/populate, staleness check)
+| Service | Runtime | Resources | Deployment |
+|---------|---------|-----------|------------|
+| Order Processing | Go 1.22, scratch container | 2 CPU, 512MB | Canary → full rollout |
+| Check-In Service | — | — | Standard CI/CD |
+| Payment Gateway Client | — | — | Canary (payment = critical path), feature-flagged |
+| Auth Library | v2.1 | Distributed (library, not service) | Per-service version bump |
 
-### Infrastructure
+| Decommissioned | When | Why |
+|----------------|------|-----|
+| Order Processing (Python) | Post-rewrite | Replaced by Go service, container archived |
+| Auth v1 signing keys | Day 30 post-migration | Grace period expired |
 
-| Item | Detail |
-|------|--------|
-| HIS API integration | Demographics endpoint (Module A) + Allergies endpoint (Module B) |
-| SLA | HIS API response time < 2s at check-in |
+## Monitoring & Alerts
 
-### Environment parity
+### Check-In
 
-| Item | Detail |
-|------|--------|
-| Test patient data | Seeded with realistic records, varying staleness dates |
-| Staleness coverage | Fresh, 3mo, 6mo, 12mo, 24mo records available in test env |
+| ID | What | Threshold | Why it matters |
+|----|------|-----------|---------------|
+| OBS-01 | Allergy-fetch failure rate | >1% over 5min | Patients can't check in if allergy data unavailable |
+| OBS-02 | Check-in flow latency (P50/P95/P99) | Dashboard | SLA: <2s response |
+| OBS-03 | Staff review queue depth | >50 (anomaly) | Could mean false positive flood |
 
-### Observability
+### Payment
 
-| ID | Signal | Monitors |
-|----|--------|----------|
-| OBS-01 | Allergy-fetch failure rate | Alert if >1% over 5min window |
-| OBS-02 | Check-in flow latency | Dashboard: P50, P95, P99 |
-| OBS-03 | Staff review queue depth | Alert if >50 (anomaly detection) |
+| ID | What | Threshold | Why it matters |
+|----|------|-----------|---------------|
+| OBS-10 | Payment error rate by category | Dashboard (card/temp/unknown) | Spot shifts in failure patterns |
+| OBS-11 | Unknown-category error rate | >5% of total failures | Means gateway is returning codes we don't recognize |
+| OBS-12 | Duplicate charge detection | Any occurrence | Reconciliation feed — customer-facing financial harm |
+| OBS-13 | Correlation ID lookup | Dashboard for support | Support needs this to debug complaints |
 
-### Coverage mapping
+### Auth
 
-| Engineer flow | Observability signal | Gap? |
-|--------------|---------------------|------|
-| FLW-01 (check-in scan) | OBS-02 (latency) | No |
-| FLW-02 (two-source fetch) | OBS-01 (failure rate), OBS-02 (latency) | No |
-| FLW-03 (diff/populate) | OBS-02 (latency) | No |
-| FLW-04 (staleness check) | OBS-01 (allergy fetch), OBS-03 (queue depth) | No |
+| ID | What | Threshold | Why it matters |
+|----|------|-----------|---------------|
+| OBS-30 | Token version ratio (v1 vs v2) | Dashboard | Steady state: 100% v2 |
+| OBS-31 | v2 validation failure rate | >0.1% | Auth failures = users locked out |
+| OBS-32 | v1 token usage post-grace | Any occurrence | Should never fire — means something is still issuing v1 |
 
-**Full observability coverage across all Engineer flows.**
+### Order Processing
 
----
+| ID | What | Threshold | Why it matters |
+|----|------|-----------|---------------|
+| OBS-60 | Order processing latency | P95 <500ms (SLA) | Currently 92ms — healthy margin |
+| OBS-61 | Order processing error rate | Dashboard | Baseline: 0.02% |
+| OBS-62 | Order processing uptime | 99.9% (SLA) | Currently 99.97% |
 
-## Entry 002 — Silent Checkout Failure
+## Flow → Signal Coverage Map
 
-**Engineer flows to cover:** FLW-10..13 (checkout→gateway, error categorization, correlation logging, idempotency)
+Every flow in Engineering's registry must have at least one production signal here. No exceptions.
 
-### Observability
+| Flow | Signal(s) | Gap? |
+|------|-----------|------|
+| FLW-01 Check-in scan | OBS-02 | No |
+| FLW-02 Two-source fetch | OBS-01, OBS-02 | No |
+| FLW-03 Diff/populate | OBS-02 | No |
+| FLW-04 Staleness check | OBS-01, OBS-03 | No |
+| FLW-10 Checkout → gateway | OBS-10 | No |
+| FLW-11 Error categorization | OBS-11 | No |
+| FLW-12 Correlation logging | OBS-13 | No |
+| FLW-13 Idempotency | OBS-12 | No |
+| FLW-30 Token validation | OBS-31 | No |
+| FLW-31 Token issuance | OBS-30 | No |
+| FLW-40 Color tokens | — (frontend CSS) | N/A |
+| FLW-41 Theme toggle | — (frontend) | N/A |
+| FLW-42 Opacity overlay | — (frontend CSS) | N/A |
+| FLW-43 Preference sync | — (existing profile API) | N/A |
 
-| ID | Signal | Monitors |
-|----|--------|----------|
-| OBS-10 | Payment error rate by category | Dashboard: card/temp/unknown breakdown |
-| OBS-11 | Unknown-category error rate | Alert if >5% of total failures |
-| OBS-12 | Duplicate charge detection | Alert from payment reconciliation feed |
-| OBS-13 | Correlation ID lookup | Dashboard for support team |
+## Environments
 
-### Deployment
+| Environment | Purpose | Parity |
+|-------------|---------|--------|
+| Staging | Integration testing | HIS API simulator, payment gateway simulator, both auth signing keys |
+| Load test | Capacity validation | Production-scale traffic, mixed success/failure scenarios |
 
-| Item | Detail |
-|------|--------|
-| Canary | Gateway client change requires canary deploy (payment = critical path) |
-| Rollback | Feature flag on body-parsing logic, fallback to old behavior |
+| Test data | Detail |
+|-----------|--------|
+| Patient records | Varying staleness: fresh, 3mo, 6mo, 12mo, 24mo |
+| Payment test cards | Trigger: success, expiry, decline, unknown error |
+| Auth tokens | v2 (production), v1 (regression testing only) |
 
-### Environment parity
+## Rollback Plans
 
-| Item | Detail |
-|------|--------|
-| Staging gateway simulator | Supports all 4 error categories (card_expired, insufficient_funds, temp_decline, unknown) |
-| Load test | 1000 concurrent checkouts, mixed success/failure |
+| Service | How to roll back | Time to recover |
+|---------|-----------------|----------------|
+| Payment gateway client | Feature flag: disable body-parsing, revert to old behavior | Instant (flag toggle) |
+| Order processing | Archived Python container still available | ~5min (redeploy) |
+| Auth library | Per-service config flag revert, no redeployment | Instant (config change) |
 
-### Coverage mapping
+## What happened when we didn't have coverage
 
-| Engineer flow | Observability signal | Gap? |
-|--------------|---------------------|------|
-| FLW-10 (checkout → gateway → categorize) | OBS-10 (error rate by category) | No |
-| FLW-11 (error categorization) | OBS-11 (unknown rate alert) | No |
-| FLW-12 (correlation ID logging) | OBS-13 (lookup dashboard) | No |
-| FLW-13 (idempotency) | OBS-12 (duplicate charge alert) | No |
-
-**Full coverage. Every flow has a production signal.**
-
----
-
-## Entry 003 — Auth Library Migration
-
-**Engineer flows to cover:** FLW-30..32 (dual-mode validation, opt-in issuance, grace period)
-
-### Deployment strategy
-
-| ID | Item | Detail |
-|----|------|--------|
-| DEP-30 | Canary | v2 token issuance at 5% traffic, monitor error rates |
-| DEP-31 | Circuit breaker | v2 validation fails → automatic fallback to v1 |
-| DEP-32 | Rollback | Per-service config flag revert, no redeployment needed |
-
-### Observability
-
-| ID | Signal | Monitors |
-|----|--------|----------|
-| OBS-30 | Token version ratio | Dashboard: v1 vs v2 across all services (live) |
-| OBS-31 | v2 validation failure rate | Alert if >0.1% |
-| OBS-32 | v1 token usage post-grace | Alert: should be zero after day 30 |
-
-### Environment parity
-
-| Item | Detail |
-|------|--------|
-| Staging | Both v1 and v2 signing keys available |
-| Load test | Mixed v1/v2 token traffic at production scale |
-
-### Migration timeline (DevOps view)
-
-```
-Day 0:  Library published, canary begins (DEP-30)
-Day 1:  OBS-31 — zero v2 validation failures at 5% traffic
-Day 3:  Canary expanded to 25%
-Day 7:  Canary at 100% — all issuance through v2 for opted-in services
-Day 20: OBS-30 — 62% v2 (Services A, C), 38% v1 (Services B, D)
-Day 30: Grace period expired
-        OBS-32 activated — no v1 tokens should appear
-        DEP-31 circuit breaker removed
-        v1 signing keys decommissioned from all environments
-```
-
-### Post-migration steady state
-
-| Item | State |
-|------|-------|
-| OBS-30 | v2 ratio: 100% |
-| OBS-32 | Active — should never fire |
-| DEP-31 | Removed (circuit breaker no longer needed) |
-| v1 keys | Decommissioned |
-
----
-
-## Entry 004 — Dark Mode
-
-**No DevOps inventory changes.**
-
-This is a frontend-only change: CSS custom properties + localStorage + existing profile API endpoint. No new infrastructure. No deployment strategy beyond normal CI/CD. No observability gaps — the existing frontend error monitoring covers it.
-
-**Correct behavior.** Not every feature needs DevOps inventory changes. If no operational boxes are affected, DevOps stays out.
-
----
-
-## Entry 005 — Ghost Feature Removal
-
-**No infrastructure to remove.** The PDF export feature had no dedicated infrastructure.
-
-But that's the problem.
-
-### Gap discovered
-
-The PDF export feature had:
-- No observability signal in production
-- No degradation alert
-- No way to detect that it was silently broken
-
-**This is why it died without anyone noticing.** If DevOps had required observability coverage for FLW-99, the deprecation of the PDF library would have triggered an alert 8 months ago.
-
-### Systemic rule added
-
-**Observability audit:** Every flow in Engineer's inventory must map to at least one production signal. Flows with zero signals are flagged as **unobservable**.
-
-| Rule | Detail |
-|------|--------|
-| Coverage requirement | Every Engineer flow → ≥1 DevOps observability signal |
-| Audit frequency | Part of daily sanity reconciliation |
-| Violation response | Flag flow as unobservable, escalate to Engineer + QA |
+PDF export (FLW-99) had zero production signals. The dependency died 8 months ago. Returns 200 + empty body. No alert. No dashboard. No one noticed. Three people tried to use it — got empty files — gave up silently.
 
 An unobservable flow is a ghost waiting to happen.
 
----
+## What Ops protects daily
 
-## Entry 006 — Order Service Rewrite
-
-**Engineer's implementation changed.** DevOps auto-notified by transition mechanic.
-
-### Infrastructure changes
-
-| Item | Before | After |
-|------|--------|-------|
-| Runtime | Python 3.11, 2.1GB RAM | Go 1.22, 340MB RAM |
-| Container | python:3.11-slim | golang:1.22-alpine (then scratch) |
-| Cold start | 12s | 0.8s |
-| Resource profile | 4 CPU, 4GB mem | 2 CPU, 512MB mem |
-
-### Observability remapped
-
-| ID | Signal | Change |
-|----|--------|--------|
-| OBS-60 | Order processing latency | Same thresholds, new service target |
-| OBS-61 | Order processing error rate | Same thresholds, new service target |
-| OBS-62 | Order processing uptime | Same SLA (99.9%), new healthcheck endpoint |
-
-Dashboards updated. Alert targets remapped. Same boxes, new plumbing.
-
-### Deployment verification
-
-| Check | Result |
-|-------|--------|
-| Canary (5%, 24h) | Error rate: Go 0.02% vs Python 0.03% |
-| Latency | Go P95 92ms vs Python P95 375ms |
-| Resource usage | 6x memory reduction |
-| SLA | 99.9% maintained during rollout |
-
-### Post-rollout
-
-| Item | State |
-|------|-------|
-| Python service | Decommissioned, container image archived |
-| Go service | Production, 100% traffic |
-| Operational boxes | All exceeded (not just matched) |
-
-**DevOps verified operational boxes without being told what to check.** The transition mechanic notified them. Their inventory told them which boxes apply. They re-verified. Done.
-
----
-
-## Sanity checklist (daily reconciliation)
-
-| Dimension | Question | Action if yes |
-|-----------|----------|---------------|
-| Staleness | Is this infrastructure serving a live Engineer flow? | Decommission if orphaned |
-| Correctness | Do environments match production? Do alerts fire when they should? | Fix parity gaps, test alert paths |
-| Coverage | Does every Engineer flow have ≥1 production observability signal? | Flag unobservable flows (see Entry 005 rule) |
-
-### Integrity rules
-
-| Rule | Rationale | Source |
-|------|-----------|--------|
-| Every Engineer flow → ≥1 observability signal | Unobservable flows die silently | Entry 005 |
-| Environment parity is proven, not assumed | "Works in staging" means nothing if staging doesn't match prod | Constitution |
-| Deployment paths are reproducible | If you can't redeploy from scratch, you can't roll back | Constitution |
-| Incidents trace to broken matches | Every outage should point to which box broke | Constitution |
+1. **Every engineering flow → at least one production signal.** If we can't see it, we can't know when it dies. Run the coverage map. Flag gaps.
+2. **Environments must match reality.** "Works in staging" is meaningless if staging doesn't have the same data shapes, failure modes, and scale as production.
+3. **Rollback plans must exist before deploy, not after an incident.** Every critical-path deployment has a documented rollback. Untested rollback plans are fiction.

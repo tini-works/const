@@ -1,28 +1,29 @@
-# QA Inventory — 005 Ghost Feature Removal
+# QA — Proof Registry
 
-## Proof Registry Failure Exposed
+## Active Proofs
 
-| ID | Path | Mechanism | Degradation signal | Actual status |
-|----|------|-----------|-------------------|---------------|
-| VP-99 | Export to PDF generates valid PDF | Unit test with **mocked** PDF library | **None** | **FALSE PROOF** |
+| ID | Path | Mechanism | Degradation signal | Status |
+|----|------|-----------|--------------------|--------|
+| VP-12 | Dashboard loads aggregated data | Integration test + Datadog latency | Alert on p99 > 2s | Active |
+| VP-15 | Email digest delivered | E2E test + delivery webhook | Alert on bounce > 5% | Active |
+| ~~VP-99~~ | ~~PDF export generates valid PDF~~ | ~~Unit test (mocked)~~ | ~~None~~ | **Removed — false proof** |
 
-The mock passes forever. The real library died 8 months ago. QA's registry showed "proven" for a broken feature.
+## VP-99 Post-Mortem
 
-This is a QA-level failure: proof mechanism disconnected from reality, no degradation signal.
+VP-99 was a false proof. The test mocked the PDF library. The mock passed while the real dependency was dead for 8 months. No degradation signal existed to catch it.
 
-## Verification Paths Removed
+QA's registry showed "proven" for a broken feature. That's the failure.
 
-| ID | Path | Reason |
-|----|------|--------|
-| VP-99 | Export to PDF | Feature removed from all inventories |
+## Removed
 
-Mocked test suite for PDF export deleted.
+- Mocked test suite for PDF export deleted
+- VP-99 removed from proof registry
 
-## Systemic Rule Added
+## New Rule
 
-**No mock-only proofs for external dependencies.** Every mocked test must have either:
+**No mock-only proofs for external dependencies.** Every mocked test must pair with either:
 
-1. A companion integration test hitting the real dependency, **OR**
+1. A companion integration test hitting the real dependency, OR
 2. A production degradation signal that fires when the dependency changes or dies
 
-A mock that passes while the real dependency is dead is a proof-shaped lie.
+A mock that passes while the real dependency is dead is not a proof.

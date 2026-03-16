@@ -1,30 +1,38 @@
-# Design Inventory — 002 Silent Checkout Failure
+# Design Registry — Silent Checkout Failure
 
-**Boxes received:** B1 (failure visible), B2 (categorized reason), B3 (recovery path), B4 (cart preserved)
+## Error Screens
 
-## Screens
+| ID | Screen | Headline | CTA | When shown |
+|----|--------|----------|-----|------------|
+| SCR-10 | Card problem | "There's a problem with your card" | Update payment method | `card_expired`, `card_declined` |
+| SCR-11 | Temporary decline | "Payment couldn't be processed right now" | Try again | `temp_decline`, `rate_limit` |
+| SCR-12 | Contact bank | "Your bank declined this payment" | Use different card / Contact support | `do_not_honor`, `bank_decline` |
 
-| ID | Screen | Content | Matches |
-|----|--------|---------|---------|
-| SCR-10 | Checkout Error — card problem | "There's a problem with your card" / "Update payment method" CTA | B1, B2 |
-| SCR-11 | Checkout Error — temporary decline | "Payment couldn't be processed right now" / "Try again" CTA | B1, B2 |
-| SCR-12 | Checkout Error — contact bank | "Please contact your bank" / Alt payment + support CTA | B1, B2 |
+Three variants, not one. Each maps to a different user action. Generic "something went wrong" is banned — it tells the customer nothing and creates another support ticket.
 
-## State Machine (modified)
+## Checkout State Machine (updated)
 
 ```
-Pay → Processing →
-    Success → Confirmation
-    Failure → Error State (categorized) →
-        Card problem → "Update Card" → return to Payment step
-        Temporary → "Retry" → return to Processing
-        Bank issue → "Alt payment" or "Contact support"
-        (all paths) → Cart + shipping preserved (B4)
+Cart → Shipping → Payment → Processing →
+    ✓ Success → Confirmation
+    ✗ Failure → Error State (categorized) →
+        Card problem → "Update Card" → Payment step (cart preserved)
+        Temporary   → "Retry"       → Processing   (cart preserved)
+        Bank issue  → "Alt payment"  → Payment step (cart preserved)
+                    → "Contact support" → Support flow
 ```
 
-**Hanging state check:** Every error path leads to resolution (retry/update) or explicit exit (support). Cart preserved on all paths. **No hanging states.**
+Every error path leads to either resolution or explicit exit. No dead ends. Cart and shipping details preserved on all paths — the customer never has to re-add items.
 
-## Negotiation contributions
+## User Flows
 
-- Pushed back on B2: raw gateway errors are inappropriate. "Insufficient funds" is sensitive. Created the categorization approach instead.
-- Originated B4: error state must not lose cart contents. Without this, users would have to re-add items after a failed payment — worse than the original bug.
+**Happy path:** Cart → Pay → Confirmation
+**Card error:** Cart → Pay → SCR-10 → Update card → Pay → Confirmation
+**Temp error:** Cart → Pay → SCR-11 → Retry → Confirmation (or SCR-11 again, max 2 retries then SCR-12)
+**Bank error:** Cart → Pay → SCR-12 → Alt payment or Support
+
+## What Design pushed back on
+
+**Raw error messages.** PM initially wanted to show the gateway's reason. "Insufficient funds" is sensitive — showing it in a shared screen or over-shoulder situation is a privacy problem. Design proposed the three-category approach instead: specific enough to act on, general enough to respect the user.
+
+**Cart preservation.** Design originated this requirement. PM's brief was "show an error." But if the error state drops the cart, the customer has to re-add everything after a failed payment — that's worse than the original silent failure. This became a hard requirement going upstream.

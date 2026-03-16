@@ -1,28 +1,25 @@
-# PM Inventory — 005 Ghost Feature Removal
+# PM — Product Registry
 
-**Source:** Engineer's routine sanity check exposed a dead feature.
+## Active Requirements
 
-## Requirements Removed
+| ID | Requirement | Stakeholder | Last validated | Status |
+|----|-------------|-------------|----------------|--------|
+| REQ-12 | Dashboard reporting | Analytics team | 2026-01 | Active |
+| REQ-14 | Scheduled email digest | Ops lead | 2026-02 | Active |
+| ~~REQ-08~~ | ~~Monthly report PDF export~~ | ~~(none)~~ | ~~2024-09~~ | **Removed** |
 
-| ID | Requirement | Original source | Action | Reason |
-|----|-------------|----------------|--------|--------|
-| REQ-XX | Monthly report PDF export | Reporting workflow (2 years ago) | REMOVED | Workflow replaced 18 months ago, no active stakeholder, 0 active users |
+Registry count: 2 active. Down from 3. That's healthy.
 
-## How PM was involved
+## REQ-08 Removal
 
-Engineer escalated: "This flow is broken, unused, and unfixable without a new PDF library. Fix or remove?"
+Engineer escalated: "PDF export is broken, unused, and unfixable without a new library. Fix or remove?"
 
-PM checked:
+Checked:
 - Original requirement tied to monthly reporting workflow
-- That workflow was replaced by a dashboard 18 months ago
-- No current stakeholder needs PDF export
-- 3 uses in 90 days, all by one intern, all failed
+- Workflow replaced by dashboard 18 months ago
+- No current stakeholder owns or needs PDF export
+- 3 uses in 90 days (one intern), all failed
 
-Decision: **remove.**
+No stakeholder. No workflow. No users. **Removed.**
 
-## Observations
-
-- PM's inventory shrank. This is healthy.
-- A requirement traced to a dead workflow with no active stakeholder is inventory rot.
-- Removing it is as important as adding new items.
-- Proven by absence of need: no stakeholder, no workflow, no users.
+A requirement traced to a dead workflow with no active stakeholder is inventory rot. Removing it cleans the registry.

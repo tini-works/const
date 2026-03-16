@@ -1,17 +1,22 @@
-# Design Inventory — 005 Ghost Feature Removal
+# Design — Screen Catalog
 
-## Screens Removed
+## Screens Modified
 
-| ID | Screen | Reason |
-|----|--------|--------|
-| SCR-XX | "Export Report" button on dashboard | Feature removed — no active users, dependency dead |
+| Screen | Element | Change |
+|--------|---------|--------|
+| Report Dashboard | "Export PDF" button | Removed |
 
-## State Machine Modified
+## State Machine Update
 
-Removed export-triggered states. All transitions that previously led to export now lead to their parent state.
+Removed export-triggered states. Transitions that led to export now resolve to their parent state.
 
-**Hanging state check after removal:** No orphaned states, no dead links. **No hanging states.**
+Hanging state check after removal: none. No orphaned states, no dead links.
 
-## Observation
+## Before / After
 
-A screen pointing to a broken feature is worse than no screen. It misleads users and generates support questions. Removing it is a design improvement.
+```
+Before: Dashboard → [Export] → Generating → Download → Done
+After:  Dashboard (export path removed, no dangling UI)
+```
+
+A button pointing to a broken feature misleads users and generates support tickets. Removing it is the fix.

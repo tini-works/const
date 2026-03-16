@@ -1,29 +1,46 @@
-# Engineer Inventory — 003 Auth Library Migration
+# Engineer Inventory — Auth Library Migration (JWT v1 → v2)
 
-**Boxes to match:** B1 (backward compat), B2 (no code changes), B3 (rollback), B4 (dual-mode), B5 (opt-in issuance), B6 (grace period)
+## Auth Library Lifecycle
 
-## Flows
+| Version | Mode | What it does |
+|---------|------|-------------|
+| v2.0 (migration) | Dual-mode | Validates v2 first, falls back to v1. Issues v1 or v2 per service config. |
+| v2.1 (post-grace) | v2-only | v1 validation code removed. v1 fallback path deleted. |
 
-| ID | Flow | Matches | Post-grace state |
-|----|------|---------|-----------------|
-| FLW-30 | Token validation: try v2 → fallback v1 → reject | B1, B4 | Updated: v2 only |
-| FLW-31 | Token issuance: check service config → v2 if opted-in, else v1 | B3, B5 | Updated: v2 only |
-| FLW-32 | Grace period: v1 tokens valid 30 days post-migration-start | B1, B6 | Archived |
+## Validation Flow (v2.0 — during migration)
 
-## System Design
+```
+Token in → try v2 validation
+  ├── valid → accept
+  └── fail → try v1 validation
+        ├── valid → accept (log as v1-fallback)
+        └── fail → reject 401
+```
 
-| Item | Migration state | Post-grace state |
-|------|----------------|-----------------|
-| Auth library | v2.0 — dual-mode validator | v2.1 — v2-only, v1 code removed |
-| Service config flag | `auth.token_version = v1 \| v2` | Deprecated (always v2) |
-| v1 signing key | Retained for grace period | Decommissioned |
+## Issuance Flow (v2.0 — during migration)
 
-## Transition Mechanic
+```
+Service requests token → check service config flag
+  ├── auth.token_version = v2 → issue v2 token
+  └── auth.token_version = v1 → issue v1 token (default)
+```
 
-When the library was published, every dependent service was flagged SUSPECT automatically. No spreadsheet, no Slack. Inventory dependency tracking propagated the change.
+Opt-in is per-service. Each team flips their own flag when ready.
 
-Each service re-verified independently:
-- Service A: day 3 (opted into v2)
-- Service B: day 5 (stayed on v1, grace period)
-- Service C: day 20 (opted into v2, late)
-- Service D: day 22 (blocked by pre-existing test failure, fixed first)
+## System State
+
+| Component | During migration | After day 30 |
+|-----------|-----------------|-------------|
+| Auth library | v2.0 dual-mode | v2.1 v2-only |
+| Service config flag | `auth.token_version = v1 | v2` | Removed (always v2) |
+| v1 signing key | Retained | Decommissioned from all envs |
+| v1 validation code | Active (fallback path) | Deleted |
+
+## Service Re-verification
+
+| Service | Day | Outcome |
+|---------|-----|---------|
+| Service A | 3 | Opted into v2 issuance |
+| Service B | 5 | Stayed on v1, verified grace period works |
+| Service C | 20 | Opted into v2 (late) |
+| Service D | 22 | Blocked by pre-existing broken tests — fixed, then verified |

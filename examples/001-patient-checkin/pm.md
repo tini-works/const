@@ -1,27 +1,35 @@
-# PM Inventory — 001 Patient Check-In
+# Product Registry — Patient Check-In
 
 **Source:** Patient feedback — "I already told you last time."
 
-## Requirements
+**Proven: 4/4 (100%)**
 
-| ID | Requirement | External source | Downstream match | Status |
-|----|-------------|----------------|-----------------|--------|
-| REQ-101 | Returning patient data pre-filled at check-in | Patient feedback | Design → SCR-01 | PROVEN |
-| REQ-102 | Allergies and insurance persist across visits | Patient feedback | Engineer → FLW-02 | PROVEN |
-| REQ-103 | Confirm-not-reenter flow | Patient feedback | Design → SCR-01, B4 | PROVEN |
-| REQ-104 | Stale allergy re-confirmation (>6mo) | Engineer (upward box B5) | Design → SCR-03 | PROVEN |
+---
 
-## Boxes
+## Active Requirements
 
-| Box | Direction | Content | Negotiation notes | Status |
-|-----|-----------|---------|-------------------|--------|
-| B1 | PM → Design | Pre-filled + editable, changes flagged for staff | Revised: Design asked "editable or locked?" | PROVEN |
-| B2 | PM → Design | Data persistence across visits | Accepted as-is | PROVEN |
-| B3 | PM → Design | Confirm, not re-enter | Accepted as-is | PROVEN |
-| B4 | Design → PM | Confirm step replaces intake for returning patients | Originated by Design | PROVEN |
-| B5 | Engineer → PM | Allergy staleness guard (>6mo → force re-confirm) | Originated by Engineer — clinical safety | PROVEN |
+| ID | What | Why (source) | Who received it | Proven? |
+|----|------|-------------|-----------------|---------|
+| REQ-101 | Returning patient data pre-filled at check-in | Patient feedback | Design | Yes — SCR-01 shipped |
+| REQ-102 | Allergies and insurance persist across visits | Patient feedback | Engineer | Yes — FLW-02 live |
+| REQ-103 | Confirm-not-reenter flow for returning patients | Patient feedback | Design | Yes — SCR-01 confirm step |
+| REQ-104 | Stale allergy re-confirmation (>6mo) | Engineer raised clinical safety concern | Design | Yes — SCR-03 shipped |
 
-## Observations
+One patient sentence. Four requirements. One of them (REQ-104) didn't come from the patient at all — Engineer discovered it during implementation and surfaced it because patient safety is an external concern PM faces.
 
-- Engineer surfaced B5 upward. PM accepted it because patient safety is an external concern PM faces. PM doesn't only push requirements down — it recognizes when downstream verticals discover something the outside world demands.
-- 1 customer sentence → 4 requirements, 5 boxes.
+## Active Contracts
+
+Promises PM has made — either to downstream verticals or accepted from them.
+
+| Contract | With | What PM promised or accepted |
+|----------|------|------------------------------|
+| Check-in data pre-fill | Design | Pre-filled + editable, changes flagged for staff review |
+| Data persistence | Engineer | Allergies and insurance available from prior visits |
+| Confirm-not-reenter | Design | Confirm step replaces intake for returning patients |
+| Allergy staleness guard | Engineer (accepted) | If >6mo stale, force re-confirmation — clinical safety |
+
+## What PM watches
+
+1. **Is every requirement still alive?** The patient's complaint is real and ongoing. All four requirements have active sources.
+2. **Does every requirement have a downstream match?** All four are picked up — Design has SCR-01 and SCR-03, Engineer has FLW-01..04.
+3. **Are contracts holding?** The "editable or locked?" question from Design refined the pre-fill contract. The allergy staleness guard from Engineer added a contract PM didn't anticipate but accepted because patient safety is PM's external facing concern.

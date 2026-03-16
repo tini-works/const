@@ -1,61 +1,24 @@
-# Engineer Inventory — 006 Silent Service Rewrite
+# Engineer Inventory — Order Processing
 
-**Trigger:** Engineer decided to rewrite order-processing from Python monolith to Go microservice.
+## What changed
 
-## Pre-Rewrite: Box Check
-
-Before writing a line of Go, the engineer reads their inventory. What boxes are they accountable for?
-
-| Box | Source | Content | Status |
-|-----|--------|---------|--------|
-| B1 | PM | Order status queryable <5s after state change | PROVEN |
-| B2 | PM | 500 concurrent orders without degradation | PROVEN |
-| B3 | Design | Confirmation screen within 2s of payment | PROVEN |
-| B4 | DevOps | 99.9% uptime SLA | PROVEN |
-| B5 | DevOps | P95 latency < 500ms | PROVEN |
-
-All boxes known. All currently proven. Proceed.
-
-## What Changed
-
-| Aspect | Before | After |
-|--------|--------|-------|
-| Language | Python | Go |
+| | Before | After |
+|---|--------|-------|
+| Language | Python 3.11 | Go 1.22 |
 | Architecture | Monolith module | Microservice |
 | P95 latency | 380ms | 92ms |
 | Memory | 2.1GB | 340MB |
 | Cold start | 12s | 0.8s |
-| API contract | v1 | v1 (unchanged) |
 
-## What Did NOT Change
+## What didn't change
 
-- API endpoints (same paths, same request/response shapes)
-- Event emissions (same events, same payloads)
-- Boxes (all 5 still match — better, actually)
+API contract v1 — same endpoints, same request/response shapes, same event payloads. PM and Design contracts unaffected.
 
-## No Permission Asked
+## Deployment sequence
 
-No proposal. No RFC. No architecture review. No notification to PM or Design. Their boxes were unaffected.
+1. Local: all 47 verification paths pass against Go service
+2. Staging: load test at 2000 concurrent (4x contract), P95 92ms
+3. Canary: 5% traffic, 24h — Go 0.02% error rate vs Python 0.03%
+4. Full rollout. Python decommissioned.
 
-QA auto-notified (transition mechanic). 47 verification paths re-run — all pass.
-
-DevOps auto-notified (deployment pipeline changed). Operational boxes verified — all exceeded SLA.
-
-## Deployment Sequence
-
-1. Go service written, all 47 verification paths pass locally
-2. Staging deploy, load test: 2000 concurrent (4x headroom), P95 92ms
-3. Canary: 5% traffic, 24h — Go 0.02% error vs Python 0.03%
-4. Full rollout, Python service decommissioned
-
-## Post-Rewrite Box Status
-
-| Box | Required | Actual | Margin |
-|-----|----------|--------|--------|
-| B1 | <5s | <1s | 5x |
-| B2 | 500 concurrent | 2000 tested | 4x |
-| B3 | <2s | 92ms | 20x |
-| B4 | 99.9% uptime | 99.97% during rollout | ✓ |
-| B5 | <500ms P95 | 92ms | 5x |
-
-Freedom is the reward for maintaining proven matches.
+No permission asked. Contracts held.

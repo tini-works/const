@@ -1,29 +1,35 @@
-# PM Inventory — 004 Dark Mode
+# PM Inventory — Dark Mode
 
-**Source:** CEO competitive reaction. No customer story initially.
+## Origin
 
-**PM grounded it:** 40% of sessions after 8 PM. Users work late. There's a real need — just not the one CEO described.
+CEO: "Competitors have dark mode. We need it by Friday."
+
+PM pulled usage data. 40% of sessions happen after 8 PM. There's a real need — just not the one CEO described. Reframed as low-light comfort, not competitive checkbox.
 
 ## Requirements
 
-| ID | Requirement | External source | Downstream match | Status |
-|----|-------------|----------------|-----------------|--------|
-| REQ-401 | Low-light comfort viewing | Usage data (40% evening sessions) | Design → SCR-40..41 | PROVEN |
-| REQ-402 | Full-screen dark mode coverage | UX principle (partial = jarring) | — | DEFERRED |
-| REQ-403 | Persistent preference (cross-session, cross-device) | Standard expectation | Engineer → FLW-43 | PROVEN |
-| REQ-404 | Design token system as infrastructure | Design discovery | — | ROADMAP |
+| ID | Requirement | Evidence | Status |
+|----|-------------|----------|--------|
+| REQ-401 | Low-light comfort viewing | 40% evening sessions | PROVEN |
+| REQ-402 | Full-screen dark mode (all screens) | UX principle — partial coverage is jarring | DEFERRED |
+| REQ-403 | Preference persists cross-session + cross-device | Standard expectation | PROVEN |
+| REQ-404 | Design token system | Design discovery — 200+ hardcoded colors | ROADMAP |
 
-## Boxes
+## Contracts
 
-| Box | Direction | Content | Status |
-|-----|-----------|---------|--------|
-| B1 | PM → Design | Reduced-brightness mode (v1 scope) | PROVEN |
-| B2 | PM → Design | Full dark mode (all screens) | DEFERRED — blocked by B4 |
-| B3 | PM → Design | Preference persists cross-session + cross-device | PROVEN |
-| B4 | PM → Design/Eng | Design token system (infrastructure) | ROADMAP |
+| To | What | Status |
+|----|------|--------|
+| Design | Reduced-brightness mode, v1 scope | PROVEN |
+| Design | Persistent preference (toggle + cross-device sync) | PROVEN |
+| Design | Full dark mode, all screens | DEFERRED — needs REQ-404 |
+| Design + Eng | Design token infrastructure | ROADMAP |
 
-## Observations
+## What got renegotiated
 
-- PM didn't parrot the CEO. Looked for data, found 40% evening usage. Grounded the request in a real user need.
-- Design discovered the architectural blocker (200+ hardcoded colors, no token system). PM's response: renegotiate scope, not force the original ask.
-- Result: 2-week deliverable + roadmap item. Not a 3-month surprise.
+Design found 200+ hardcoded colors and no token system. Full dark mode = design system migration, not a toggle. PM renegotiated with CEO:
+
+- **Delivered:** reduced-brightness v1 in 2 weeks
+- **Deferred:** full dark mode until token system exists
+- **Roadmap:** design token infrastructure (REQ-404)
+
+CEO got a Friday demo of the toggle. Eng got a sane scope. Nobody got a 3-month surprise.
