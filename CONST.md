@@ -22,6 +22,8 @@ Instead:
 
 The requirement is not the truth. The boxes are the truth. Each side holds responsibility: the sender to elaborate and provide boxes, the receiver to fulfill by matching them.
 
+Matching is **not a pipeline.** Each vertical independently discovers what must be true and matches it. The result is a web of matched boxes across independent inventories — not a chain of arrows flowing from one vertical to the next. If your process looks like upstream → downstream → downstream, you are deriving, not matching.
+
 ### 2. Start from the Customer's Story
 
 The customer describes what happens at their natural level. That's the flow.
@@ -54,6 +56,21 @@ Inventory is not documentation. It is:
   - **Coverage**: new reality not yet reflected
 
 Inventory is the mechanism that makes matching possible at scale. Without it, boxes have nothing to match against.
+
+Each inventory item carries **traces** — records of matching decisions:
+
+- **Where it came from** — what asked for this item to exist (customer story, business goal, upstream box)
+- **What it matches** — which boxes in other inventories this item addresses
+- **Who confirmed the match** — a human decided this item matches that box. The decision can be right or wrong. It is a judgment, not a derivation.
+
+Traces are **not structural coupling.** Each vertical owns its own traces. A trace says "we believe this matches that" — it is a record of a human judgment, recorded in the team's own inventory. It is not a pointer that makes one inventory dependent on another's internal structure.
+
+Traces serve two purposes:
+
+1. **Verification** — "how do I know this item is still valid?" Follow its traces to what it matches. If the matched item changed, this item is suspect.
+2. **Change impact** — "what else needs checking when this item changes?" Everything that traces to this item needs re-verification. Traces are the exhaustive TODO list.
+
+The document set that makes up an inventory is **chosen by each team** for their work. The Constitution defines what the inventory must achieve — matching, tracing, verification — not what specific documents it contains. A PM might use PRDs, epics, and user stories. An engineer might use ADRs, API specs, and architecture docs. A different project might use entirely different artifacts. The principle doesn't change; the documents do.
 
 ### 4. Unidirectional Quality
 
@@ -138,20 +155,31 @@ A box is a **must-be-verified criterion** negotiated between sender and receiver
 
 ### Transitions
 
-Transitions are **event-driven**. When a vertical's inventory changes, the change propagates to every vertical that has boxes depending on the changed item.
+Transitions are **event-driven**. When a vertical's inventory changes, the change propagates through traces.
 
 - An upstream change **flags dependent items as suspect** — they lose their proven status.
-- The dependent vertical must **explicitly re-verify** to restore proven status.
+- Traces identify which items are affected: everything that traces to the changed item needs re-verification.
+- The dependent vertical must **explicitly re-verify** to restore proven status — and must **acknowledge** the change and its impact assessment.
 
-There is no scheduled handoff. The event is the trigger.
+There is no scheduled handoff. The event is the trigger. The traces are the TODO list.
 
 ### Proven
 
 Binary. An item is either proven or it is not.
 
 - There are no intermediate states (no "in progress," no "assumed," no "90% done").
-- An item becomes not-proven when upstream changes flag it as suspect **and** explicit verification confirms the invalidation.
 - The forcing function: if you can't prove it, it's not proven.
+
+**Lifecycle:**
+
+1. An item enters the inventory as **unverified** — it exists, but no one has confirmed the match holds.
+2. A human confirms the match with **evidence** — a test that was run, a review that was done, a demonstration that was witnessed. The item becomes **proven.** The evidence, the verifier, and the conditions are recorded.
+3. When an upstream item changes, traces identify dependent items. Those items become **suspect** — they were proven under conditions that may no longer hold.
+4. The owning vertical must **explicitly re-verify** to restore proven status. Re-verification produces new evidence.
+
+Proof requires **evidence, not assertion.** "All criteria verified" written in a document is a claim. A test execution record, a review sign-off, a dated walkthrough — those are evidence. A claim without evidence is not proof.
+
+Each team **owns only what they can prove.** An item without evidence of verification is unverified, regardless of what any document claims about it.
 
 ### Freedom
 
@@ -168,3 +196,5 @@ Daily reconciliation of every inventory across three dimensions:
 3. **Coverage** — add what's missing from current reality
 
 Sanity is not a ceremony. It is inventory management. A warehouse that isn't reconciled daily is a warehouse you can't trust.
+
+Reconciliation includes verifying that proofs have **evidence** — not just structure. A test case that exists but has never been run is not proof. A coverage report that claims "verified" without a date is not reconciled. Evidence degrades: a proof from six months ago may no longer hold. Reconciliation catches this.
