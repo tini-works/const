@@ -42,6 +42,10 @@ migration_batches 1──N migration_records
 
 The central entity. One record per patient across all locations (centralized model per DEC-005).
 
+> **Read by:** [`POST /patients/identify`](api-spec.md#post-patientsidentify), [`GET /patients/{id}`](api-spec.md#get-patientsid), [`GET /dashboard/search`](api-spec.md#get-dashboardsearch)
+> **Written by:** [`PATCH /patients/{id}`](api-spec.md#patch-patientsid), [`POST /migration/batches/{batch_id}/import`](api-spec.md#post-migrationbatchesbatch_idimport), [`POST /migration/duplicates/{id}/resolve`](api-spec.md#post-migrationduplicatesidresolve)
+> **Stories:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access)
+
 ```sql
 CREATE TABLE patients (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -91,6 +95,9 @@ CREATE INDEX idx_patients_name_trgm ON patients
 
 Added in Round 5 (multi-location).
 
+> **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`WebSocket /ws/dashboard/{location_id}`](api-spec.md#websocket-wsdashboardlocation_id)
+> **Stories:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in)
+
 ```sql
 CREATE TABLE locations (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -108,6 +115,9 @@ CREATE TABLE locations (
 ### kiosks
 
 Each kiosk is bound to a location.
+
+> **Read by:** [`POST /checkins`](api-spec.md#post-checkins) (kiosk_id validation)
+> **Stories:** [US-010](../product/user-stories.md#us-010-location-aware-check-in)
 
 ```sql
 CREATE TABLE kiosks (
@@ -148,6 +158,9 @@ CREATE TABLE staff_locations (
 
 Appointments are location-specific.
 
+> **Read by:** [`POST /patients/identify`](api-spec.md#post-patientsidentify), [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`GET /mobile-checkin/{token}/status`](api-spec.md#get-mobile-checkintokenstatus)
+> **Written by:** [`POST /checkins`](api-spec.md#post-checkins) (status update on check-in)
+
 ```sql
 CREATE TABLE appointments (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -169,6 +182,10 @@ CREATE INDEX idx_appointments_location_date ON appointments (location_id, appoin
 ### check_ins
 
 Tracks each check-in event. One per appointment per channel.
+
+> **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`GET /mobile-checkin/{token}/status`](api-spec.md#get-mobile-checkintokenstatus)
+> **Written by:** [`POST /checkins`](api-spec.md#post-checkins), [`PATCH /checkins/{id}/progress`](api-spec.md#patch-checkinsidprogress), [`POST /checkins/{id}/complete`](api-spec.md#post-checkinsidcomplete)
+> **Stories:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
 
 ```sql
 CREATE TABLE check_ins (
@@ -206,6 +223,9 @@ CREATE INDEX idx_checkins_patient_date ON check_ins (patient_id, started_at);
 
 ### allergies
 
+> **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
+> **Written by:** [`POST /patients/{id}/allergies`](api-spec.md#post-patientsidallergies), [`PUT /patients/{id}/allergies/{allergy_id}`](api-spec.md#put-patientsidallergiesallergy_id), [`DELETE /patients/{id}/allergies/{allergy_id}`](api-spec.md#delete-patientsidallergiesallergy_id)
+
 ```sql
 CREATE TABLE allergies (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -229,6 +249,10 @@ CREATE INDEX idx_allergies_patient ON allergies (patient_id);
 ### medications
 
 Added medication tracking in Round 6 for compliance.
+
+> **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
+> **Written by:** [`POST /patients/{id}/medications`](api-spec.md#post-patientsidmedications), [`PUT /patients/{id}/medications/{medication_id}`](api-spec.md#put-patientsidmedicationsmedication_id), [`DELETE /patients/{id}/medications/{medication_id}`](api-spec.md#delete-patientsidmedicationsmedication_id)
+> **Stories:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in)
 
 ```sql
 CREATE TABLE medications (
@@ -256,6 +280,11 @@ CREATE INDEX idx_medications_patient ON medications (patient_id);
 
 Immutable audit records. Required for state health board compliance (Round 6). Never updated or deleted.
 
+> **Written by:** [`POST /checkins/{id}/complete`](api-spec.md#post-checkinsidcomplete) (creates record on check-in finalization)
+> **Stories:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), Epic [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
+> **ADR:** [ADR-004](adrs.md#adr-004-immutable-medication-confirmation-audit-records)
+> **Tested by:** [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none), [TC-605](../quality/test-suites.md#tc-605-medication-confirmation--immutability)
+
 ```sql
 CREATE TABLE medication_confirmations (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -276,6 +305,10 @@ CREATE INDEX idx_med_confirmations_patient ON medication_confirmations (patient_
 ---
 
 ### insurance_records
+
+> **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
+> **Written by:** [`PUT /patients/{id}/insurance/{type}`](api-spec.md#put-patientsidinsurancetype), [`POST /patients/{id}/insurance/{type}/photo`](api-spec.md#post-patientsidinsurancetypephoto) (OCR results)
+> **Stories:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card)
 
 ```sql
 CREATE TABLE insurance_records (
@@ -316,6 +349,9 @@ CREATE INDEX idx_insurance_patient ON insurance_records (patient_id);
 
 All PHI access and modifications.
 
+> **Written by:** All API endpoints that read or modify patient data
+> **Monitored by:** [Audit Log Growth alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 ```sql
 CREATE TABLE audit_log (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -341,6 +377,11 @@ CREATE INDEX idx_audit_time ON audit_log (created_at);
 
 Stores full snapshots on each version change. Supports conflict resolution display ("what changed") and rollback.
 
+> **Written by:** [`PATCH /patients/{id}`](api-spec.md#patch-patientsid) (snapshot on version change), [`POST /migration/duplicates/{id}/resolve`](api-spec.md#post-migrationduplicatesidresolve) (pre-merge snapshot)
+> **Read by:** [`PATCH /patients/{id}`](api-spec.md#patch-patientsid) (conflict resolution — shows what changed), [`POST /migration/batches/{batch_id}/rollback`](api-spec.md#post-migrationbatchesbatch_idrollback) (restoring pre-merge state)
+> **ADR:** [ADR-003](adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+> **Tested by:** [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback)
+
 ```sql
 CREATE TABLE patient_record_versions (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -364,6 +405,10 @@ CREATE INDEX idx_patient_versions ON patient_record_versions (patient_id, versio
 
 Top-level container for a migration run.
 
+> **Read by:** [`GET /migration/batches/{batch_id}`](api-spec.md#get-migrationbatchesbatch_id)
+> **Written by:** [`POST /migration/batches`](api-spec.md#post-migrationbatches), [`POST /migration/batches/{batch_id}/rollback`](api-spec.md#post-migrationbatchesbatch_idrollback)
+> **Stories:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside)
+
 ```sql
 CREATE TABLE migration_batches (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -385,6 +430,9 @@ CREATE TABLE migration_batches (
 ### migration_records
 
 One row per imported record.
+
+> **Read by:** [`GET /migration/records`](api-spec.md#get-migrationrecords)
+> **Written by:** [`POST /migration/batches/{batch_id}/import`](api-spec.md#post-migrationbatchesbatch_idimport), [`POST /migration/duplicates/{id}/resolve`](api-spec.md#post-migrationduplicatesidresolve)
 
 ```sql
 CREATE TABLE migration_records (

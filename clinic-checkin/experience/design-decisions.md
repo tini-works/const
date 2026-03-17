@@ -99,6 +99,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-007: Skeleton screens instead of spinners for data loading
 
+**Triggered by:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition)
+
 **PM said (via US-006):** System must remain responsive during peak hours. Show a loading state, not a frozen screen.
 
 **Design decision:** Use skeleton screens (gray placeholder bars matching the layout structure) instead of centered spinners for all data-loading transitions.
@@ -110,6 +112,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ---
 
 ## DD-008: No "currently being edited by" indicator
+
+**Triggered by:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss)
 
 **PM said (BUG-003):** Optimistic concurrency control. Detect conflicts on save.
 
@@ -126,6 +130,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-009: Kiosk auto-return countdown is visible and interruptible
 
+**Triggered by:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan)
+
 **PM didn't specify** what happens after check-in completion on the kiosk.
 
 **Design decision:** After the success screen, a visible 10-second countdown starts. The kiosk then returns to the welcome screen with a full session purge. Tapping the screen during the countdown resets it to 10 seconds.
@@ -140,6 +146,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-010: Migration notice is informational, not alarming
 
+**Triggered by:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [E5](../product/epics.md#e5-riverside-practice-acquisition)
+
 **PM said:** First visit after Riverside migration should prompt patient to review all migrated data.
 
 **Design decision:** The migration notice is a subtle blue info banner, not a warning or error state. Text: "We recently migrated your records from Riverside Family Practice. Please carefully review all your information to make sure it's correct."
@@ -151,6 +159,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ---
 
 ## DD-011: Mobile session timeout at 5 minutes, with warning at 4
+
+**Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
 
 **PM said:** HTTPS, session timeout, no data cached on device after completion.
 
@@ -168,6 +178,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-012: Search always searches all locations
 
+**Triggered by:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E3](../product/epics.md#e3-multi-location-support)
+
 **PM said:** Cross-location search as a should-have for staff.
 
 **Design decision:** Search is ALWAYS cross-location, regardless of the location filter on the dashboard. The location filter controls the queue view. Search is a different mental model — "find this patient wherever they are."
@@ -184,6 +196,8 @@ Two different tools for two different needs. They don't need to be coupled.
 
 ## DD-013: Confidence scores are visible but not decisive
 
+**Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition)
+
 **PM said:** Duplicate detection surfaces potential matches with confidence scores. No auto-merge.
 
 **Design consideration:** Confidence scores can create a false sense of certainty. "95% match" sounds like a sure thing, but it could be two different people with the same name and birthday (it happens, especially in healthcare).
@@ -199,6 +213,8 @@ Two different tools for two different needs. They don't need to be coupled.
 ---
 
 ## DD-014: "Already checked in" kiosk message for mobile-first patients
+
+**Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
 
 **PM said:** If the patient checks in via mobile and also tries kiosk, the system recognizes them and skips redundant steps.
 

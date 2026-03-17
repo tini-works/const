@@ -6,6 +6,11 @@ How things behave. Transitions, animations, error handling, edge cases, timing. 
 
 ## 1. Kiosk Interactions
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Proven by | [Suite 1](../quality/test-suites.md#suite-1-core-kiosk-check-in-round-1), [Suite 3](../quality/test-suites.md#suite-3-session-isolation--bug-002-fix-round-4) |
+
 ### 1.1 Card Scan → Data Display (Session Lifecycle)
 
 **Happy path:**
@@ -110,6 +115,11 @@ This prevents the next patient from seeing any residual data (reinforces BUG-002
 ---
 
 ## 2. Receptionist Dashboard Interactions
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [E1](../product/epics.md#e1-returning-patient-recognition), [E3](../product/epics.md#e3-multi-location-support) |
+| Proven by | [Suite 2](../quality/test-suites.md#suite-2-kiosk-to-receptionist-sync--bug-001-fix-round-2), [Suite 7](../quality/test-suites.md#suite-7-concurrent-edit-safety--bug-003-fix-round-7) |
 
 ### 2.1 Real-Time Queue Updates
 

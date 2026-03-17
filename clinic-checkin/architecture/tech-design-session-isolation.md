@@ -1,6 +1,10 @@
 # Technical Design: Kiosk Session Isolation (BUG-002 P0 Fix)
 
-**Related:** BUG-002, US-003, ADR-002, DD-001
+**Related:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [ADR-002](adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation), DD-001
+**Screens:** [1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen), [1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen), [1.3 Identity Confirmation](../experience/screen-specs.md#13-patient-identification-confirmation-screen)
+**Flows:** [4. Data Leak Prevention](../experience/user-flows.md#4-data-leak-prevention--between-patients-bug-002-fix)
+**Tested by:** [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
+**Monitored by:** [Data Leak Detected (P0)](../operations/monitoring-alerting.md#p0----page-immediately-any-time), [security_session_isolation_failure metric](../operations/monitoring-alerting.md#check-in-service)
 
 ---
 

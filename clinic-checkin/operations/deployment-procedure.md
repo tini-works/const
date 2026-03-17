@@ -333,7 +333,7 @@ If a migration breaks production and reverse migration isn't ready:
 |--------|--------|
 | Error rate > 1% for 5 minutes post-deploy | Auto-rollback (configured in CI/CD) |
 | Error rate > 5% at any point | Immediate manual rollback |
-| Patient data exposed (BUG-002 class) | Immediate rollback + incident response |
+| Patient data exposed ([BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) class) | Immediate rollback + incident response. See [Runbook: Data Leak](./runbook-data-leak.md). |
 | Dashboard not updating | Investigate first (may be Notification Service, not a deploy issue) |
 | Slow response times (> 5s p95) | Investigate first (may be DB or cache issue) |
 
@@ -342,27 +342,42 @@ If a migration breaks production and reverse migration isn't ready:
 ## Service-Specific Deploy Notes
 
 ### Check-In Service
+
+> **Architecture:** [Check-In Service](../architecture/architecture.md#check-in-service-core) · **Infra:** [infrastructure.md](./infrastructure.md#check-in-service-core) · **Smoke test endpoint:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) · **Post-deploy monitors:** [Service Down](./monitoring-alerting.md#p0----page-immediately-any-time), [Error Rate](./monitoring-alerting.md#p0----page-immediately-any-time)
+
 - Runs 2+ instances: rolling deploy, zero downtime
 - After deploy: verify a test check-in flow end-to-end on staging
 - Key smoke test: `POST /patients/identify` with a known test card ID
 
 ### Notification Service
+
+> **Architecture:** [Notification Service](../architecture/architecture.md#notification-service) · **Infra:** [infrastructure.md](./infrastructure.md#notification-service) · **Smoke test endpoint:** [WebSocket /ws/dashboard](../architecture/api-spec.md#websocket-wsdashboardlocation_id) · **Post-deploy monitors:** [Sync Failure Rate](./monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections](./monitoring-alerting.md#p1----notify-during-business-hours) · **Related runbook:** [Sync Failure](./runbook-sync-failure.md)
+
 - Single instance: brief WebSocket interruption during deploy
 - Deploy during low-traffic hours when possible
 - After deploy: verify WebSocket connection from a test dashboard client
 - Key smoke test: trigger a test check-in, verify dashboard receives the event
 
 ### Migration Service
+
+> **Architecture:** [Migration Service](../architecture/architecture.md#migration-service-round-10) · **Infra:** [infrastructure.md](./infrastructure.md#migration-service) · **Smoke test endpoint:** [GET /migration/batches](../architecture/api-spec.md#get-migrationbatchesbatch_id) · **Related runbook:** [Import Failure](./runbook-import-failure.md)
+
 - Single instance, not on critical path
 - **Never deploy during an active migration batch.** Check `GET /migration/batches` for `in_progress` status first
 - After deploy: verify `GET /health` returns OK
 
 ### OCR Service
+
+> **Architecture:** [OCR Service](../architecture/architecture.md#ocr-service-round-8) · **Infra:** [infrastructure.md](./infrastructure.md#ocr-service) · **ADR:** [ADR-006 OCR API Contract](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract) · **Post-deploy monitors:** [OCR Service Slow](./monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 - Single instance, not on critical path
 - After deploy: upload a test insurance card image, verify OCR extraction returns results
 - If Google Vision API credentials rotated, update in Secrets Manager before deploying
 
 ### Frontend SPAs (Kiosk, Mobile, Dashboard)
+
+> **Infra:** [infrastructure.md — Kiosks](./infrastructure.md#kiosks-per-location), [CDN](./infrastructure.md#network-topology) · **Session isolation critical:** changes to kiosk SPA must be reviewed against [ADR-002 Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) per [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) post-mortem
+
 - Static files deployed to CDN
 - Cache invalidation on deploy (CloudFront invalidation or equivalent)
 - After deploy: hard-refresh a kiosk browser to pick up new assets
