@@ -69,7 +69,7 @@ The framework's concepts are embedded in the work, not called out:
 | **Don't derive, match** | Acceptance criteria in user stories are negotiated — Design pushes back ("editable or locked?"), Architecture surfaces constraints nobody else can see |
 | **Start from the customer's story** | Every round starts with verbatim customer words. "I tried three times" becomes an idempotency requirement. The words create the work. |
 | **Own your inventory** | Each area owns its documents. Product doesn't write screen specs. Quality doesn't write architecture docs. |
-| **Unidirectional quality** | Work flows product → experience → architecture. Discoveries flow back up through product, not around it. |
+| **Iterate together, own separately** | PM, Design, and Engineering work in parallel from the same customer story. Each owns their domain. The overlap is real — but skipping the matching isn't allowed. |
 | **Boxes** | Acceptance criteria in user stories, assertions in test cases, thresholds in monitoring rules |
 | **Traces** | Each item records where it came from and what it matches. Traces are human judgments — they can be right or wrong. They're owned by the team, not shared infrastructure. |
 | **Proven** | Proof requires evidence, not assertion. A test execution record, a review sign-off, a dated walkthrough. "All criteria verified" without a date is a claim, not proof. |

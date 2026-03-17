@@ -30,13 +30,15 @@ The customer describes what happens at their natural level. That's the flow.
 
 A patient says: *"I visit the clinic. I don't want to re-enter my information."* They don't know about HIS, data sync, or screen states. They know what they experience.
 
-Each vertical translates this story deeper into their domain:
+Each vertical discovers boxes from the same story, in their own domain, in parallel:
 
 - **PM** captures it as-told. Discovers boxes: "data must be there," "no re-entry."
-- **Design** translates it into screens and state transitions — a journey through states.
-- **Engineer** translates it into system flows — data sync, API calls, event sequences. One customer sentence becomes N technical flows.
-- **QA** maps verification paths across all translations — proves the customer's sentence holds end-to-end.
-- **DevOps** ensures the infrastructure supports the flow in production.
+- **Design** discovers what the user should see and do — screens, states, transitions.
+- **Engineer** discovers what the system must do — data sync, API calls, event sequences. One customer sentence becomes N technical flows.
+- **QA** discovers what must be proven — verification paths across all verticals.
+- **DevOps** discovers what must run — infrastructure that supports the flows in production.
+
+They work from the same story, not from each other's output. They iterate together to align their matches.
 
 Flows are **fractal**. Zoom in: an event ("patient visits clinic") becomes its own flow with steps, screens, and system calls. Zoom out: that entire flow is just one event in the hospital-wide story. Every zoom level is valid. Every translation, at every depth, must trace back to the customer's words.
 
@@ -72,13 +74,21 @@ Traces serve two purposes:
 
 The document set that makes up an inventory is **chosen by each team** for their work. The Constitution defines what the inventory must achieve — matching, tracing, verification — not what specific documents it contains. A PM might use PRDs, epics, and user stories. An engineer might use ADRs, API specs, and architecture docs. A different project might use entirely different artifacts. The principle doesn't change; the documents do.
 
-### 4. Unidirectional Quality
+### 4. Iterate Together, Own Separately
 
-Certain artifacts require a strict flow to retain their quality. Don't break the flow.
+PM, Design, and Engineering work in parallel — not in sequence. The customer's story reaches all verticals at once. Each discovers boxes from their vantage point. They iterate together to negotiate matches.
 
-**Think twice, write once.** Shortcuts corrupt downstream proofs. Reversing is expensive — not just the rework, but the cascade of re-verification across every dependent box.
+- **PM** owns what the outside world needs — but doesn't dictate how Design or Engineering fulfills it.
+- **Design** owns what the user sees and does — but needs Engineering's input on what's feasible and PM's input on what matters.
+- **Engineering** owns the system — but needs Design's input on what users expect and PM's input on constraints.
+- **QA** audits that the matches hold — across all of them, not after a handoff chain.
+- **DevOps** proves it runs — in parallel with Engineering, not after.
 
-Respect the pipeline. If an artifact must flow through Design before it reaches Engineering, it flows through Design. The pipeline exists because each stage adds proof that later stages depend on.
+The overlap is real. A designer and an engineer may co-discover that a screen needs a different flow because of a system constraint. That's matching in action — not a pipeline violation.
+
+**What must not happen:** skipping the matching. If Engineering builds something without matching against Design's screens, the proof chain is broken. If Design specifies screens without matching against PM's acceptance criteria, the trace is missing. Each vertical owns its domain, but the matches between domains are the proof that the work is coherent.
+
+**Think twice, write once.** Reversing a match is expensive — not just the rework, but the cascade of re-verification across every item that traced to it.
 
 ---
 
