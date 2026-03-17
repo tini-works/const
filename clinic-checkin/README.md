@@ -36,34 +36,27 @@ A working example of [the Constitution](../CONST.md) applied to a real product �
 
 Each area maintains its own inventory — the working documents that team uses day to day. See the full [responsibility matrix](MATRIX.md) for who owns, consumes, and gets notified on every document.
 
-## Traces
+## How inventories relate
 
-Each inventory item carries traces — records of matching decisions, not a derivation chain.
+Each team owns their inventory independently. Items connect through **matching** — negotiated agreements between teams — not derivation chains.
 
-```
-                    ┌─────────────┐
-                    │  customer   │
-                    │   story     │
-                    └──────┬──────┘
-                           │ each vertical independently
-                           │ discovers boxes and matches
-                    ┌──────┴──────┐
-          ┌─────────┤  product/   ├─────────┐
-          │         │ user stories│         │
-          │         └─────────────┘         │
-          │ matches                  matches │
-    ┌─────┴───────┐              ┌─────────┴───┐
-    │ experience/ │              │architecture/ │
-    │ screens,    │   matches    │ API, data    │
-    │ flows       ├──────────────┤ model, ADRs  │
-    └─────┬───────┘              └──────┬──────┘
-          │ matches                      │ matches
-    ┌─────┴───────┐              ┌──────┴──────┐
-    │  quality/   ├──────────────┤ operations/  │
-    │  test cases,│   matches    │ monitoring,  │
-    │  proofs     │              │ runbooks     │
-    └─────────────┘              └─────────────┘
-```
+### Matching, not deriving
+
+Each team independently discovers what must be true and matches it. The result is a web of negotiated matches, not a pipeline of arrows:
+
+![Matching relationships between inventories](https://diashort.apps.quickable.co/e/5b1445de)
+
+### Inventory items and their traces
+
+Every item carries traces: where it came from, what it matches, and what proves it. When something changes, traces identify what goes suspect:
+
+![Inventory item relationships across all areas](https://diashort.apps.quickable.co/e/037d4aa3)
+
+### Verification lifecycle
+
+Each item moves through states. Proof requires evidence — a human confirmed the match with something concrete, not just an assertion:
+
+![Verification lifecycle: unverified → proven → suspect → re-verified](https://diashort.apps.quickable.co/e/c6018808)
 
 Each team owns their traces. A trace says "we believe this matches that" — it's a human judgment recorded in that team's own inventory. When something changes, traces identify what's suspect.
 
