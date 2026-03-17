@@ -191,6 +191,11 @@ When the panel opens, the system records the record's version number.
 
 ## 3. Mobile Check-In Interactions
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E2](../product/epics.md#e2-mobile-check-in), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
+| Proven by | [Suite 4](../quality/test-suites.md#suite-4-mobile-check-in-round-3), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
+
 ### 3.1 Link Open → Identity Verification
 
 **Patient taps SMS/email link:**

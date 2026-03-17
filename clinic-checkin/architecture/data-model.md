@@ -461,6 +461,12 @@ CREATE INDEX idx_migration_records_status ON migration_records (status);
 
 Potential matches found during migration.
 
+> **Read by:** [`GET /migration/duplicates/{id}`](api-spec.md#get-migrationduplicatesid)
+> **Written by:** Dedup engine during import, [`POST /migration/duplicates/{id}/resolve`](api-spec.md#post-migrationduplicatesidresolve)
+> **Stories:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge)
+> **ADR:** [ADR-008](adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration)
+> **Tested by:** [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold)
+
 ```sql
 CREATE TABLE duplicate_candidates (
     id                  UUID PRIMARY KEY DEFAULT gen_random_uuid(),
