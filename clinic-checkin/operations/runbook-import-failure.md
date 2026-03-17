@@ -2,6 +2,8 @@
 
 **Severity:** P2 (does not affect live check-in operations)
 **Impact:** Riverside patient records are not imported, staff review queue stalls, migration timeline slips.
+**Last tested:** 2026-03-17 — Ran Type 1 (schema mapping) and Type 4 (transaction failure) against test batch in staging.
+**Last triggered:** Never in production. Riverside migration has not started yet.
 
 ### Traceability
 

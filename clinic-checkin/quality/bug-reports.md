@@ -8,6 +8,10 @@
 **Reported:** Round 2
 **Reporter:** Patient (via complaint)
 **Status:** Fix verified
+**Verified by:** automated (CI)
+**Verified on:** 2024-03-10
+**Environment:** staging
+**Evidence:** TC-201..204 all pass + 20-consecutive-checkin regression (Suite 2, staging, 2024-03-10)
 
 ### Traceability
 
@@ -70,6 +74,10 @@ The fundamental mistake was showing a success state based on a partial operation
 **Reported:** Round 4
 **Reporter:** Patient (via complaint)
 **Status:** Fix verified
+**Verified by:** Chen Wei (security review, manual) + automated (CI)
+**Verified on:** 2024-03-08
+**Environment:** staging
+**Evidence:** TC-301..305 all pass (Suite 3, staging, 2024-03-08). Frame-by-frame video analysis passed. Penetration test (memory dump, network cache) passed.
 
 ### Traceability
 
@@ -153,6 +161,10 @@ This bug exposed a fundamental architectural gap: the kiosk was built as a singl
 **Reported:** Round 7
 **Reporter:** Receptionist (Sarah)
 **Status:** Fix verified
+**Verified by:** automated (CI)
+**Verified on:** 2024-03-10
+**Environment:** staging
+**Evidence:** TC-701..705 all pass (Suite 7, staging, 2024-03-10). 10-concurrent-edit stress test passed — zero data loss.
 
 ### Traceability
 

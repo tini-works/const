@@ -7,6 +7,7 @@
 **Date:** Round 1 (initial), Revised Round 2 (BUG-001)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-15 — confirmed after Round 9 scaling changes (WebSocket efficiency changes in ADR-007 are additive, ack mechanism unchanged)
 
 **Triggered by:** [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data)
 **Verified by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push)
@@ -52,6 +53,7 @@ The root cause was twofold:
 **Date:** Round 4 (BUG-002 — P0 Security)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-20 — still valid, confirmed during Round 10 import work (migrated patient first-visit flow goes through same session purge)
 
 **Triggered by:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan)
 **Verified by:** [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
@@ -106,6 +108,7 @@ This is a PHI exposure — HIPAA-reportable. Trust in the kiosk is existential f
 **Date:** Round 7 (BUG-003)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-20 — still valid, confirmed during Round 10 (migration merge writes use same version mechanism)
 
 **Triggered by:** [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records)
 **Verified by:** [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-704](../quality/test-suites.md#tc-704-no-conflict--normal-save), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](../quality/test-suites.md#tc-1201-patch-patientsid--version-required)
@@ -170,6 +173,7 @@ Every version change writes a row to `patient_record_versions` with a full snaps
 **Date:** Round 6 (E6: Compliance)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-15 — still valid
 
 **Triggered by:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), Epic [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
 **Verified by:** [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none), [TC-605](../quality/test-suites.md#tc-605-medication-confirmation--immutability), [TC-1202](../quality/test-suites.md#tc-1202-post-checkinsidcomplete--medication-confirmation-required)
@@ -229,6 +233,7 @@ CREATE TABLE medication_confirmations (
 **Date:** Round 5 (E3: Multi-Location)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-15 — still valid, read replicas added in Round 9 are additive to centralized model
 
 **Triggered by:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in), Epic [E3](../product/epics.md#e3-multi-location-support)
 **Verified by:** [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency), [TC-502](../quality/test-suites.md#tc-502-location-aware-kiosk), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed)
@@ -277,6 +282,7 @@ All locations connect to the same cloud-hosted database. If connectivity is lost
 **Date:** Round 8 (E4: Insurance Card Photo Capture)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-20 — still valid, extended in Round 10 for paper record OCR (same contract, same service)
 
 **Triggered by:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), Epic [E4](../product/epics.md#e4-insurance-card-photo-capture)
 **Verified by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
@@ -331,6 +337,7 @@ The Check-In Service does not know or care whether OCR is powered by Google Visi
 **Date:** Round 9 (Performance)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-20 — current, validated against Round 10 migration load requirements
 
 **Triggered by:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance)
 **Verified by:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable)
@@ -408,6 +415,7 @@ Cache frequently-accessed, read-heavy data:
 **Date:** Round 10 (E5: Riverside Acquisition)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-22 — current (Round 10)
 
 **Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), Epic [E5](../product/epics.md#e5-riverside-practice-acquisition)
 **Verified by:** [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1004](../quality/test-suites.md#tc-1004-duplicate-detection--no-match), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
@@ -478,6 +486,7 @@ For each imported Riverside record R:
 **Date:** Round 8 (E4: Insurance Card Photo Capture), extended Round 10 (E5: Paper Record Scanning)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-22 — current (Round 10)
 
 **Triggered by:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside)
 **Verified by:** [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
@@ -531,6 +540,7 @@ s3://clinic-checkin-files/
 **Date:** Round 10 (E5: Riverside Acquisition)
 
 **Status:** Accepted
+**Last reviewed:** 2024-12-22 — current (Round 10)
 
 **Triggered by:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), Epic [E5](../product/epics.md#e5-riverside-practice-acquisition)
 **Verified by:** [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)

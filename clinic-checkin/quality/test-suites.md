@@ -11,6 +11,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 1: Core Kiosk Check-In (Round 1)
 
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+
 ### TC-101: Returning patient — happy path check-in
 - **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval, pre-populated data, confirm-all action, confirmation timestamp; [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5s
 - **Tests:** [Screen 1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen), [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen), [Screen 1.3 Identity Confirmation](../experience/screen-specs.md#13-patient-identification-confirmation-screen), [Screen 1.4 Demographics](../experience/screen-specs.md#14-check-in-review-screen--demographics), [Screen 1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [Screen 1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [Screen 1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications), [Screen 1.8 Confirmation](../experience/screen-specs.md#18-check-in-confirmation-screen); [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins](../architecture/api-spec.md#post-checkins), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete)
@@ -174,6 +176,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 2: Kiosk-to-Receptionist Sync — BUG-001 Fix (Round 2)
 
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+
 ### TC-201: Successful sync — green checkmark
 - **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5 seconds of patient tapping Confirm, all fields visible; [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) AC: after patient confirms, data appears on receptionist screen within 5s
 - **Tests:** [Screen 1.8 Confirmation — Success state](../experience/screen-specs.md#18-check-in-confirmation-screen), [Screen 2.1 Dashboard — status badges](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (sync_status: confirmed), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id) (ack mechanism)
@@ -256,6 +260,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ## Suite 3: Session Isolation — BUG-002 Fix (Round 4)
+
+> **Last run:** 2024-03-08 | **Environment:** staging | **Result:** all pass | **Run by:** manual (Chen Wei, security review)
 
 ### TC-301: Sequential patients — no data leakage
 - **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: no other patient's data is rendered, even transiently; session state is fully cleared before loading a new patient's data
@@ -363,7 +369,30 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ---
 
+### TC-306: Audit log records identification events
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: audit log records each identification event with patient ID and timestamp
+- **Tests:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (audit side-effect), [audit_log table](../architecture/data-model.md#audit_log)
+- **Monitored by:** [Audit Log Growth](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
+**Precondition:** Patient "Sarah Johnson" (ID: `patient-001`) exists. Kiosk idle. Database audit_log table accessible for query.
+
+**Steps:**
+1. Record the current max `created_at` in `audit_log` where `entity_type = 'patient'` and `action = 'identify'`
+2. Scan Sarah's card at the kiosk
+3. Complete identity confirmation ("Yes, that's me")
+4. Query `audit_log` for entries where `entity_type = 'patient'` and `action = 'identify'` and `created_at` > recorded timestamp
+
+**Expected:**
+- At least one audit_log row exists with `entity_id = patient-001`, `action = 'identify'`, `actor_type = 'kiosk'`
+- `created_at` timestamp is within seconds of the scan time
+- Entry includes the kiosk identifier in `actor_id`
+- A failed identification (e.g., no-match scan) also produces an audit entry with `action = 'identify_failed'`
+
+---
+
 ## Suite 4: Mobile Check-In (Round 3)
+
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
 
 ### TC-401: Mobile check-in — happy path
 - **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: mobile-optimized web flow, identity verification, demographics/insurance/allergy/medication confirmation, check-in valid 24h before; [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) AC: channel shown, timestamp, confirmed data viewable
@@ -510,6 +539,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 5: Multi-Location (Round 5)
 
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+
 ### TC-501: Cross-location patient record — data consistency
 - **Proves:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access) AC: patient record is centralized, changes at Location A immediately visible at Location B, same pre-populated data
 - **Tests:** [GET /patients/{id}](../architecture/api-spec.md#get-patientsid) (same data regardless of location); [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication)
@@ -589,6 +620,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ## Suite 6: Medication Compliance (Round 6)
+
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
 
 ### TC-601: Medication step is mandatory — cannot skip
 - **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: medication list is displayed as a mandatory step (cannot be skipped), applies to every visit
@@ -715,6 +748,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 7: Concurrent Edit Safety — BUG-003 Fix (Round 7)
 
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+
 ### TC-701: Two receptionists — conflict detection
 - **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: on save, if record has been modified since loaded, system blocks save and shows conflict notice with what changed and who changed it; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking, version mismatch blocks save with clear conflict message
 - **Tests:** [Screen 2.2 Patient Detail — conflict banner](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (409 version_conflict response), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
@@ -822,6 +857,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 8: Insurance Card Photo Capture — OCR (Round 8)
 
+> **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+
 ### TC-801: Photo capture — happy path on kiosk
 - **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: camera capture at kiosk, patient guided to capture front/back, OCR extracts fields, extracted fields shown for review, low-confidence flagged
 - **Tests:** [Screen 1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [Screen 1.5a Photo Capture Overlay](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay); [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [GET /patients/{id}/insurance/{type}/photo/status/{processing_id}](../architecture/api-spec.md#get-patientsidinsurancetypephotostatusprocessing_id); [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract)
@@ -926,6 +963,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 9: Performance — Peak Load (Round 9)
 
+> **Last run:** 2024-03-07 | **Environment:** staging (load-test cluster) | **Result:** all pass | **Run by:** manual (DevOps — James Park)
+
 ### TC-901: 50 concurrent kiosk check-ins — response time
 - **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: system handles 50 concurrent sessions, p95 < 3s, no freezes or timeouts
 - **Tests:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (all under load); [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) (PgBouncer, read replicas, Redis cache)
@@ -1026,6 +1065,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ## Suite 10: Riverside Data Migration (Round 10)
+
+> **Last run:** 2024-03-09 | **Environment:** staging (migration sandbox) | **Result:** all pass | **Run by:** manual (migration team — Lisa Nguyen)
 
 ### TC-1001: EMR import — valid records
 - **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: electronic records mapped and imported, migration report shows counts
@@ -1250,6 +1291,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 
 ## Suite 11: Accessibility
 
+> **Last run:** 2024-02-28 | **Environment:** staging | **Result:** all pass | **Run by:** manual (a11y review — Maria Santos)
+
 ### TC-1101: Kiosk screen reader compatibility
 - **Proves:** Accessibility requirements (WCAG compliance, implicit in all user stories)
 - **Tests:** [Screen 1.1-1.9 Kiosk screens](../experience/screen-specs.md#1-kiosk-check-in-screens) (ARIA labels, aria-live, focus management)
@@ -1306,6 +1349,8 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ## Suite 12: API Contract Verification
+
+> **Last run:** 2024-03-10 | **Environment:** CI | **Result:** all pass | **Run by:** automated (CI)
 
 ### TC-1201: PATCH /patients/{id} — version required
 - **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: optimistic locking, record version checked on save; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking

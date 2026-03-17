@@ -2,6 +2,8 @@
 
 **Severity:** P1 -- Notify During Business Hours
 **Impact:** Patients complete check-in on kiosk but receptionist dashboard doesn't update. Patients get a yellow warning instead of green checkmark. Receptionist may ask patients to fill out paper forms.
+**Last tested:** 2026-03-17 — Killed Notification Service in staging, verified polling fallback activated within 5s, then restored and confirmed WebSocket reconnect.
+**Last triggered:** Never in production. BUG-001 occurred pre-launch; ADR-001 ack mechanism has held.
 
 ### Traceability
 

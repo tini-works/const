@@ -36,20 +36,36 @@ A working example of [the Constitution](../CONST.md) applied to a real product �
 
 Each area maintains its own inventory — the working documents that team uses day to day. See the full [responsibility matrix](MATRIX.md) for who owns, consumes, and gets notified on every document.
 
-## Traceability
+## Traces
 
-Every item links both ways — upstream to its source, downstream to its proof:
+Each inventory item carries traces — records of matching decisions, not a derivation chain.
 
 ```
-customer story
-  → user story (acceptance criteria)
-    → screen spec (what the user sees)
-      → API endpoint (how the system does it)
-        → test case (proof it works)
-          → production monitor (proof it keeps working)
+                    ┌─────────────┐
+                    │  customer   │
+                    │   story     │
+                    └──────┬──────┘
+                           │ each vertical independently
+                           │ discovers boxes and matches
+                    ┌──────┴──────┐
+          ┌─────────┤  product/   ├─────────┐
+          │         │ user stories│         │
+          │         └─────────────┘         │
+          │ matches                  matches │
+    ┌─────┴───────┐              ┌─────────┴───┐
+    │ experience/ │              │architecture/ │
+    │ screens,    │   matches    │ API, data    │
+    │ flows       ├──────────────┤ model, ADRs  │
+    └─────┬───────┘              └──────┬──────┘
+          │ matches                      │ matches
+    ┌─────┴───────┐              ┌──────┴──────┐
+    │  quality/   ├──────────────┤ operations/  │
+    │  test cases,│   matches    │ monitoring,  │
+    │  proofs     │              │ runbooks     │
+    └─────────────┘              └─────────────┘
 ```
 
-Break any link and you know exactly what's suspect. Follow any link and you can verify the claim.
+Each team owns their traces. A trace says "we believe this matches that" — it's a human judgment recorded in that team's own inventory. When something changes, traces identify what's suspect.
 
 ## Where the Constitution shows up
 
@@ -62,9 +78,10 @@ The framework's concepts are embedded in the work, not called out:
 | **Own your inventory** | Each area owns its documents. Product doesn't write screen specs. Quality doesn't write architecture docs. |
 | **Unidirectional quality** | Work flows product → experience → architecture. Discoveries flow back up through product, not around it. |
 | **Boxes** | Acceptance criteria in user stories, assertions in test cases, thresholds in monitoring rules |
-| **Proven** | A story is proven when test cases pass and monitoring shows green — not when someone writes "done" |
-| **Transitions** | When architecture changes an API, the screen spec that uses it goes suspect. The [MATRIX](MATRIX.md) shows who gets notified. |
-| **Sanity** | The backlog is reconciled. The coverage report shows gaps. Bug reports trace to ADRs. Runbooks trace to incidents. |
+| **Traces** | Each item records where it came from and what it matches. Traces are human judgments — they can be right or wrong. They're owned by the team, not shared infrastructure. |
+| **Proven** | Proof requires evidence, not assertion. A test execution record, a review sign-off, a dated walkthrough. "All criteria verified" without a date is a claim, not proof. |
+| **Transitions** | When architecture changes an API, traces identify which screens, tests, and monitors matched against it. Those items go suspect until re-verified. Notification requires acknowledgment. |
+| **Sanity** | Reconciliation checks evidence, not just structure. A test case that exists but was never run is not proof. Coverage gaps are tracked, not just listed. |
 
 ## By the numbers
 

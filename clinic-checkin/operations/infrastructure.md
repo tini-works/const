@@ -24,6 +24,8 @@ Owner: DevOps
 
 The clinic check-in system runs on cloud-hosted infrastructure serving two clinic locations, kiosk terminals, mobile web clients, and staff dashboards. This document describes every deployed component, its configuration, and how to rebuild from scratch.
 
+**Last verified:** 2026-03-17 — Services deployed, database config, networking, and capacity numbers confirmed against production. Next verification due when any infrastructure change is deployed or at 30-day mark (2026-04-16).
+
 ---
 
 ## Network Topology

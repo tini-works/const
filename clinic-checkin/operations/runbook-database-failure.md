@@ -2,6 +2,8 @@
 
 **Severity:** P0 -- Page Immediately
 **Impact:** Total system outage. No check-ins, no dashboard, no data access.
+**Last tested:** 2026-03-17 — Type A (PgBouncer restart) and Type B (RDS failover) exercised in staging. Type C (manual promote) and Type D (storage full) verified as documentation-only.
+**Last triggered:** Never in production.
 
 ---
 

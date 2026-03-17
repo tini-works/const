@@ -2,6 +2,8 @@
 
 **Severity:** P0 -- Page Immediately
 **SLA:** Acknowledge within 15 minutes, contain within 1 hour
+**Last tested:** 2026-03-17 — Tabletop exercise: simulated BUG-002 recurrence, walked through containment and HIPAA assessment steps.
+**Last triggered:** Never in production. BUG-002 occurred in QA; ADR-002 session purge has held.
 
 This runbook covers any incident where one patient's PHI is exposed to another patient, unauthorized staff member, or external party. This includes BUG-002-class issues (kiosk session isolation failure) and any other unauthorized data exposure.
 

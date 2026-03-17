@@ -4,7 +4,7 @@ Who owns what. Who consumes what. Where to find what.
 
 ## RACI by document
 
-**O** = Owns (creates, maintains, reconciles) · **C** = Consumes (reads, depends on) · **N** = Notified (when it changes)
+**O** = Owns (creates, maintains, reconciles) · **C** = Reads (matches against) · **N** = Notified (must acknowledge change + assess impact)
 
 | Document | Product | Experience | Architecture | Quality | Operations |
 |----------|---------|------------|--------------|---------|------------|
@@ -120,9 +120,9 @@ Who owns what. Who consumes what. Where to find what.
 ## How to read the matrix
 
 - **Start from your role.** Find the **O** column — those are your documents to maintain.
-- **Follow C downstream.** Documents you consume are your inputs. If they change, check if your work is still valid.
-- **Follow N upstream.** Documents that notify you are signals. Something changed that might affect your inventory.
-- **Trace any item end-to-end:** user story → screen spec → API endpoint → test case → production monitor. If any link is broken, the chain is suspect.
+- **Follow C across.** Documents you read are your matching inputs. If they change, check if your matches still hold.
+- **Follow N.** Notification means you must acknowledge the change and assess impact to your inventory. Unacknowledged notifications leave items suspect.
+- **Traces, not chains.** Each item traces to what it matches. When something changes, its traces identify what needs re-verification — not through a linear chain, but through the web of matching decisions each team recorded.
 
 ## Timeline
 

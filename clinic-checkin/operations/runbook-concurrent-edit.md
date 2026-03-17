@@ -2,6 +2,8 @@
 
 **Severity:** P2 (operational) / P1 (if data loss is confirmed)
 **Impact:** Staff members see "This record was modified since you loaded it" errors. In the worst case (if optimistic locking fails), data is silently lost.
+**Last tested:** 2026-03-17 — Walked through Scenario A (frequent conflicts) and Scenario B (stale cache) in staging.
+**Last triggered:** Never in production. BUG-003 occurred pre-launch; ADR-003 has prevented recurrence.
 
 ### Traceability
 

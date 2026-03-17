@@ -2,6 +2,8 @@
 
 **Severity:** P1 during clinic hours, P2 otherwise
 **Impact:** Slow kiosk response, search hangs, dashboard updates delayed. Patients may leave the clinic.
+**Last tested:** 2026-03-17 — Load test with 50 concurrent sessions in staging; walked through "DB Connection Exhaustion" and "Not Enough Instances" response steps.
+**Last triggered:** Never in production.
 
 ### Traceability
 

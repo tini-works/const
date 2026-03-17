@@ -45,6 +45,7 @@ The central entity. One record per patient across all locations (centralized mod
 > **Read by:** [`POST /patients/identify`](api-spec.md#post-patientsidentify), [`GET /patients/{id}`](api-spec.md#get-patientsid), [`GET /dashboard/search`](api-spec.md#get-dashboardsearch)
 > **Written by:** [`PATCH /patients/{id}`](api-spec.md#patch-patientsid), [`POST /migration/batches/{batch_id}/import`](api-spec.md#post-migrationbatchesbatch_idimport), [`POST /migration/duplicates/{id}/resolve`](api-spec.md#post-migrationduplicatesidresolve)
 > **Stories:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access)
+> **If schema changes:** Re-verify `GET /patients/{id}` response shape, `PATCH /patients/{id}` request/conflict shape, dashboard search results, kiosk/mobile review screens (1.4-1.7, 2.2, 3.2), dedup algorithm (ADR-008), migration schema mapping (ADR-010), trigram and composite indexes (ADR-007).
 
 ```sql
 CREATE TABLE patients (
@@ -97,6 +98,7 @@ Added in Round 5 (multi-location).
 
 > **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`WebSocket /ws/dashboard/{location_id}`](api-spec.md#websocket-wsdashboardlocation_id)
 > **Stories:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in)
+> **If schema changes:** Re-verify dashboard queue endpoint, WebSocket channel routing, kiosk location binding, staff_locations assignments, and all location-scoped queries (ADR-005).
 
 ```sql
 CREATE TABLE locations (
@@ -189,6 +191,7 @@ Tracks each check-in event. One per appointment per channel.
 > **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`GET /mobile-checkin/{token}/status`](api-spec.md#get-mobile-checkintokenstatus)
 > **Written by:** [`POST /checkins`](api-spec.md#post-checkins), [`PATCH /checkins/{id}/progress`](api-spec.md#patch-checkinsidprogress), [`POST /checkins/{id}/complete`](api-spec.md#post-checkinsidcomplete)
 > **Stories:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
+> **If schema changes:** Re-verify check-in flow endpoints, dashboard queue display, WebSocket sync/ack mechanism (ADR-001), mobile token validation, duplicate prevention logic, and medication_confirmations FK relationship.
 
 ```sql
 CREATE TABLE check_ins (
@@ -228,6 +231,7 @@ CREATE INDEX idx_checkins_patient_date ON check_ins (patient_id, started_at);
 
 > **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
 > **Written by:** [`POST /patients/{id}/allergies`](api-spec.md#post-patientsidallergies), [`PUT /patients/{id}/allergies/{allergy_id}`](api-spec.md#put-patientsidallergiesallergy_id), [`DELETE /patients/{id}/allergies/{allergy_id}`](api-spec.md#delete-patientsidallergiesallergy_id)
+> **If schema changes:** Re-verify `GET /patients/{id}` allergy section, review screens (1.6, 3.2), and migration schema mapping for allergy import.
 
 ```sql
 CREATE TABLE allergies (
@@ -256,6 +260,7 @@ Added medication tracking in Round 6 for compliance.
 > **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
 > **Written by:** [`POST /patients/{id}/medications`](api-spec.md#post-patientsidmedications), [`PUT /patients/{id}/medications/{medication_id}`](api-spec.md#put-patientsidmedicationsmedication_id), [`DELETE /patients/{id}/medications/{medication_id}`](api-spec.md#delete-patientsidmedicationsmedication_id)
 > **Stories:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in)
+> **If schema changes:** Re-verify `GET /patients/{id}` medication section, medication confirmation snapshot format (ADR-004 — snapshot must match current schema), review screens (1.7, 3.2), and migration schema mapping for medication import.
 
 ```sql
 CREATE TABLE medications (
@@ -287,6 +292,7 @@ Immutable audit records. Required for state health board compliance (Round 6). N
 > **Stories:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), Epic [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
 > **ADR:** [ADR-004](adrs.md#adr-004-immutable-medication-confirmation-audit-records)
 > **Tested by:** [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none), [TC-605](../quality/test-suites.md#tc-605-medication-confirmation--immutability)
+> **If schema changes:** Re-verify compliance audit trail (ADR-004), check-in completion endpoint, snapshot format, and immutability constraint. This table is INSERT-only by design — any schema change must preserve that invariant for regulatory compliance.
 
 ```sql
 CREATE TABLE medication_confirmations (
@@ -312,6 +318,7 @@ CREATE INDEX idx_med_confirmations_patient ON medication_confirmations (patient_
 > **Read by:** [`GET /patients/{id}`](api-spec.md#get-patientsid)
 > **Written by:** [`PUT /patients/{id}/insurance/{type}`](api-spec.md#put-patientsidinsurancetype), [`POST /patients/{id}/insurance/{type}/photo`](api-spec.md#post-patientsidinsurancetypephoto) (OCR results)
 > **Stories:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card)
+> **If schema changes:** Re-verify `GET /patients/{id}` insurance section, OCR field extraction mapping (ADR-006), insurance review screen (1.5), photo capture overlay (1.5a), and S3 key reference format (ADR-009).
 
 ```sql
 CREATE TABLE insurance_records (
@@ -384,6 +391,7 @@ Stores full snapshots on each version change. Supports conflict resolution displ
 > **Read by:** [`PATCH /patients/{id}`](api-spec.md#patch-patientsid) (conflict resolution — shows what changed), [`POST /migration/batches/{batch_id}/rollback`](api-spec.md#post-migrationbatchesbatch_idrollback) (restoring pre-merge state)
 > **ADR:** [ADR-003](adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
 > **Tested by:** [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback)
+> **If schema changes:** Re-verify conflict resolution UI (409 response shape depends on snapshot format), migration rollback mechanism (ADR-010 restores from these snapshots), and the `patients` table snapshot must stay in sync with the actual column set.
 
 ```sql
 CREATE TABLE patient_record_versions (
@@ -469,6 +477,7 @@ Potential matches found during migration.
 > **Stories:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge)
 > **ADR:** [ADR-008](adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration)
 > **Tested by:** [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold)
+> **If schema changes:** Re-verify dedup algorithm scoring (ADR-008), merge resolution endpoint, duplicate review screen (4.2), rollback mechanism (ADR-010 — rollback reverses merges using patient_record_versions), and the `patients` table FK relationship.
 
 ```sql
 CREATE TABLE duplicate_candidates (

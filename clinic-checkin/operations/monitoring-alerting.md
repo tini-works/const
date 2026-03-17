@@ -356,6 +356,17 @@ External pings from outside our infrastructure, verifying the system is reachabl
 - Escalation: if primary doesn't ack within 15 minutes, page secondary
 - If secondary doesn't ack within 15 minutes, page CTO
 
+### Acknowledgment Protocol
+
+When an alert fires, acknowledgment is not just "I see it." It means:
+
+1. **Identify affected items.** What does this alert prove? (See traceability table above.) Those items are now **suspect** — their proven status no longer holds.
+2. **Assess impact.** Which upstream requirements and downstream dependencies trace to the suspect items? Flag them.
+3. **Plan re-verification.** What evidence is needed to restore proven status? A passing test run, a metric returning to baseline, a manual walkthrough — not just "it stopped firing."
+4. **Record the acknowledgment.** Who acknowledged, when, what was flagged suspect, and what re-verification is planned. This goes in the incident channel, not just PagerDuty.
+
+An alert that is acknowledged but not impact-assessed is an alert that is ignored with extra steps.
+
 ### Alert Fatigue Prevention
 
 - Alerts that fire > 3 times/week without action needed: review and tune thresholds

@@ -21,6 +21,65 @@ Prioritized by urgency, dependency order, and business impact.
 | US-012 | Patient data migration from Riverside | E5 | P3 | Open | [Screen 4.1](../experience/screen-specs.md#41-admin--migration-dashboard), [Flow 13](../experience/user-flows.md#13-riverside-migration--first-visit-after-migration), [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback), [TC-1001–1009](../quality/test-suites.md#tc-1001-emr-import--valid-records) |
 | US-013 | Duplicate detection and merge | E5 | P3 | Open | [Screen 4.2](../experience/screen-specs.md#42-admin--duplicate-review-screen), [Flow 14](../experience/user-flows.md#14-duplicate-detection--staff-review-riverside), [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [TC-1003–1011](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match) |
 
+---
+
+## Coverage Gaps
+
+Items identified from the [coverage report](../quality/coverage-report.md) triage. These are untested areas that need either test coverage or an explicit risk acceptance.
+
+### Security / Session Isolation
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-001 | 100-session memory leak test for kiosk session purge | P1 — prolonged kiosk use could degrade session isolation | Needs TC |
+| GAP-002 | Presigned URL expiry verification (15-min S3 URLs) | P2 — expired URLs could expose stale access or break staff image viewing | Needs TC |
+
+### Mobile Check-In
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-003 | SMS/email link delivery verification (Twilio integration) | P2 — patients may never receive check-in links | Needs TC (depends on Twilio sandbox) |
+| GAP-004 | Reminder notification delivery (2h before appointment) | P3 — missed reminders reduce mobile check-in adoption | Needs TC |
+| GAP-005 | Cross-browser compatibility matrix (iOS Safari, Chrome Android) | P2 — mobile flow may break on common devices | Needs device lab test plan |
+| GAP-006 | Focus management on mobile bottom sheet edit panels | P3 — accessibility issue for screen reader users on mobile | Needs TC |
+
+### Multi-Location
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-007 | Admin "All Locations" dashboard view | P3 — admin lacks cross-location visibility | Needs TC |
+| GAP-008 | Staff permissions scoped per location | P2 — receptionist at Location A could access Location B patient queue | Needs TC |
+| GAP-009 | Cross-location appointment history UI display | P3 — US-009 AC partially unverified | Needs TC |
+
+### Insurance OCR
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-010 | Secondary insurance card photo capture | P3 — patients with dual coverage can't photograph second card | Needs TC |
+| GAP-011 | Client-side blurry/dark image detection before OCR submit | P3 — poor quality images waste OCR processing and frustrate patients | Needs TC |
+
+### Data Migration (Riverside)
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-012 | Riverside medication frequency mapping (BID -> twice_daily) | P2 — incorrect medication data post-migration is a patient safety risk | Needs TC |
+| GAP-013 | Batch sequential review flow (staff reviews 10 duplicates at a time) | P3 — staff workflow for bulk review untested | Needs TC |
+| GAP-014 | Migration dashboard live count accuracy during active import | P3 — admin may see stale progress data | Needs TC |
+
+### Accessibility
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-015 | Kiosk high-contrast mode toggle | P3 — visually impaired patients at kiosk | Needs TC |
+
+### Audit
+
+| # | Gap | Risk | Status |
+|---|-----|------|--------|
+| GAP-016 | US-003 audit log AC — scan events logged with patient ID + timestamp | P2 — security audit trail incomplete, compliance risk | Needs TC |
+
+---
+
 ## Priority definitions
 - **P0:** Fix now. Production incident, data exposure, compliance violation.
 - **P1:** Fix this sprint. Core flow broken or deadline-driven compliance.

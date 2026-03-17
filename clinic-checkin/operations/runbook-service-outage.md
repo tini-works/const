@@ -2,6 +2,8 @@
 
 **Severity:** P0 -- Page Immediately
 **Impact:** Kiosks down, check-in flow unavailable, patients cannot self-service.
+**Last tested:** 2026-03-17 — Killed Check-In Service in staging, verified detection (alert within 90s), recovery (container restart < 2 min), and kiosk auto-reconnect.
+**Last triggered:** Never in production.
 
 ---
 
