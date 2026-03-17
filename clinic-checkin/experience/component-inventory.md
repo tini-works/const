@@ -31,6 +31,11 @@ Used on the receptionist dashboard and patient detail panels to communicate chec
 
 ## 2. Progress Indicator
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E1](../product/epics.md#e1-returning-patient-recognition), [E2](../product/epics.md#e2-mobile-check-in) |
+| Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path) |
+
 Shows the patient where they are in the check-in flow.
 
 ### Kiosk Variant
@@ -61,6 +66,11 @@ Simplified dot indicator (space-constrained).
 ---
 
 ## 3. Editable Section Card
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Proven by | [TC-102](../quality/test-suites.md#tc-102-returning-patient--edit-demographics-during-check-in), [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk) |
 
 The primary pattern for displaying and editing patient data on review screens.
 
@@ -136,6 +146,11 @@ The primary pattern for displaying and editing patient data on review screens.
 
 ## 4. Medication Card
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in) |
+| Proven by | [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified) |
+
 Used in the medication list (Step 4, mandatory review).
 
 ### Default State
@@ -188,6 +203,11 @@ Used in the medication list (Step 4, mandatory review).
 ---
 
 ## 5. Allergy Pill / Tag
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in) |
 
 Used in the allergy list (Step 3).
 
@@ -247,6 +267,11 @@ Modal overlay for destructive actions (removing allergies, medications, merging 
 
 ## 7. Conflict Banner
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) |
+| Proven by | [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes) |
+
 Used in the receptionist patient detail panel when a concurrent edit conflict is detected (BUG-003 fix).
 
 ```
@@ -269,6 +294,11 @@ Used in the receptionist patient detail panel when a concurrent edit conflict is
 ---
 
 ## 8. Skeleton Screen / Shimmer Loader
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Proven by | [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend) |
 
 Placeholder UI shown during data loading (Round 9 performance).
 
@@ -297,6 +327,11 @@ Placeholder UI shown during data loading (Round 9 performance).
 
 ## 9. Connection Status Indicator
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) |
+| Proven by | [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+
 Shown in the header/top bar during degraded performance or connectivity issues (Round 9).
 
 | State | Visual | Label |
@@ -312,6 +347,11 @@ Shown in the header/top bar during degraded performance or connectivity issues (
 ---
 
 ## 10. Search Input
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access) |
+| Proven by | [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search) |
 
 Used on kiosk name search and receptionist dashboard.
 
@@ -343,6 +383,11 @@ Dropdown shows: "No patients found matching 'Johnathan'"
 
 ## 11. Location Selector
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E3](../product/epics.md#e3-multi-location-support) |
+| Proven by | [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search) |
+
 Dropdown in the receptionist dashboard top bar (post-Round 5 multi-location).
 
 ```
@@ -364,6 +409,11 @@ Dropdown in the receptionist dashboard top bar (post-Round 5 multi-location).
 
 ## 12. Confidence Score Badge (Riverside Migration)
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
+| Proven by | [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge) |
+
 Used in the duplicate review and migration dashboard (Round 10).
 
 | Score Range | Visual | Color |
@@ -379,6 +429,11 @@ Used in the duplicate review and migration dashboard (Round 10).
 ---
 
 ## 13. Photo Capture Viewfinder
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
+| Proven by | [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
 
 Camera overlay for insurance card capture (Round 8).
 
@@ -406,6 +461,11 @@ Same layout but card outline is oriented horizontally in a portrait frame. Card 
 ---
 
 ## 14. Migration Notice Banner
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
+| Proven by | [TC-1008](../quality/test-suites.md#tc-1008-first-visit-after-migration--patient-confirmation) |
 
 Shown on check-in review screens when a patient has migrated data that hasn't been patient-confirmed yet (Round 10).
 

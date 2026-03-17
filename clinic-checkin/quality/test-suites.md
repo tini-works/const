@@ -1,13 +1,21 @@
 # Test Suites — Clinic Check-In System
 
-Test cases organized by feature area. Each case includes preconditions, steps, and expected results. Traceability to user stories and bugs is noted per case.
+Test cases organized by feature area. Each case includes preconditions, steps, and expected results. Traceability to user stories, screens, API endpoints, and production monitors is noted per case.
+
+**Traceability key:**
+- **Proves:** which [product/](../product/user-stories.md) acceptance criteria this test verifies
+- **Tests:** which [architecture/](../architecture/api-spec.md) API endpoint or [experience/](../experience/screen-specs.md) screen
+- **Monitored by:** which [operations/](../operations/monitoring-alerting.md) alert detects when this breaks in production
 
 ---
 
 ## Suite 1: Core Kiosk Check-In (Round 1)
 
 ### TC-101: Returning patient — happy path check-in
-**Traces to:** US-001, US-002
+- **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval, pre-populated data, confirm-all action, confirmation timestamp; [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5s
+- **Tests:** [Screen 1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen), [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen), [Screen 1.3 Identity Confirmation](../experience/screen-specs.md#13-patient-identification-confirmation-screen), [Screen 1.4 Demographics](../experience/screen-specs.md#14-check-in-review-screen--demographics), [Screen 1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [Screen 1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [Screen 1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications), [Screen 1.8 Confirmation](../experience/screen-specs.md#18-check-in-confirmation-screen); [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins](../architecture/api-spec.md#post-checkins), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete)
+- **Monitored by:** [Service Down](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (service unavailability), [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours) (latency), [Check-In Flow Dashboard — Sync Success Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient "Sarah Johnson" exists in the system with demographics, insurance (Aetna, member ID ABC123), allergies (Penicillin — severe), and medications (Lisinopril 10mg once daily). Appointment scheduled for today at 9:15 AM at Main Street Clinic. Kiosk is idle (welcome screen).
 
 **Steps:**
@@ -36,7 +44,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-102: Returning patient — edit demographics during check-in
-**Traces to:** US-001
+- **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: patient can edit any individual field before confirming
+- **Tests:** [Screen 1.4 Demographics — Edit mode](../experience/screen-specs.md#14-check-in-review-screen--demographics); [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid)
+- **Monitored by:** [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Error Rate Warning](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Same as TC-101.
 
 **Steps:**
@@ -57,7 +68,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-103: New patient — kiosk check-in
-**Traces to:** US-001
+- **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval (no record found triggers new patient flow)
+- **Tests:** [Screen 1.4 Demographics — new patient state](../experience/screen-specs.md#14-check-in-review-screen--demographics); [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (404 response), [POST /checkins](../architecture/api-spec.md#post-checkins)
+- **Monitored by:** [Service Down](../operations/monitoring-alerting.md#p0----page-immediately-any-time), [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Card "NEW-001" is not associated with any patient record. Kiosk is idle.
 
 **Steps:**
@@ -81,7 +95,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-104: Card scan failure — fallback to name search
-**Traces to:** US-001
+- **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval (fallback path)
+- **Tests:** [Screen 1.1 Kiosk Welcome — Scan failed state](../experience/screen-specs.md#11-kiosk-welcome-screen), [Screen 1.9 Name Search](../experience/screen-specs.md#19-kiosk-name-search-screen); [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (name_search method)
+- **Monitored by:** [Patient Search Latency (p95)](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Patient "Sarah Johnson" exists. Kiosk is idle.
 
 **Steps:**
@@ -101,6 +118,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-105: Card scan — no matching record
+- **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval (no match)
+- **Tests:** [Screen 1.1 Kiosk Welcome — Identification failed state](../experience/screen-specs.md#11-kiosk-welcome-screen); [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (404 response)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Card "UNKNOWN-001" has no associated patient. Kiosk is idle.
 
 **Steps:**
@@ -115,7 +136,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-106: Identity confirmation — rejection ("That's not me")
-**Traces to:** US-003
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: if identification fails, a generic error is shown — no partial data from another patient
+- **Tests:** [Screen 1.3 Identity Confirmation — Rejected state](../experience/screen-specs.md#13-patient-identification-confirmation-screen)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (session isolation failure counter)
+
 **Precondition:** Patient exists, card scanned successfully.
 
 **Steps:**
@@ -130,6 +154,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-107: Kiosk idle timeout
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: session state is fully cleared before loading a new patient's data
+- **Tests:** [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen) (session purge on timeout)
+- **Monitored by:** [Active Check-In Sessions gauge](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient is on a check-in review screen.
 
 **Steps:**
@@ -147,7 +175,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 2: Kiosk-to-Receptionist Sync — BUG-001 Fix (Round 2)
 
 ### TC-201: Successful sync — green checkmark
-**Traces to:** US-002, BUG-001
+- **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5 seconds of patient tapping Confirm, all fields visible; [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) AC: after patient confirms, data appears on receptionist screen within 5s
+- **Tests:** [Screen 1.8 Confirmation — Success state](../experience/screen-specs.md#18-check-in-confirmation-screen), [Screen 2.1 Dashboard — status badges](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (sync_status: confirmed), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id) (ack mechanism)
+- **Monitored by:** [Sync Success Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [Sync Failure Rate High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard)
+- **Regression for:** [BUG-001](bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates)
+
 **Precondition:** Receptionist dashboard is open and connected (WebSocket active). Patient has appointment today.
 
 **Steps:**
@@ -164,7 +196,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-202: Sync timeout — yellow warning on kiosk
-**Traces to:** US-002, BUG-001
+- **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: if check-in is incomplete or failed, receptionist sees a clear status; [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) AC: if sync fails, kiosk shows an error state (not a false green checkmark)
+- **Tests:** [Screen 1.8 Confirmation — Sync failure state](../experience/screen-specs.md#18-check-in-confirmation-screen); [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (sync_status: timeout)
+- **Monitored by:** [Sync Failure Rate High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Sync Timeout Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+- **Regression for:** [BUG-001](bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates)
+
 **Precondition:** Receptionist dashboard WebSocket is disrupted (simulate network disconnection on dashboard side).
 
 **Steps:**
@@ -181,7 +217,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-203: Sync failure — dashboard retry
-**Traces to:** US-002, BUG-001
+- **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: if check-in is incomplete or failed, receptionist sees a clear status; [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) AC: receptionist screen shows "syncing..." state if data is in transit
+- **Tests:** [Screen 2.1 Dashboard — Syncing.../Check-In Failed badges](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) (polling fallback), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id)
+- **Monitored by:** [Sync Failure Rate High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard)
+- **Regression for:** [BUG-001](bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates)
+
 **Precondition:** Dashboard WebSocket was disconnected during a check-in.
 
 **Steps:**
@@ -197,7 +237,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-204: Dashboard real-time update — WebSocket push
-**Traces to:** US-002
+- **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: receptionist dashboard shows real-time check-in status per patient, confirmed data appears within 5 seconds
+- **Tests:** [Screen 2.1 Dashboard — queue row updates](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id)
+- **Monitored by:** [WebSocket Connections](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard), [Sync Success Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Receptionist dashboard connected via WebSocket. Multiple patients checking in.
 
 **Steps:**
@@ -215,7 +258,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 3: Session Isolation — BUG-002 Fix (Round 4)
 
 ### TC-301: Sequential patients — no data leakage
-**Traces to:** US-003, BUG-002
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: no other patient's data is rendered, even transiently; session state is fully cleared before loading a new patient's data
+- **Tests:** [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen) (800ms barrier); [ADR-002 Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (`security_session_isolation_failure > 0`)
+- **Regression for:** [BUG-002](bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+
 **Precondition:** Two test patients: Patient A (Sarah Johnson, allergy: Penicillin) and Patient B (James Williams, allergy: Latex). Kiosk idle.
 
 **Steps:**
@@ -233,7 +280,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-302: Rapid sequential scans — no data leakage
-**Traces to:** US-003, BUG-002
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: no other patient's data is rendered, even transiently; session state is fully cleared
+- **Tests:** [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen) (interrupted countdown, immediate purge); [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+- **Regression for:** [BUG-002](bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+
 **Precondition:** Two test patients with distinct data. Kiosk is on Patient A's success screen.
 
 **Steps:**
@@ -251,7 +302,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-303: Rapid sequential scans — sub-second timing
-**Traces to:** US-003, BUG-002
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: no other patient's data is rendered, even transiently, in any UI layer
+- **Tests:** [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen); [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) (Layer 1: state reset, Layer 2: DOM destruction, Layer 3: transition barrier)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+- **Regression for:** [BUG-002](bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+
 **Precondition:** Automated test setup. Two different patient cards.
 
 **Steps:**
@@ -269,7 +324,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-304: Session purge — DOM inspection
-**Traces to:** US-003, BUG-002
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: session state is fully cleared before loading a new patient's data
+- **Tests:** [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) (Layer 1: state reset, Layer 2: DOM destruction)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+- **Regression for:** [BUG-002](bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+
 **Precondition:** Patient A has completed check-in.
 
 **Steps:**
@@ -287,7 +346,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-305: Browser back button does not reveal previous session
-**Traces to:** US-003, BUG-002
+- **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: session state is fully cleared
+- **Tests:** [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) (defense in depth against browser navigation)
+- **Monitored by:** [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+- **Regression for:** [BUG-002](bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
+
 **Precondition:** Patient A completed check-in. Kiosk returned to welcome.
 
 **Steps:**
@@ -303,7 +366,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 4: Mobile Check-In (Round 3)
 
 ### TC-401: Mobile check-in — happy path
-**Traces to:** US-007, US-008
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: mobile-optimized web flow, identity verification, demographics/insurance/allergy/medication confirmation, check-in valid 24h before; [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) AC: channel shown, timestamp, confirmed data viewable
+- **Tests:** [Screen 3.1 Mobile Landing](../experience/screen-specs.md#31-mobile--link-landing--identity-verification), [Screen 3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications), [Screen 3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen); [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete)
+- **Monitored by:** [Check-ins Today by channel](../operations/monitoring-alerting.md#4-check-in-flow-dashboard) (Mobile vs Kiosk pie chart), [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Mobile Web uptime](../operations/monitoring-alerting.md#uptime-monitoring-external)
+
 **Precondition:** Patient Sarah Johnson has appointment tomorrow at 9:15 AM at Main Street Clinic. System sends SMS check-in link 24 hours before.
 
 **Steps:**
@@ -331,7 +397,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-402: Mobile — identity verification failure
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: identity verification
+- **Tests:** [Screen 3.1 Mobile Landing — Verification failed state](../experience/screen-specs.md#31-mobile--link-landing--identity-verification); [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity) (401 response with attempts_remaining)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Valid check-in link. Patient enters wrong verification info.
 
 **Steps:**
@@ -348,7 +417,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-403: Mobile — expired link
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: check-in valid starting 24 hours before appointment time (link expiry)
+- **Tests:** [Screen 3.1 Mobile Landing — Link expired state](../experience/screen-specs.md#31-mobile--link-landing--identity-verification); [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity) (410 Gone), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus)
+- **Monitored by:** [Mobile Web uptime](../operations/monitoring-alerting.md#uptime-monitoring-external)
+
 **Precondition:** Appointment was at 9:15 AM, current time is 9:20 AM.
 
 **Steps:**
@@ -361,7 +433,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-404: Mobile — partial completion and resume
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: mobile web flow (partial completion); [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) AC: if mobile check-in is partial, it shows as "in progress"
+- **Tests:** [Screen 3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications) (partial save + resume), [Screen 2.1 Dashboard — Mobile Partial badge](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [PATCH /checkins/{id}/progress](../architecture/api-spec.md#patch-checkinsidprogress)
+- **Monitored by:** [Check-In Flow Dashboard — Mobile vs Kiosk](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient opens link, verifies identity, completes demographics and insurance steps.
 
 **Steps:**
@@ -380,7 +455,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-405: Mobile then kiosk — duplicate prevention
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: if the patient also checks in at the kiosk, the system recognizes them as already checked in
+- **Tests:** [Screen 1.8 Confirmation — already checked in state](../experience/screen-specs.md#18-check-in-confirmation-screen); [POST /checkins](../architecture/api-spec.md#post-checkins) (409 already_checked_in)
+- **Monitored by:** [Check-ins Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient completed mobile check-in earlier today.
 
 **Steps:**
@@ -396,7 +474,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-406: Mobile — session timeout
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: identity verification (session security)
+- **Tests:** [Screen 3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications) (session timeout behavior)
+- **Monitored by:** [Active Check-In Sessions](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient has verified identity and is on a review screen.
 
 **Steps:**
@@ -412,7 +493,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-407: Mobile — already checked in via mobile
-**Traces to:** US-007
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: once completed, kiosk and receptionist see the patient as "checked in — mobile"
+- **Tests:** [Screen 3.1 Mobile Landing — Already checked in state](../experience/screen-specs.md#31-mobile--link-landing--identity-verification); [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity) (409 already_checked_in)
+- **Monitored by:** [Check-ins Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient already completed mobile check-in for this appointment.
 
 **Steps:**
@@ -427,7 +511,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 5: Multi-Location (Round 5)
 
 ### TC-501: Cross-location patient record — data consistency
-**Traces to:** US-009
+- **Proves:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access) AC: patient record is centralized, changes at Location A immediately visible at Location B, same pre-populated data
+- **Tests:** [GET /patients/{id}](../architecture/api-spec.md#get-patientsid) (same data regardless of location); [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication)
+- **Monitored by:** [Read Replica Lag](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (critical), [Read Replica Lag Warning](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Patient "Sarah Johnson" has visited Location A before. Today she has an appointment at Location B. Both locations are configured in the system.
 
 **Steps:**
@@ -444,7 +531,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-502: Location-aware kiosk
-**Traces to:** US-010
+- **Proves:** [US-010](../product/user-stories.md#us-010-location-aware-check-in) AC: kiosk is associated with a specific location, check-in notifications route to the correct location's staff
+- **Tests:** [Screen 1.1 Kiosk Welcome — location name in header](../experience/screen-specs.md#11-kiosk-welcome-screen), [Screen 2.1 Dashboard — location filter](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [POST /checkins](../architecture/api-spec.md#post-checkins) (location_id), [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) (location_id filter)
+- **Monitored by:** [Check-ins Today by location](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Kiosk at Location B is configured with Location B's ID.
 
 **Steps:**
@@ -460,7 +550,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-503: Receptionist — location filter and search
-**Traces to:** US-009, US-010
+- **Proves:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access) AC: single source of truth; [US-010](../product/user-stories.md#us-010-location-aware-check-in) AC: dashboard filtered by location by default, with option to search across locations
+- **Tests:** [Screen 2.1 Dashboard — location selector, search](../experience/screen-specs.md#21-receptionist-dashboard--main-view); [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) (location_id filter), [GET /dashboard/search](../architecture/api-spec.md#get-dashboardsearch) (cross-location)
+- **Monitored by:** [Patient Search Latency](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Receptionist at Location A is logged in. Patient has checked in at Location B.
 
 **Steps:**
@@ -479,7 +572,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-504: Mobile check-in — location displayed
-**Traces to:** US-010
+- **Proves:** [US-010](../product/user-stories.md#us-010-location-aware-check-in) AC: mobile check-in prompts the patient to confirm which location
+- **Tests:** [Screen 3.1 Mobile Landing — appointment location display](../experience/screen-specs.md#31-mobile--link-landing--identity-verification), [Screen 3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen)
+- **Monitored by:** [Mobile Web uptime](../operations/monitoring-alerting.md#uptime-monitoring-external)
+
 **Precondition:** Patient has appointment at Location B.
 
 **Steps:**
@@ -495,7 +591,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 6: Medication Compliance (Round 6)
 
 ### TC-601: Medication step is mandatory — cannot skip
-**Traces to:** US-005
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: medication list is displayed as a mandatory step (cannot be skipped), applies to every visit
+- **Tests:** [Screen 1.7 Medications — cannot bypass](../experience/screen-specs.md#17-check-in-review-screen--medications); [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records)
+- **Monitored by:** [Check-In Flow Dashboard](../operations/monitoring-alerting.md#4-check-in-flow-dashboard) (check-in duration — would reveal if step is being bypassed)
+
 **Precondition:** Returning patient with medications on file. Kiosk check-in.
 
 **Steps:**
@@ -512,7 +611,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-602: Medication confirmation — "confirmed unchanged"
-**Traces to:** US-005
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: confirmation is timestamped and stored as an auditable record; each medication entry includes name, dosage, frequency
+- **Tests:** [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (medication_confirmation field); [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records) (medication_confirmations table, snapshot format)
+- **Monitored by:** [Audit Log Growth](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Patient has Lisinopril 10mg once daily and Metformin 500mg twice daily on file. Kiosk check-in.
 
 **Steps:**
@@ -532,7 +634,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-603: Medication confirmation — "modified"
-**Traces to:** US-005
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: patient can add medications; each medication entry includes name, dosage, frequency
+- **Tests:** [Screen 1.7 Medications — Add medication](../experience/screen-specs.md#17-check-in-review-screen--medications); [POST /patients/{id}/medications](../architecture/api-spec.md#post-patientsidmedications), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete)
+- **Monitored by:** [Audit Log Growth](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Patient has Lisinopril on file.
 
 **Steps:**
@@ -551,7 +656,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-604: Medication confirmation — "confirmed none"
-**Traces to:** US-005
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: if the patient has no medications on file, they are prompted to confirm "no current medications"
+- **Tests:** [Screen 1.7 Medications — No medications state](../experience/screen-specs.md#17-check-in-review-screen--medications); [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete)
+- **Monitored by:** [Audit Log Growth](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Patient has no medications on file.
 
 **Steps:**
@@ -569,7 +677,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-605: Medication confirmation — immutability
-**Traces to:** US-005
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: confirmation is timestamped and stored as an auditable record (immutable)
+- **Tests:** [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records) (INSERT-only table, no UPDATEs, no DELETEs)
+- **Monitored by:** [Audit Log Growth](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** A medication confirmation record exists from a previous check-in.
 
 **Steps:**
@@ -583,7 +694,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-606: Medication step on mobile
-**Traces to:** US-005, US-007
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: applies to every visit (including mobile); [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: flow includes medication confirmation
+- **Tests:** [Screen 3.2 Mobile Review — Medications step](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications); [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (channel = mobile)
+- **Monitored by:** [Check-ins Today by channel](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Patient doing mobile check-in.
 
 **Steps:**
@@ -602,7 +716,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 7: Concurrent Edit Safety — BUG-003 Fix (Round 7)
 
 ### TC-701: Two receptionists — conflict detection
-**Traces to:** US-004, BUG-003
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: on save, if record has been modified since loaded, system blocks save and shows conflict notice with what changed and who changed it; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking, version mismatch blocks save with clear conflict message
+- **Tests:** [Screen 2.2 Patient Detail — conflict banner](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (409 version_conflict response), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+- **Monitored by:** [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+- **Regression for:** [BUG-003](bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+
 **Precondition:** Patient "Mrs. Rodriguez" exists (version 5). Two receptionist sessions open (Receptionist A and B).
 
 **Steps:**
@@ -624,7 +742,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-702: Conflict resolution — "View current version"
-**Traces to:** US-004, BUG-003
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: blocked user can review the current version and re-apply edits; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: user can refresh to see current version
+- **Tests:** [Screen 2.2 Patient Detail — "View current version" action](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [GET /patients/{id}](../architecture/api-spec.md#get-patientsid) (re-fetch latest)
+- **Monitored by:** [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+- **Regression for:** [BUG-003](bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+
 **Precondition:** Continuing from TC-701 where B's save was blocked.
 
 **Steps:**
@@ -639,7 +761,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-703: Conflict resolution — "Re-apply my changes"
-**Traces to:** US-004, BUG-003
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: blocked user can review the current version and re-apply edits; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: user can re-apply changes
+- **Tests:** [Screen 2.2 Patient Detail — "Re-apply my changes" action](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid)
+- **Monitored by:** [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+- **Regression for:** [BUG-003](bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+
 **Precondition:** Continuing from TC-701 where B's save was blocked.
 
 **Steps:**
@@ -655,7 +781,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-704: No conflict — normal save
-**Traces to:** US-004
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: no silent data loss — every save either succeeds atomically or fails with a clear explanation
+- **Tests:** [Screen 2.2 Patient Detail — normal save](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (200 success)
+- **Monitored by:** [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Only one receptionist has the patient record open.
 
 **Steps:**
@@ -672,7 +801,11 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-705: Concurrent edit — same field by two users
-**Traces to:** US-004, BUG-003
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: on save, if record modified since loaded, system blocks save; conflict notice shows what changed; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: no silent overwrites under any concurrency scenario
+- **Tests:** [Screen 2.2 Patient Detail — conflict banner](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (409), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+- **Monitored by:** [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+- **Regression for:** [BUG-003](bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+
 **Precondition:** Two receptionists both open the same patient (version 5).
 
 **Steps:**
@@ -690,7 +823,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 8: Insurance Card Photo Capture — OCR (Round 8)
 
 ### TC-801: Photo capture — happy path on kiosk
-**Traces to:** US-011
+- **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: camera capture at kiosk, patient guided to capture front/back, OCR extracts fields, extracted fields shown for review, low-confidence flagged
+- **Tests:** [Screen 1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [Screen 1.5a Photo Capture Overlay](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay); [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [GET /patients/{id}/insurance/{type}/photo/status/{processing_id}](../architecture/api-spec.md#get-patientsidinsurancetypephotostatusprocessing_id); [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract)
+- **Monitored by:** [OCR Processing Time](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration), [OCR Service Slow](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Patient is on the insurance review step. Kiosk camera is functional.
 
 **Steps:**
@@ -713,7 +849,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-802: Photo capture — OCR failure
-**Traces to:** US-011
+- **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: fallback — patient can manually enter fields if OCR fails
+- **Tests:** [Screen 1.5 Insurance — OCR failed state](../experience/screen-specs.md#15-check-in-review-screen--insurance); [GET /patients/{id}/insurance/{type}/photo/status/{processing_id}](../architecture/api-spec.md#get-patientsidinsurancetypephotostatusprocessing_id) (status: failed)
+- **Monitored by:** [OCR Service Slow](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [OCR results by quality](../operations/monitoring-alerting.md#ocr-service)
+
 **Precondition:** Use a deliberately unreadable image (blank card, badly blurred).
 
 **Steps:**
@@ -728,7 +867,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-803: Photo capture — camera permission denied
-**Traces to:** US-011
+- **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: fallback — patient can manually enter if camera unavailable
+- **Tests:** [Screen 1.5a Photo Capture — Camera permission denied state](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Browser/kiosk camera permission is denied.
 
 **Steps:**
@@ -743,7 +885,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-804: Photo capture on mobile
-**Traces to:** US-011, US-007
+- **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: camera capture available on mobile; [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: mobile web flow
+- **Tests:** [Screen 3.2 Mobile Review — Insurance photo capture](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications), [Screen 1.5a Photo Capture — mobile adaptation](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay); [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto)
+- **Monitored by:** [OCR Processing Time](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration), [Mobile Web uptime](../operations/monitoring-alerting.md#uptime-monitoring-external)
+
 **Precondition:** Patient is on mobile check-in, insurance step.
 
 **Steps:**
@@ -761,7 +906,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-805: Insurance card photos stored and accessible to staff
-**Traces to:** US-011
+- **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: original images are stored and accessible to staff for reference
+- **Tests:** [Screen 2.2 Patient Detail — insurance card photo thumbnail](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); [ADR-009](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) (presigned URLs, 15-min expiry)
+- **Monitored by:** [Service Down](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (S3 health check)
+
 **Precondition:** Patient completed photo capture during check-in.
 
 **Steps:**
@@ -779,7 +927,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 9: Performance — Peak Load (Round 9)
 
 ### TC-901: 50 concurrent kiosk check-ins — response time
-**Traces to:** US-006
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: system handles 50 concurrent sessions, p95 < 3s, no freezes or timeouts
+- **Tests:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (all under load); [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) (PgBouncer, read replicas, Redis cache)
+- **Monitored by:** [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Concurrent Sessions Warning](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [DB Pool Near Capacity](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Load test environment with 50 test patient identities and appointments. Load testing tool configured.
 
 **Steps:**
@@ -797,7 +948,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-902: Patient search performance under load
-**Traces to:** US-006
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: patient search returns results within 2 seconds under 50 concurrent sessions
+- **Tests:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (name_search), [Screen 1.9 Name Search](../experience/screen-specs.md#19-kiosk-name-search-screen); [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) (search optimization, trigram index, debounce)
+- **Monitored by:** [Patient Search Latency (p95)](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Cache Hit Rate](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Database has 10,000+ patient records. 30 concurrent users performing name searches.
 
 **Steps:**
@@ -813,7 +967,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-903: Dashboard stability during peak
-**Traces to:** US-006
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: receptionist dashboard updates within 5 seconds during peak, no freezes
+- **Tests:** [Screen 2.1 Dashboard](../experience/screen-specs.md#21-receptionist-dashboard--main-view), [Screen 5.1 Loading States](../experience/screen-specs.md#51-loading-states); [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id)
+- **Monitored by:** [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Concurrent Sessions Warning](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Precondition:** Receptionist dashboard connected. 30 patients checking in simultaneously.
 
 **Steps:**
@@ -830,7 +987,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-904: Degraded mode — slow backend
-**Traces to:** US-006
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: if a downstream service is slow, the UI shows a loading state — not a frozen screen
+- **Tests:** [Screen 5.2 Degraded Mode — Slow Backend](../experience/screen-specs.md#52-degraded-mode--slow-backend), [Screen 5.4 Skeleton Screens](../experience/screen-specs.md#54-skeleton-screens)
+- **Monitored by:** [p95 Response Time Critical](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Error Rate Critical](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+
 **Precondition:** Artificially slow the backend to > 3 seconds per response.
 
 **Steps:**
@@ -847,7 +1007,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-905: Degraded mode — backend unreachable
-**Traces to:** US-006
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: if a downstream service is slow/unavailable, the UI shows a loading state — not a frozen screen
+- **Tests:** [Screen 5.3 Degraded Mode — Backend Unreachable](../experience/screen-specs.md#53-degraded-mode--backend-unreachable)
+- **Monitored by:** [Service Down](../operations/monitoring-alerting.md#p0----page-immediately-any-time), [Database Unreachable](../operations/monitoring-alerting.md#p0----page-immediately-any-time), [Error Rate Critical](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+
 **Precondition:** Backend is completely down.
 
 **Steps:**
@@ -865,7 +1028,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 10: Riverside Data Migration (Round 10)
 
 ### TC-1001: EMR import — valid records
-**Traces to:** US-012
+- **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: electronic records mapped and imported, migration report shows counts
+- **Tests:** [POST /migration/batches/{batch_id}/import](../architecture/api-spec.md#post-migrationbatchesbatch_idimport), [GET /migration/batches/{batch_id}](../architecture/api-spec.md#get-migrationbatchesbatch_id), [Screen 4.1 Migration Dashboard](../experience/screen-specs.md#41-admin--migration-dashboard); [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback)
+- **Monitored by:** [Migration Dashboard — Records Processed](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration), [Migration Import Errors](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+
 **Precondition:** Batch of 100 test Riverside EMR records in their schema format. All records have valid required fields.
 
 **Steps:**
@@ -882,7 +1048,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1002: EMR import — validation failures
-**Traces to:** US-012
+- **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: each migrated record is validated — missing required fields are flagged for manual review
+- **Tests:** [POST /migration/batches/{batch_id}/import](../architecture/api-spec.md#post-migrationbatchesbatch_idimport), [GET /migration/records](../architecture/api-spec.md#get-migrationrecords) (status filter: import_error); [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) (Stage 2: Validation)
+- **Monitored by:** [Migration Import Errors](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [Migration Dashboard — Import Error Rate](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Batch includes records with missing required fields (e.g., no DOB, no last name).
 
 **Steps:**
@@ -898,7 +1067,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1003: Duplicate detection — exact match
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: matching algorithm checks full name + DOB, phone; potential duplicates surfaced with confidence score
+- **Tests:** [GET /migration/duplicates/{id}](../architecture/api-spec.md#get-migrationduplicatesid) (confidence_score, match_reasons); [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration) (scoring algorithm)
+- **Monitored by:** [Duplicates Found](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Existing patient "Sarah M. Johnson, DOB 03/15/1982, phone 555-867-5309". Riverside record: "Sarah Johnson, DOB 03/15/1982, phone 555-867-5309".
 
 **Steps:**
@@ -914,7 +1086,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1004: Duplicate detection — no match
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: matching algorithm; no false matches for unrelated records
+- **Tests:** [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration) (scoring below threshold)
+- **Monitored by:** [Migration Dashboard — Records Processed](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Riverside record for a patient who does NOT exist in our system.
 
 **Steps:**
@@ -928,7 +1103,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1005: Staff merge review — field-level merge
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: staff can confirm merge, on merge most recent data wins by default but staff can choose field-by-field, merge history is auditable
+- **Tests:** [Screen 4.2 Duplicate Review](../experience/screen-specs.md#42-admin--duplicate-review-screen); [POST /migration/duplicates/{id}/resolve](../architecture/api-spec.md#post-migrationduplicatesidresolve) (resolution: merged, merge_decisions)
+- **Monitored by:** [Duplicates Resolved](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration), [Queue Depth (staff review)](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** A duplicate candidate exists: our record vs. Riverside record with differing insurance and middle name.
 
 **Steps:**
@@ -950,7 +1128,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1006: Staff review — keep separate
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: staff can reject (keep separate)
+- **Tests:** [Screen 4.2 Duplicate Review — "Keep separate" action](../experience/screen-specs.md#42-admin--duplicate-review-screen); [POST /migration/duplicates/{id}/resolve](../architecture/api-spec.md#post-migrationduplicatesidresolve) (resolution: kept_separate)
+- **Monitored by:** [Duplicates Resolved](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Two records flagged as potential duplicates but are actually different people.
 
 **Steps:**
@@ -966,7 +1147,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1007: Migration rollback
-**Traces to:** US-012
+- **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: migration is reversible (implied by migration report and pipeline)
+- **Tests:** [POST /migration/batches/{batch_id}/rollback](../architecture/api-spec.md#post-migrationbatchesbatch_idrollback); [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) (rollback mechanism)
+- **Monitored by:** [Migration Dashboard — Batch Status](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** A batch of 100 records was imported, including 5 that were merged with existing patients.
 
 **Steps:**
@@ -985,7 +1169,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1008: First visit after migration — patient confirmation
-**Traces to:** US-012
+- **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: each migrated record is validated, migration report (patient sees migration notice on first visit)
+- **Tests:** [Screen 1.4 Demographics — migration notice banner](../experience/screen-specs.md#14-check-in-review-screen--demographics); [GET /patients/{id}](../architecture/api-spec.md#get-patientsid) (patient_confirmed, migration_source, data_confidence fields)
+- **Monitored by:** [Check-ins Today by location](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Precondition:** Riverside patient "Maria Garcia" was imported (patient_confirmed = FALSE). She visits the clinic for the first time.
 
 **Steps:**
@@ -1004,7 +1191,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1009: Paper record OCR pipeline
-**Traces to:** US-012
+- **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: paper records are digitized and entered (with defined pipeline)
+- **Tests:** [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) (paper record OCR pipeline), [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records)
+- **Monitored by:** [OCR Processing Time](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration), [OCR results by quality](../operations/monitoring-alerting.md#ocr-service)
+
 **Precondition:** Scanned paper record PDF uploaded to object storage.
 
 **Steps:**
@@ -1022,7 +1212,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1010: Duplicate detection — near miss (below threshold)
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: matching algorithm checks phone number (but phone alone is insufficient)
+- **Tests:** [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration) (phone-only score = 0.20, below 0.40 threshold)
+- **Monitored by:** [Duplicates Found](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Riverside record with same phone as existing patient but different name and DOB.
 
 **Steps:**
@@ -1038,7 +1231,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1011: No auto-merge verification
-**Traces to:** US-013
+- **Proves:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) AC: no automatic merges without staff confirmation
+- **Tests:** [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration) (no auto-merge regardless of confidence); [Screen 4.2 Duplicate Review](../experience/screen-specs.md#42-admin--duplicate-review-screen) (staff confirmation required)
+- **Monitored by:** [Duplicates Found vs Duplicates Resolved](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Precondition:** Import a batch with high-confidence duplicates (score > 0.95).
 
 **Steps:**
@@ -1055,6 +1251,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 11: Accessibility
 
 ### TC-1101: Kiosk screen reader compatibility
+- **Proves:** Accessibility requirements (WCAG compliance, implicit in all user stories)
+- **Tests:** [Screen 1.1-1.9 Kiosk screens](../experience/screen-specs.md#1-kiosk-check-in-screens) (ARIA labels, aria-live, focus management)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours) (accessibility failures may cause interaction errors)
+
 **Precondition:** Screen reader enabled on kiosk.
 
 **Steps:**
@@ -1071,6 +1271,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1102: Touch target sizes
+- **Proves:** Accessibility requirements (touch target sizing per WCAG 2.5.5)
+- **Tests:** [Screen 1.1-1.9 Kiosk screens](../experience/screen-specs.md#1-kiosk-check-in-screens), [Screen 3.1-3.3 Mobile screens](../experience/screen-specs.md#3-mobile-check-in-screens)
+- **Monitored by:** N/A (design-time verification)
+
 **Precondition:** Kiosk and mobile devices.
 
 **Steps:**
@@ -1084,6 +1288,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1103: Color-independent status indication
+- **Proves:** Accessibility requirements (color independence per WCAG 1.4.1)
+- **Tests:** [Screen 2.1 Dashboard — status badges](../experience/screen-specs.md#21-receptionist-dashboard--main-view)
+- **Monitored by:** N/A (design-time verification)
+
 **Precondition:** Receptionist dashboard.
 
 **Steps:**
@@ -1100,6 +1308,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 12: API Contract Verification
 
 ### TC-1201: PATCH /patients/{id} — version required
+- **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: optimistic locking, record version checked on save; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking
+- **Tests:** [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (400/422 without version, 409 with wrong version); [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Steps:**
 1. Send PATCH request without version field
 2. Send PATCH request with incorrect version
@@ -1111,6 +1323,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1202: POST /checkins/{id}/complete — medication confirmation required
+- **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: medication list is mandatory step
+- **Tests:** [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (400/422 without medication_confirmation); [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records)
+- **Monitored by:** [Error Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Steps:**
 1. Send complete request without `medication_confirmation` field
 
@@ -1120,6 +1336,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1203: Rate limiting on patient search
+- **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: system handles 50 concurrent sessions without degradation
+- **Tests:** [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (429 rate limited response)
+- **Monitored by:** [p95 Response Time](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Concurrent Sessions Warning](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 **Steps:**
 1. Send 100 search requests in rapid succession from one client
 
@@ -1130,6 +1350,10 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ---
 
 ### TC-1204: Mobile token expiry enforcement
+- **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: check-in valid starting 24 hours before appointment time
+- **Tests:** [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity) (410 Gone, 409 already_checked_in); [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus)
+- **Monitored by:** [Mobile Web uptime](../operations/monitoring-alerting.md#uptime-monitoring-external)
+
 **Steps:**
 1. Use a token for an appointment that already passed
 2. Use a token that was already used to complete check-in

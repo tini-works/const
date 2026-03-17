@@ -133,6 +133,9 @@ CREATE TABLE kiosks (
 
 ### staff
 
+> **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue) (staff permissions), [Authentication](api-spec.md#authentication)
+> **Stories:** [US-010](../product/user-stories.md#us-010-location-aware-check-in) (staff location assignments)
+
 ```sql
 CREATE TABLE staff (
     id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),

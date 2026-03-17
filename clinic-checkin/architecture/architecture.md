@@ -122,6 +122,12 @@ If WebSocket delivery fails, the notification service retries via polling endpoi
 
 A separate service for the Riverside acquisition data migration. Not part of the runtime check-in path.
 
+> **Implements:** [E5](../product/epics.md#e5-riverside-practice-acquisition), [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge)
+> **Tech design:** [Migration Pipeline](tech-design-migration-pipeline.md)
+> **ADRs:** [ADR-008](adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [ADR-010](adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback)
+> **API:** [Section 9 Migration](api-spec.md#9-migration-round-10)
+> **Monitored by:** [Migration Dashboard](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+
 **Responsibilities:**
 - EMR schema mapping and import (Riverside EMR -> our data model)
 - Paper record OCR pipeline (scan -> extract -> validate)
@@ -135,6 +141,11 @@ A separate service for the Riverside acquisition data migration. Not part of the
 ### OCR Service (Round 8)
 
 Handles insurance card image processing.
+
+> **Implements:** [E4](../product/epics.md#e4-insurance-card-photo-capture), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card)
+> **Tech design:** [OCR Pipeline](tech-design-ocr-pipeline.md)
+> **ADR:** [ADR-006](adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract)
+> **Monitored by:** [OCR Service metrics](../operations/monitoring-alerting.md#ocr-service)
 
 **Responsibilities:**
 - Receive card images (front and back)
