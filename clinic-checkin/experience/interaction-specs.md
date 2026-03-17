@@ -274,6 +274,11 @@ This pattern is used because inline expansion doesn't work well on small screens
 
 ## 4. Error Handling (Cross-Cutting)
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) |
+| Proven by | [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+
 ### 4.1 Network Errors
 
 | Context | Behavior |
@@ -320,6 +325,11 @@ Fields validate on blur (when the user moves to the next field) and on submit. N
 ---
 
 ## 5. Performance-Related Interactions (Round 9)
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Proven by | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak) |
 
 ### 5.1 Search Debouncing
 

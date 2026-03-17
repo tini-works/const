@@ -4,6 +4,8 @@
 
 A clinic check-in system serving patients (via kiosk and mobile web), receptionists (via dashboard), and administrators (via admin panel). Integrates with existing HIS (Hospital Information System) for medication data and, in later phases, with external EMR systems for data migration.
 
+**Traceability:** This document is the top-level technical reference. It implements all epics ([E1](../product/epics.md#e1-returning-patient-recognition)–[E6](../product/epics.md#e6-compliance--medication-list-at-check-in)). For detailed links, see individual [ADRs](adrs.md), [API spec](api-spec.md), [data model](data-model.md), and tech design documents in this directory.
+
 ---
 
 ## High-Level Architecture
@@ -71,6 +73,10 @@ A clinic check-in system serving patients (via kiosk and mobile web), receptioni
 
 The primary backend service. Handles all patient-facing and staff-facing operations.
 
+> **Implements:** [E1](../product/epics.md#e1-returning-patient-recognition), [E2](../product/epics.md#e2-mobile-check-in), [E3](../product/epics.md#e3-multi-location-support), [E4](../product/epics.md#e4-insurance-card-photo-capture), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
+> **API:** Sections [1–8 of the API spec](api-spec.md)
+> **Monitored by:** [Operations Overview Dashboard](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard), [Check-In Flow Dashboard](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Responsibilities:**
 - Patient identification (card scan lookup, name search)
 - Patient record CRUD with optimistic locking (version field)
@@ -90,6 +96,11 @@ The primary backend service. Handles all patient-facing and staff-facing operati
 ### Notification Service
 
 Decoupled from the check-in service to avoid blocking the check-in flow on notification delivery.
+
+> **Implements:** [BUG-001 fix](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [US-007 mobile link delivery](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
+> **ADR:** [ADR-001](adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates)
+> **API:** [Section 8 Real-Time Updates](api-spec.md#8-real-time-updates), [Section 6 Mobile Check-In Links](api-spec.md#6-mobile-check-in-links)
+> **Monitored by:** [Notification Service metrics](../operations/monitoring-alerting.md#notification-service)
 
 **Responsibilities:**
 - Real-time push to receptionist dashboard (WebSocket with polling fallback — ADR-001)

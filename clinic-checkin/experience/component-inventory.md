@@ -6,6 +6,11 @@ Reusable UI components across all surfaces (kiosk, mobile, receptionist dashboar
 
 ## 1. Status Badges
 
+| Trace | Link |
+|-------|------|
+| Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) |
+| Proven by | [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push), [TC-1103](../quality/test-suites.md#tc-1103-color-independent-status-indication) |
+
 Used on the receptionist dashboard and patient detail panels to communicate check-in state.
 
 | Variant | Label | Background | Text/Icon Color | Icon | Usage |
