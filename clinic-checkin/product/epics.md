@@ -21,6 +21,15 @@
 
 **Performance requirement:** System must handle 30+ concurrent check-ins during peak hours without degradation (Round 9).
 
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-001](user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-003](user-stories.md#us-003-secure-patient-identification-on-scan), [US-004](user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [US-005](user-stories.md#us-005-medication-list-confirmation-at-check-in), [US-006](user-stories.md#us-006-peak-hour-check-in-performance) |
+| Bug Stories | [BUG-001](user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [BUG-002](user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [BUG-003](user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) |
+| Decisions | [DEC-001](decision-log.md#dec-001-bug-002-elevated-to-p0-blocks-all-e1-feature-work), [DEC-002](decision-log.md#dec-002-medication-confirmation-is-mandatory-in-the-check-in-flow-not-optional), [DEC-003](decision-log.md#dec-003-optimistic-concurrency-control-for-patient-records), [DEC-007](decision-log.md#dec-007-performance-target--50-concurrent-sessions-p95-under-3-seconds) |
+| Architecture | [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) |
+
 ---
 
 ## E2: Mobile Check-In
@@ -38,6 +47,16 @@
 **Dependencies:** E1 (returning patient data must exist), E4 (medication confirmation mandate applies to mobile too).
 
 **See:** [PRD — Mobile Check-In](prd-mobile-checkin.md)
+
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-007](user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008](user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) |
+| PRD | [PRD: Mobile Check-In](prd-mobile-checkin.md) |
+| Decisions | [DEC-004](decision-log.md#dec-004-mobile-check-in-via-mobile-web-not-native-app) |
+| Screens | [3.1 Mobile Landing](../experience/screen-specs.md#31-mobile--link-landing--identity-verification), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications), [3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen) |
+| Flows | [Flow 6: Mobile Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path), [Flow 7: Partial Completion](../experience/user-flows.md#7-mobile-check-in--partial-completion), [Flow 8: Duplicate Prevention](../experience/user-flows.md#8-mobile-check-in--kiosk-arrival-duplicate-prevention) |
 
 ---
 
@@ -57,6 +76,16 @@
 
 **See:** [PRD — Multi-Location Support](prd-multi-location.md)
 
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-009](user-stories.md#us-009-cross-location-patient-record-access), [US-010](user-stories.md#us-010-location-aware-check-in) |
+| PRD | [PRD: Multi-Location Support](prd-multi-location.md) |
+| Decisions | [DEC-005](decision-log.md#dec-005-centralized-patient-record-for-multi-location-not-syncreplicate) |
+| Architecture | [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication) |
+| Flows | [Flow 11: Multi-Location Check-In](../experience/user-flows.md#11-multi-location-check-in), [Flow 12: Mobile Multi-Location](../experience/user-flows.md#12-mobile-check-in--multi-location) |
+
 ---
 
 ## E4: Insurance Card Photo Capture
@@ -72,6 +101,15 @@
 - Stored image available for staff reference
 
 **Dependencies:** E2 (mobile flow needs this too), E1 (insurance data storage).
+
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-011](user-stories.md#us-011-photo-capture-of-insurance-card) |
+| Architecture | [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) |
+| Screens | [1.5a Photo Capture Overlay](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay) |
+| Flows | [Flow 9: Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture) |
 
 ---
 
@@ -92,6 +130,17 @@
 
 **See:** [PRD — Riverside Acquisition Migration](prd-riverside-acquisition.md)
 
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-012](user-stories.md#us-012-patient-data-migration-from-riverside), [US-013](user-stories.md#us-013-duplicate-patient-detection-and-merge) |
+| PRD | [PRD: Riverside Acquisition](prd-riverside-acquisition.md) |
+| Decisions | [DEC-006](decision-log.md#dec-006-duplicate-detection-requires-staff-confirmation--no-auto-merge), [DEC-008](decision-log.md#dec-008-riverside-paper-records--digitization-pipeline-not-bulk-data-entry) |
+| Architecture | [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [ADR-009](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records), [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) |
+| Screens | [4.1 Migration Dashboard](../experience/screen-specs.md#41-admin--migration-dashboard), [4.2 Duplicate Review](../experience/screen-specs.md#42-admin--duplicate-review-screen) |
+| Flows | [Flow 13: First Visit After Migration](../experience/user-flows.md#13-riverside-migration--first-visit-after-migration), [Flow 14: Duplicate Detection — Staff Review](../experience/user-flows.md#14-duplicate-detection--staff-review-riverside) |
+
 ---
 
 ## E6: Compliance — Medication List at Check-In
@@ -109,3 +158,14 @@
 **Dependencies:** E1 (check-in flow), E2 (mobile check-in must include this).
 
 **Deadline:** Hard — must be live before Q3 license renewal period.
+
+**Traceability:**
+
+| Link type | References |
+|-----------|------------|
+| User Stories | [US-005](user-stories.md#us-005-medication-list-confirmation-at-check-in) |
+| Decisions | [DEC-002](decision-log.md#dec-002-medication-confirmation-is-mandatory-in-the-check-in-flow-not-optional) |
+| Architecture | [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records) |
+| Screens | [1.7 Medications Review](../experience/screen-specs.md#17-check-in-review-screen--medications) |
+| Flows | [Flow 1 Step 4](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), [Flow 6 Step 4](../experience/user-flows.md#6-mobile-check-in--happy-path) |
+| Tests | [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip) through [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile) |

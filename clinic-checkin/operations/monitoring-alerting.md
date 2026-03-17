@@ -3,6 +3,28 @@
 Last updated: 2026-03-17
 Owner: DevOps
 
+### Traceability — Operations as Last Line of Proof
+
+Every monitor exists to watch an architecture component, prove a product requirement is met in production, or detect a quality failure at runtime. This section maps the full chain.
+
+| Alert / Monitor | Watches (architecture) | Proves (product) | Detects (quality) |
+|-----------------|----------------------|-------------------|-------------------|
+| **Service Down** | [Check-In Service](../architecture/architecture.md#check-in-service-core) | [US-006 peak-hour performance](../product/user-stories.md#us-006-peak-hour-check-in-performance) — system uptime | [TC-905 backend unreachable](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) in production |
+| **Database Unreachable** | [PostgreSQL Primary](../architecture/architecture.md#database) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — system availability | [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+| **Error Rate Critical** | All [API endpoints](../architecture/api-spec.md) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — p95 under 3s, no freezes | [TC-901 50 concurrent check-ins](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time) failing in prod |
+| **Data Leak Detected** | [Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) | [US-003 secure identification](../product/user-stories.md#us-003-secure-patient-identification-on-scan) — no PHI leakage | [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage)–[TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) session isolation failure in prod |
+| **Read Replica Lag** | [Read Replica](../architecture/architecture.md#database), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — dashboard data freshness | [TC-903 dashboard stability](../quality/test-suites.md#tc-903-dashboard-stability-during-peak) |
+| **p95 Response Time** | All [API endpoints](../architecture/api-spec.md), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — p95 < 3s | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902 search perf](../quality/test-suites.md#tc-902-patient-search-performance-under-load) |
+| **Concurrent Sessions Warning** | [Check-In Service scaling](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — 50 concurrent target | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time) |
+| **DB Pool Near Capacity** | [PgBouncer](../architecture/architecture.md#connection-pooling-round-9), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — no timeouts | [TC-904 degraded mode](../quality/test-suites.md#tc-904-degraded-mode--slow-backend) |
+| **Sync Failure Rate High** | [Notification Service](../architecture/architecture.md#notification-service), [WebSocket /ws/dashboard](../architecture/api-spec.md#websocket-wsdashboardlocation_id) | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — data within 5s | [TC-202 sync timeout](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203 sync failure](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry) |
+| **WebSocket Connections High** | [Notification Service](../architecture/architecture.md#notification-service), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates) | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — real-time updates | [TC-204 WebSocket push](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push) |
+| **Cache Hit Rate Low** | [Redis cache](../architecture/architecture.md#caching-round-9), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — search < 2s | [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load) |
+| **OCR Service Slow** | [OCR Service](../architecture/architecture.md#ocr-service-round-8), [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract) | [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) — OCR extraction | [TC-801 OCR happy path](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802 OCR failure](../quality/test-suites.md#tc-802-photo-capture--ocr-failure) |
+| **Migration Import Errors** | [Migration Service](../architecture/architecture.md#migration-service-round-10), [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) | [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) — import quality | [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures) |
+
+**Runbook links:** Each P0/P1 alert fires a runbook — see [Alert Rules](#alert-rules) below for runbook references, and the [runbooks index](#runbooks) for triggered-by / caused-by / fixed-by links.
+
 ---
 
 ## Monitoring Stack
@@ -96,11 +118,11 @@ These alerts page the on-call engineer. Response expected within 15 minutes.
 
 | Alert | Condition | Duration | Action |
 |-------|-----------|----------|--------|
-| **Service Down** | `up{job="checkin"} == 0` | 1 min | Page on-call. See [Runbook: Service Outage](./runbook-service-outage.md) |
-| **Database Unreachable** | `pg_up == 0` | 30 sec | Page on-call. See [Runbook: Database Failure](./runbook-database-failure.md) |
-| **Error Rate Critical** | HTTP 5xx rate > 5% | 2 min | Page on-call. Likely deploy issue or downstream failure |
-| **Data Leak Detected** | `security_session_isolation_failure > 0` | Immediate | Page on-call + security lead. See [Runbook: Data Leak](./runbook-data-leak.md) |
-| **Read Replica Lag Critical** | `pg_replication_lag_seconds > 10` | 1 min | Page on-call. Dashboard showing stale data |
+| **Service Down** | `up{job="checkin"} == 0` | 1 min | Page on-call. See [Runbook: Service Outage](./runbook-service-outage.md). **Watches:** [Check-In Service](../architecture/architecture.md#check-in-service-core). **Proves:** [US-006 uptime](../product/user-stories.md#us-006-peak-hour-check-in-performance). |
+| **Database Unreachable** | `pg_up == 0` | 30 sec | Page on-call. See [Runbook: Database Failure](./runbook-database-failure.md). **Watches:** [PostgreSQL](../architecture/architecture.md#database). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance). |
+| **Error Rate Critical** | HTTP 5xx rate > 5% | 2 min | Page on-call. Likely deploy issue or downstream failure. **Watches:** all [API endpoints](../architecture/api-spec.md). **Detects:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time) threshold breach. |
+| **Data Leak Detected** | `security_session_isolation_failure > 0` | Immediate | Page on-call + security lead. See [Runbook: Data Leak](./runbook-data-leak.md). **Watches:** [ADR-002 Session Purge](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation). **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan). **Detects:** [TC-301–TC-305](../quality/test-suites.md#suite-3-session-isolation--bug-002-fix-round-4) failure in prod. **Caused by:** [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan). |
+| **Read Replica Lag Critical** | `pg_replication_lag_seconds > 10` | 1 min | Page on-call. Dashboard showing stale data. **Watches:** [Read Replica](../architecture/architecture.md#database), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions). **Proves:** [US-002 data freshness](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data). |
 
 ### P1 -- Notify During Business Hours
 
@@ -108,14 +130,14 @@ Alert via Slack #ops-alerts. Response expected within 1 hour during business hou
 
 | Alert | Condition | Duration |
 |-------|-----------|----------|
-| **p95 Response Time Warning** | > 2 seconds (any endpoint) | 5 min |
-| **p95 Response Time Critical** | > 3 seconds (any endpoint) | 2 min |
-| **Concurrent Sessions Warning** | > 40 active sessions | 5 min |
-| **DB Pool Near Capacity** | PgBouncer utilization > 80% | 5 min |
-| **Read Replica Lag Warning** | > 2 seconds | 2 min |
-| **WebSocket Connections High** | > 15 per location | 5 min |
-| **Sync Failure Rate High** | Sync timeout rate > 10% of check-ins | 10 min |
-| **Error Rate Warning** | HTTP 5xx rate > 1% | 5 min |
+| **p95 Response Time Warning** | > 2 seconds (any endpoint) | 5 min | **Watches:** [API endpoints](../architecture/api-spec.md), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) p95 < 3s. **Detects:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load). **Runbook:** [Peak Load](./runbook-peak-load.md). |
+| **p95 Response Time Critical** | > 3 seconds (any endpoint) | 2 min | Same traceability as above. |
+| **Concurrent Sessions Warning** | > 40 active sessions | 5 min | **Watches:** [Check-In Service](../architecture/architecture.md#check-in-service-core). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) 50-session target. **Detects:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time). **Runbook:** [Peak Load](./runbook-peak-load.md). |
+| **DB Pool Near Capacity** | PgBouncer utilization > 80% | 5 min | **Watches:** [PgBouncer](../architecture/architecture.md#connection-pooling-round-9), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance). **Runbook:** [Peak Load](./runbook-peak-load.md). |
+| **Read Replica Lag Warning** | > 2 seconds | 2 min | **Watches:** [Read Replica, ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions). **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) dashboard freshness. |
+| **WebSocket Connections High** | > 15 per location | 5 min | **Watches:** [Notification Service](../architecture/architecture.md#notification-service), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates). **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data). **Detects:** [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push). |
+| **Sync Failure Rate High** | Sync timeout rate > 10% of check-ins | 10 min | **Watches:** [Notification Service](../architecture/architecture.md#notification-service), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete). **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) within 5s. **Detects:** [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk). **Caused by:** [BUG-001](../quality/bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing). **Runbook:** [Sync Failure](./runbook-sync-failure.md). |
+| **Error Rate Warning** | HTTP 5xx rate > 1% | 5 min | **Watches:** all [API endpoints](../architecture/api-spec.md). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance). |
 
 ### P2 -- Investigate During Next Business Day
 
@@ -123,14 +145,14 @@ Alert via Slack #ops-alerts. No pager.
 
 | Alert | Condition | Duration |
 |-------|-----------|----------|
-| **Cache Hit Rate Low** | Redis hit rate < 50% | 30 min |
-| **Redis Memory High** | > 80% of max memory | 30 min |
-| **DB Storage High** | > 70% of allocated storage | N/A (daily check) |
-| **Certificate Expiry** | TLS cert expires within 14 days | N/A (daily check) |
-| **Dead Tuples High** | > 100,000 dead tuples on patients table | N/A (daily check) |
-| **Audit Log Growth** | > 1 GB/day growth | N/A (daily check) |
-| **OCR Service Slow** | OCR processing time p95 > 10 seconds | 15 min |
-| **Migration Import Errors** | > 5% error rate in active batch | 10 min |
+| **Cache Hit Rate Low** | Redis hit rate < 50% | 30 min | **Watches:** [Redis cache](../architecture/architecture.md#caching-round-9), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) search < 2s. **Detects:** [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load) degradation. |
+| **Redis Memory High** | > 80% of max memory | 30 min | **Watches:** [Redis](../architecture/architecture.md#caching-round-9). |
+| **DB Storage High** | > 70% of allocated storage | N/A (daily check) | **Watches:** [PostgreSQL](../architecture/architecture.md#database). |
+| **Certificate Expiry** | TLS cert expires within 14 days | N/A (daily check) | **Watches:** [TLS termination](../architecture/architecture.md#security). |
+| **Dead Tuples High** | > 100,000 dead tuples on patients table | N/A (daily check) | **Watches:** [PostgreSQL](../architecture/architecture.md#database). **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) query performance. |
+| **Audit Log Growth** | > 1 GB/day growth | N/A (daily check) | **Watches:** audit_log table per [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records). **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) compliance audit trail. |
+| **OCR Service Slow** | OCR processing time p95 > 10 seconds | 15 min | **Watches:** [OCR Service](../architecture/architecture.md#ocr-service-round-8), [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract). **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card). **Detects:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk) degradation. **Runbook:** [Import Failure — OCR section](./runbook-import-failure.md#type-2-ocr-extraction-failures-paper-records). |
+| **Migration Import Errors** | > 5% error rate in active batch | 10 min | **Watches:** [Migration Service](../architecture/architecture.md#migration-service-round-10), [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback). **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside). **Detects:** [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures). **Runbook:** [Import Failure](./runbook-import-failure.md). |
 
 ---
 

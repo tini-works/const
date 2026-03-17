@@ -3,6 +3,19 @@
 Last updated: 2026-03-17
 Owner: DevOps
 
+### Traceability
+
+| Deployed Service | Architecture Reference | Infrastructure |
+|-----------------|----------------------|----------------|
+| Check-In Service | [architecture.md — Check-In Service](../architecture/architecture.md#check-in-service-core) | [infrastructure.md — Check-In Service](./infrastructure.md#check-in-service-core) |
+| Notification Service | [architecture.md — Notification Service](../architecture/architecture.md#notification-service) | [infrastructure.md — Notification Service](./infrastructure.md#notification-service) |
+| Migration Service | [architecture.md — Migration Service](../architecture/architecture.md#migration-service-round-10) | [infrastructure.md — Migration Service](./infrastructure.md#migration-service) |
+| OCR Service | [architecture.md — OCR Service](../architecture/architecture.md#ocr-service-round-8) | [infrastructure.md — OCR Service](./infrastructure.md#ocr-service) |
+| Database migrations | [Data Model](../architecture/data-model.md) | [infrastructure.md — PostgreSQL](./infrastructure.md#database--postgresql) |
+| Frontend SPAs | [Architecture — Clients](../architecture/architecture.md#system-context) | [infrastructure.md — Kiosks](./infrastructure.md#kiosks-per-location) |
+| **Post-deploy monitoring:** | [monitoring-alerting.md](./monitoring-alerting.md) — error rate auto-rollback ties to [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) |
+| **Hotfix process references:** | [BUG-002 class](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) for P0 deploy procedure |
+
 ---
 
 ## CI/CD Pipeline

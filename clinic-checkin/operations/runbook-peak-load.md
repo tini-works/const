@@ -3,6 +3,17 @@
 **Severity:** P1 during clinic hours, P2 otherwise
 **Impact:** Slow kiosk response, search hangs, dashboard updates delayed. Patients may leave the clinic.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by:** | Alert: [p95 Response Time Warning/Critical](./monitoring-alerting.md#p1----notify-during-business-hours), Alert: [Concurrent Sessions > 40](./monitoring-alerting.md#p1----notify-during-business-hours), Alert: [DB Pool Near Capacity](./monitoring-alerting.md#p1----notify-during-business-hours), Alert: [Cache Hit Rate Low](./monitoring-alerting.md#p2----investigate-during-next-business-day) |
+| **Caused by:** | Performance bottlenecks documented in [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) root cause analysis: DB connection exhaustion, unoptimized search, dashboard broadcast storms |
+| **Fixed by:** | [ADR-007: Scaling Strategy](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) — PgBouncer, read replicas, Redis cache, search optimization |
+| **Watches:** | [Check-In Service](../architecture/architecture.md#check-in-service-core), [PgBouncer](../architecture/architecture.md#connection-pooling-round-9), [Redis](../architecture/architecture.md#caching-round-9), [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) |
+| **Proves:** | [US-006: Peak-hour performance](../product/user-stories.md#us-006-peak-hour-check-in-performance) — 50 concurrent sessions, p95 < 3s, search < 2s |
+| **Detects:** | [TC-901: 50 concurrent check-ins](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902: Search under load](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903: Dashboard stability](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904: Degraded mode](../quality/test-suites.md#tc-904-degraded-mode--slow-backend) failing in production |
+
 ---
 
 ## Detection

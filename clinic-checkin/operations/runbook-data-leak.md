@@ -5,6 +5,17 @@
 
 This runbook covers any incident where one patient's PHI is exposed to another patient, unauthorized staff member, or external party. This includes BUG-002-class issues (kiosk session isolation failure) and any other unauthorized data exposure.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by:** | Alert: [Data Leak Detected](./monitoring-alerting.md#p0----page-immediately-any-time) (`security_session_isolation_failure > 0`) |
+| **Caused by:** | [BUG-002: Previous patient's data visible on kiosk](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) — the original P0 incident |
+| **Fixed by:** | [ADR-002: Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) — three-layer defense-in-depth |
+| **Watches:** | [Check-In Service session isolation](../architecture/architecture.md#check-in-service-core), [Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) |
+| **Proves:** | [US-003: Secure patient identification on scan](../product/user-stories.md#us-003-secure-patient-identification-on-scan) — no PHI leakage between sessions |
+| **Detects:** | [TC-301: Sequential patients no leakage](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302: Rapid scans](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303: Sub-second timing](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304: DOM inspection](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305: Back button](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) — any of these failing in production |
+
 ---
 
 ## Detection

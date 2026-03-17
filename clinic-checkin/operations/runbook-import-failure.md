@@ -3,6 +3,17 @@
 **Severity:** P2 (does not affect live check-in operations)
 **Impact:** Riverside patient records are not imported, staff review queue stalls, migration timeline slips.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by:** | Alert: [Migration Import Errors > 5%](./monitoring-alerting.md#p2----investigate-during-next-business-day), Alert: [OCR Service Slow](./monitoring-alerting.md#p2----investigate-during-next-business-day) |
+| **Caused by:** | No single bug — operational runbook for the [Riverside migration pipeline](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) |
+| **Fixed by:** | [ADR-010: Migration Pipeline (batch import with rollback)](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback), [ADR-008: Duplicate Detection Algorithm](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [ADR-006: OCR Service](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract) |
+| **Watches:** | [Migration Service](../architecture/architecture.md#migration-service-round-10), [OCR Service](../architecture/architecture.md#ocr-service-round-8), [Migration API endpoints](../architecture/api-spec.md#9-migration-round-10) |
+| **Proves:** | [US-012: Patient data migration](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013: Duplicate detection and merge](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) |
+| **Detects:** | [TC-1001: Valid import](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002: Validation failures](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1003: Duplicate detection](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1007: Rollback](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1009: OCR pipeline](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline) failing in production |
+
 ---
 
 ## Detection

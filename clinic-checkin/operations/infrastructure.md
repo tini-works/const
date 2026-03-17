@@ -3,6 +3,21 @@
 Last updated: 2026-03-17
 Owner: DevOps
 
+### Traceability
+
+| Component | Architecture Reference |
+|-----------|----------------------|
+| Check-In Service | [architecture.md — Check-In Service](../architecture/architecture.md#check-in-service-core) |
+| Notification Service | [architecture.md — Notification Service](../architecture/architecture.md#notification-service) |
+| Migration Service | [architecture.md — Migration Service](../architecture/architecture.md#migration-service-round-10) |
+| OCR Service | [architecture.md — OCR Service](../architecture/architecture.md#ocr-service-round-8) |
+| PostgreSQL | [architecture.md — Database](../architecture/architecture.md#database), [data-model.md](../architecture/data-model.md) |
+| Redis | [architecture.md — Caching](../architecture/architecture.md#caching-round-9) |
+| S3 Object Storage | [architecture.md — Object Storage](../architecture/architecture.md#object-storage) |
+| PgBouncer | [architecture.md — Connection Pooling](../architecture/architecture.md#connection-pooling-round-9) |
+| **Monitored by** | [monitoring-alerting.md](./monitoring-alerting.md) |
+| **Deployed via** | [deployment-procedure.md](./deployment-procedure.md) |
+
 ---
 
 ## Overview
@@ -76,6 +91,8 @@ Internet
 
 ### Check-In Service (Core)
 
+> **Architecture:** [Check-In Service](../architecture/architecture.md#check-in-service-core) · **API surface:** [Patient Identification](../architecture/api-spec.md#1-patient-identification), [Patient Record](../architecture/api-spec.md#2-patient-record), [Clinical Data](../architecture/api-spec.md#3-clinical-data), [Insurance](../architecture/api-spec.md#4-insurance), [Check-In Flow](../architecture/api-spec.md#5-check-in-flow), [Dashboard](../architecture/api-spec.md#7-receptionist-dashboard) · **ADRs:** [ADR-002 Session Purge](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation), [ADR-003 Optimistic Locking](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), [ADR-004 Medication Audit](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records), [ADR-007 Scaling](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) · **Deploy:** [Check-In Service deploy notes](#check-in-service)
+
 | Property | Value |
 |----------|-------|
 | Runtime | Node.js 20 LTS, TypeScript |
@@ -94,6 +111,8 @@ Handles: patient lookup, check-in flow, record CRUD, medication confirmation, in
 Auto-scale trigger: CPU > 70% sustained for 2 minutes, or active connections > 150.
 
 ### Notification Service
+
+> **Architecture:** [Notification Service](../architecture/architecture.md#notification-service) · **API surface:** [Real-Time Updates (WebSocket)](../architecture/api-spec.md#8-real-time-updates), [Mobile Check-In Links](../architecture/api-spec.md#6-mobile-check-in-links) · **ADR:** [ADR-001 WebSocket with Polling Fallback](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates) · **Deploy:** [Notification Service deploy notes](#notification-service-1)
 
 | Property | Value |
 |----------|-------|
@@ -115,6 +134,8 @@ WebSocket config:
 
 ### Migration Service
 
+> **Architecture:** [Migration Service](../architecture/architecture.md#migration-service-round-10) · **API surface:** [Migration endpoints](../architecture/api-spec.md#9-migration-round-10) · **ADRs:** [ADR-008 Duplicate Detection](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [ADR-010 Migration Pipeline](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) · **Deploy:** [Migration Service deploy notes](#migration-service-1)
+
 | Property | Value |
 |----------|-------|
 | Runtime | Node.js 20 LTS, TypeScript |
@@ -129,6 +150,8 @@ Handles: EMR schema mapping, batch import pipeline, duplicate detection, merge o
 **Not on the critical path.** This service can be stopped during peak clinic hours without affecting check-in operations. Consider running migration batches during off-hours (after 6 PM).
 
 ### OCR Service
+
+> **Architecture:** [OCR Service](../architecture/architecture.md#ocr-service-round-8) · **API surface:** [Insurance photo endpoints](../architecture/api-spec.md#post-patientsidinsuracetypephoto) · **ADRs:** [ADR-006 OCR Service API Contract](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009 Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) · **Deploy:** [OCR Service deploy notes](#ocr-service-1)
 
 | Property | Value |
 |----------|-------|
@@ -147,6 +170,8 @@ Failure mode: if Google Vision is unavailable, OCR requests fail gracefully. Pat
 ---
 
 ## Database — PostgreSQL
+
+> **Architecture:** [Infrastructure — Database](../architecture/architecture.md#database) · **Data model:** [Data Model](../architecture/data-model.md) · **ADRs:** [ADR-005 Centralized Database](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication), [ADR-007 Scaling (connection pooling, read replicas)](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions)
 
 ### Primary
 
@@ -228,6 +253,8 @@ Extensions: `pg_trgm` (fuzzy text search), `pgcrypto` (gen_random_uuid).
 
 ## Cache / Message Broker — Redis
 
+> **Architecture:** [Caching (Round 9)](../architecture/architecture.md#caching-round-9) · **ADR:** [ADR-007 Scaling (query caching)](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) · **Pub/Sub for:** [ADR-001 WebSocket sync](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates)
+
 | Property | Value |
 |----------|-------|
 | Engine | Redis 7 |
@@ -260,6 +287,8 @@ Total cache footprint: < 100 MB (well within 8 GB allocation).
 ---
 
 ## Object Storage — S3
+
+> **Architecture:** [Object Storage](../architecture/architecture.md#object-storage) · **ADR:** [ADR-009 Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records)
 
 | Property | Value |
 |----------|-------|

@@ -6,6 +6,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-001: Mandatory Session Transition Screen (not just a tech fix)
 
+**Triggered by:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan)
+
 **PM said:** BUG-002 is a backend/session issue — fix the data leak.
 
 **Design added:** A mandatory visual transition screen (800ms minimum) between every patient session on the kiosk. This isn't just an engineering concern — the *design* must guarantee that no patient ever sees a flash of someone else's data, regardless of how fast the backend clears the session.
@@ -18,6 +20,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-002: "Confirm and check in" requires end-to-end sync proof
 
+**Triggered by:** [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data)
+
 **PM said:** BUG-001 — kiosk confirmation should sync to receptionist.
 
 **Design decision:** The green checkmark on the kiosk is gated on *receptionist-side confirmation*, not just kiosk-side save. If the sync hasn't been confirmed within 5 seconds, the patient sees a yellow warning asking them to notify the front desk — not a green checkmark.
@@ -29,6 +33,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ---
 
 ## DD-003: Medications step is non-skippable but designed to be fast
+
+**Triggered by:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
 
 **PM said:** Medication confirmation is mandatory per state regulation. Cannot be skipped.
 
@@ -48,6 +54,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-004: Mobile check-in uses one-step-per-screen, not a single long form
 
+**Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
+
 **PM said:** Mobile check-in follows the same flow as kiosk — demographics, insurance, allergies, medications.
 
 **Design decision:** On mobile, each section is its own screen (swipe/tap through steps). On kiosk, all sections are on a scrollable single page with a stepper.
@@ -60,6 +68,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 
 ## DD-005: Edits use bottom-sheet on mobile, inline on kiosk
 
+**Triggered by:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
+
 **PM didn't specify** how editing should work on different surfaces.
 
 **Design decision:**
@@ -71,6 +81,8 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ---
 
 ## DD-006: Side-by-side comparison for duplicate review, not a diff list
+
+**Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition)
 
 **PM said:** Duplicate detection requires staff review with confidence scores. Staff can merge, keep separate, or flag.
 

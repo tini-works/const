@@ -3,6 +3,17 @@
 **Severity:** P2 (operational) / P1 (if data loss is confirmed)
 **Impact:** Staff members see "This record was modified since you loaded it" errors. In the worst case (if optimistic locking fails), data is silently lost.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by:** | Alert: `patient_version_conflict_total` spike — monitored on [Check-In Flow Dashboard](./monitoring-alerting.md#4-check-in-flow-dashboard) |
+| **Caused by:** | [BUG-003: Concurrent edit causes silent data loss](../quality/bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss) — the original incident |
+| **Fixed by:** | [ADR-003: Optimistic Concurrency Control via Version Field](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field) |
+| **Watches:** | [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) — version field enforcement, [Check-In Service](../architecture/architecture.md#check-in-service-core) |
+| **Proves:** | [US-004: Concurrent edit safety](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) — no silent data loss |
+| **Detects:** | [TC-701: Conflict detection](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-705: Same field conflict](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users) failing in production |
+
 ---
 
 ## Detection

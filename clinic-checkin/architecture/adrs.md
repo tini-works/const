@@ -8,6 +8,10 @@
 
 **Status:** Accepted
 
+**Triggered by:** [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data)
+**Verified by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push)
+**Monitored by:** [Sync Failure Rate, WebSocket Connections](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Context:**
 The receptionist dashboard must update in real-time when a patient checks in at the kiosk. In Round 1, we implemented WebSocket push from the server to the dashboard. In Round 2, we discovered that the kiosk was showing a green checkmark to the patient without confirming that the receptionist dashboard had actually received the data (BUG-001). The receptionist saw nothing; the patient thought they were done.
 
@@ -48,6 +52,10 @@ The root cause was twofold:
 **Date:** Round 4 (BUG-002 — P0 Security)
 
 **Status:** Accepted
+
+**Triggered by:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan)
+**Verified by:** [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
+**Monitored by:** [Data Leak Detected alert (P0)](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
 
 **Context:**
 A patient scanned their card and briefly saw another patient's name and allergies on the kiosk screen. Root cause: the React component tree retained state from the previous patient's session. When the new patient's card was scanned, the app fetched new data but the old data remained visible in the DOM for a fraction of a second during the re-render cycle.
@@ -98,6 +106,10 @@ This is a PHI exposure — HIPAA-reportable. Trust in the kiosk is existential f
 **Date:** Round 7 (BUG-003)
 
 **Status:** Accepted
+
+**Triggered by:** [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records)
+**Verified by:** [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-704](../quality/test-suites.md#tc-704-no-conflict--normal-save), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](../quality/test-suites.md#tc-1201-patch-patientsid--version-required)
+**Monitored by:** [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
 
 **Context:**
 Two receptionists simultaneously edited the same patient record (Mrs. Rodriguez). Receptionist A updated insurance from Aetna to Blue Cross and saved. Receptionist B, who had opened the record before A's save, updated the phone number and saved. B's save silently overwrote A's insurance change because the last write won — A's insurance update was lost.
@@ -159,6 +171,9 @@ Every version change writes a row to `patient_record_versions` with a full snaps
 
 **Status:** Accepted
 
+**Triggered by:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), Epic [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
+**Verified by:** [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none), [TC-605](../quality/test-suites.md#tc-605-medication-confirmation--immutability), [TC-1202](../quality/test-suites.md#tc-1202-post-checkinsidcomplete--medication-confirmation-required)
+
 **Context:**
 State health board requires medication list confirmation at every visit. The confirmation must be auditable for license renewal inspection. This means we need a record of what the patient confirmed, when, and what the medication list looked like at that moment.
 
@@ -215,6 +230,9 @@ CREATE TABLE medication_confirmations (
 
 **Status:** Accepted
 
+**Triggered by:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in), Epic [E3](../product/epics.md#e3-multi-location-support)
+**Verified by:** [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency), [TC-502](../quality/test-suites.md#tc-502-location-aware-kiosk), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed)
+
 **Context:**
 The clinic is opening a second location. Patients may visit both. The patient record must be the same at every location. PM decision DEC-005 chose a centralized database over replication or event sourcing.
 
@@ -259,6 +277,10 @@ All locations connect to the same cloud-hosted database. If connectivity is lost
 **Date:** Round 8 (E4: Insurance Card Photo Capture)
 
 **Status:** Accepted
+
+**Triggered by:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), Epic [E4](../product/epics.md#e4-insurance-card-photo-capture)
+**Verified by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
+**Monitored by:** [OCR Service Slow alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [OCR Processing Time](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
 
 **Context:**
 Patients can photograph their insurance card. We need to extract structured fields (member ID, group number, payer name, etc.) from the photo. The OCR capability could be implemented via a third-party API (Google Vision, AWS Textract), a self-hosted model, or a hybrid.
@@ -309,6 +331,10 @@ The Check-In Service does not know or care whether OCR is powered by Google Visi
 **Date:** Round 9 (Performance)
 
 **Status:** Accepted
+
+**Triggered by:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance)
+**Verified by:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable)
+**Monitored by:** [p95 Response Time, Concurrent Sessions, DB Pool Utilization, Cache Hit Rate, Read Replica Lag](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
 
 **Context:**
 Monday mornings between 8-9 AM, 30 patients check in simultaneously. Current system experiences kiosk freezes and slow search. Two patients left the clinic because of it. With a second location and mobile check-in, peak concurrency will grow. PM decision DEC-007 set the target at 50 concurrent sessions, p95 under 3 seconds.
@@ -383,6 +409,9 @@ Cache frequently-accessed, read-heavy data:
 
 **Status:** Accepted
 
+**Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), Epic [E5](../product/epics.md#e5-riverside-practice-acquisition)
+**Verified by:** [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1004](../quality/test-suites.md#tc-1004-duplicate-detection--no-match), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
+
 **Context:**
 We're importing 4,000 patient records from Riverside Family Practice. An estimated 5-15% overlap with our existing patients. We need to detect duplicates with high accuracy while minimizing both false positives (flagging non-duplicates) and false negatives (missing real duplicates). PM decision DEC-006: no auto-merge — all matches require staff confirmation.
 
@@ -450,6 +479,9 @@ For each imported Riverside record R:
 
 **Status:** Accepted
 
+**Triggered by:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside)
+**Verified by:** [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
+
 **Context:**
 Two features require storing binary files:
 1. Insurance card photos (front and back, captured by patient at kiosk or mobile)
@@ -499,6 +531,10 @@ s3://clinic-checkin-files/
 **Date:** Round 10 (E5: Riverside Acquisition)
 
 **Status:** Accepted
+
+**Triggered by:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), Epic [E5](../product/epics.md#e5-riverside-practice-acquisition)
+**Verified by:** [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
+**Monitored by:** [Migration Import Errors alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
 
 **Context:**
 We need to import ~4,000 records from Riverside: ~2,000 electronic (from their EMR) and ~2,000 paper (scanned and OCR'd). The import must be reversible if systemic issues are found (e.g., schema mapping bug that corrupts data for an entire batch).

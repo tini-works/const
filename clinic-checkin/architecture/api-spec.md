@@ -22,6 +22,9 @@ All endpoints require HTTPS. All request/response bodies are JSON. Timestamps ar
 
 Look up a patient by card scan or name search. Used by kiosk and receptionist.
 
+> **Traced from:** Screen [1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen), Screen [1.9 Name Search](../experience/screen-specs.md#19-kiosk-name-search-screen), Screen [2.1 Dashboard Search](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Flows [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), [2. New Patient Kiosk](../experience/user-flows.md#2-new-patient--kiosk-check-in), [3. Card Scan Failures](../experience/user-flows.md#3-card-scan-failures)
+> **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-105](../quality/test-suites.md#tc-105-card-scan--no-matching-record), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-1203](../quality/test-suites.md#tc-1203-rate-limiting-on-patient-search)
+
 **Request:**
 ```json
 {
@@ -97,6 +100,9 @@ Minimal PHI returned — just enough for identity confirmation screen. Full reco
 
 Mobile check-in identity verification.
 
+> **Traced from:** Screen [3.1 Mobile Identity Verification](../experience/screen-specs.md#31-mobile--link-landing--identity-verification); Flow [6. Mobile Check-In Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path)
+> **Proven by:** [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-402](../quality/test-suites.md#tc-402-mobile--identity-verification-failure), [TC-1204](../quality/test-suites.md#tc-1204-mobile-token-expiry-enforcement)
+
 **Request:**
 ```json
 {
@@ -156,6 +162,9 @@ Mobile check-in identity verification.
 ### GET /patients/{id}
 
 Full patient record. Used after identity confirmation.
+
+> **Traced from:** Screens [1.4 Demographics](../experience/screen-specs.md#14-check-in-review-screen--demographics), [1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications), [2.2 Patient Detail Panel](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications)
+> **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency)
 
 **Response (200):**
 ```json
@@ -236,6 +245,9 @@ Full patient record. Used after identity confirmation.
 
 Update patient record. Supports partial updates. Enforces optimistic locking.
 
+> **Traced from:** Screens [1.4 Demographics Edit](../experience/screen-specs.md#14-check-in-review-screen--demographics), [2.2 Patient Detail Panel](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); Flow [10. Concurrent Edit Conflict](../experience/user-flows.md#10-concurrent-edit-conflict-bug-003-fix)
+> **Proven by:** [TC-102](../quality/test-suites.md#tc-102-returning-patient--edit-demographics-during-check-in), [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-704](../quality/test-suites.md#tc-704-no-conflict--normal-save), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](../quality/test-suites.md#tc-1201-patch-patientsid--version-required)
+
 **Request:**
 ```json
 {
@@ -298,6 +310,9 @@ The client uses `conflicting_changes` to render the conflict banner.
 
 ## 3. Clinical Data
 
+> **Traced from:** Screens [1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications); Stories [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in)
+> **Proven by:** [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip) through [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile)
+
 ### POST /patients/{id}/allergies
 
 ```json
@@ -357,6 +372,9 @@ Updates medication details.
 
 Update insurance record. `type` is `primary` or `secondary`.
 
+> **Traced from:** Screen [1.5 Insurance Review](../experience/screen-specs.md#15-check-in-review-screen--insurance); Story [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card)
+> **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk) through [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff)
+
 ```json
 {
   "payer_name": "Blue Cross",
@@ -370,6 +388,9 @@ Update insurance record. `type` is `primary` or `secondary`.
 ### POST /patients/{id}/insurance/{type}/photo
 
 Upload insurance card photos. Multipart form data.
+
+> **Traced from:** Screen [1.5a Photo Capture Overlay](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay); Flow [9. Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture)
+> **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile)
 
 **Request:**
 ```
@@ -390,6 +411,9 @@ card_back: (binary image data)
 ### GET /patients/{id}/insurance/{type}/photo/status/{processing_id}
 
 Poll for OCR results.
+
+> **Traced from:** Screen [1.5 Insurance Review (OCR processing state)](../experience/screen-specs.md#15-check-in-review-screen--insurance); Flow [9. Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture)
+> **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure)
 
 **Response (200 — complete):**
 ```json
@@ -433,6 +457,9 @@ Poll for OCR results.
 
 Start a new check-in.
 
+> **Traced from:** Screen [1.3 Identity Confirmation](../experience/screen-specs.md#13-patient-identification-confirmation-screen); Flow [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), Flow [8. Mobile to Kiosk Duplicate Prevention](../experience/user-flows.md#8-mobile-check-in--kiosk-arrival-duplicate-prevention)
+> **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-405](../quality/test-suites.md#tc-405-mobile-then-kiosk--duplicate-prevention), [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time)
+
 ```json
 {
   "appointment_id": "uuid",
@@ -470,6 +497,9 @@ Start a new check-in.
 
 Update check-in progress (step completed).
 
+> **Traced from:** Screens [1.4](../experience/screen-specs.md#14-check-in-review-screen--demographics)–[1.7](../experience/screen-specs.md#17-check-in-review-screen--medications), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications); Flow [7. Mobile Partial Completion](../experience/user-flows.md#7-mobile-check-in--partial-completion)
+> **Proven by:** [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume)
+
 ```json
 {
   "current_step": 3,
@@ -494,6 +524,9 @@ Update check-in progress (step completed).
 ### POST /checkins/{id}/complete
 
 Finalize the check-in. Creates the medication confirmation audit record.
+
+> **Traced from:** Screen [1.8 Confirmation](../experience/screen-specs.md#18-check-in-confirmation-screen), Screen [3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen); Flows [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), [5. Kiosk-to-Receptionist Sync](../experience/user-flows.md#5-kiosk-to-receptionist-sync-bug-001-fix), [6. Mobile Check-In](../experience/user-flows.md#6-mobile-check-in--happy-path)
+> **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-1202](../quality/test-suites.md#tc-1202-post-checkinsidcomplete--medication-confirmation-required)
 
 ```json
 {
@@ -546,6 +579,9 @@ Finalize the check-in. Creates the medication confirmation audit record.
 
 Trigger sending a check-in link to a patient. Called by the scheduler or manually by staff.
 
+> **Traced from:** Flow [6. Mobile Check-In Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path); Story [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
+> **Proven by:** [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path)
+
 ```json
 {
   "appointment_id": "uuid",
@@ -567,6 +603,9 @@ Trigger sending a check-in link to a patient. Called by the scheduler or manuall
 
 Check if a mobile check-in link is valid.
 
+> **Traced from:** Screen [3.1 Mobile Link Landing](../experience/screen-specs.md#31-mobile--link-landing--identity-verification)
+> **Proven by:** [TC-403](../quality/test-suites.md#tc-403-mobile--expired-link), [TC-407](../quality/test-suites.md#tc-407-mobile--already-checked-in-via-mobile), [TC-1204](../quality/test-suites.md#tc-1204-mobile-token-expiry-enforcement)
+
 **Response (200):**
 ```json
 {
@@ -587,6 +626,9 @@ Check if a mobile check-in link is valid.
 ### GET /dashboard/queue
 
 Get today's appointment queue for a location.
+
+> **Traced from:** Screen [2.1 Dashboard Main View](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Stories [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins)
+> **Proven by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak)
 
 **Query params:**
 - `location_id` (required, or `all` for cross-location)
@@ -643,6 +685,9 @@ Get today's appointment queue for a location.
 
 Search patients across all locations.
 
+> **Traced from:** Screen [2.1 Dashboard Search](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Flow [11. Multi-Location Check-In](../experience/user-flows.md#11-multi-location-check-in)
+> **Proven by:** [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load)
+
 **Query params:**
 - `q` (required, min 2 chars)
 
@@ -674,6 +719,10 @@ Search patients across all locations.
 
 Server pushes check-in status updates to connected receptionist dashboards.
 
+> **Traced from:** Screen [2.1 Dashboard (real-time updates)](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Flow [5. Kiosk-to-Receptionist Sync](../experience/user-flows.md#5-kiosk-to-receptionist-sync-bug-001-fix); Stories [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen)
+> **Proven by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push)
+> **Monitored by:** [WebSocket Connections per location](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Sync Failure Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
+
 **Message format (server -> client):**
 ```json
 {
@@ -704,6 +753,10 @@ This ack is the "end-to-end sync confirmation" that triggers the green checkmark
 ---
 
 ## 9. Migration (Round 10)
+
+> **Traced from:** Screens [4.1 Migration Dashboard](../experience/screen-specs.md#41-admin--migration-dashboard), [4.2 Duplicate Review](../experience/screen-specs.md#42-admin--duplicate-review-screen); Flows [13. First Visit After Migration](../experience/user-flows.md#13-riverside-migration--first-visit-after-migration), [14. Duplicate Detection Staff Review](../experience/user-flows.md#14-duplicate-detection--staff-review-riverside); Stories [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge); Epic [E5](../product/epics.md#e5-riverside-practice-acquisition)
+> **Proven by:** [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records) through [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
+> **Monitored by:** [Migration Dashboard](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
 
 ### POST /migration/batches
 

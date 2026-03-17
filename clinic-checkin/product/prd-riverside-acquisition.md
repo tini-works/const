@@ -76,3 +76,18 @@ We're acquiring Riverside Family Practice. They have 4,000 patients, roughly hal
 - 90% of paper records OCR-processed within 8 weeks
 - Riverside patients check in at any location without needing to re-enter data already in the system
 - Staff duplicate review throughput: 50+ records per day per reviewer
+
+---
+
+## Traceability
+
+| Link type | References |
+|-----------|------------|
+| Epic | [E5: Riverside Practice Acquisition](epics.md#e5-riverside-practice-acquisition) |
+| User Stories | [US-012: Patient data migration](user-stories.md#us-012-patient-data-migration-from-riverside), [US-013: Duplicate detection and merge](user-stories.md#us-013-duplicate-patient-detection-and-merge) |
+| Decisions | [DEC-006: No auto-merge](decision-log.md#dec-006-duplicate-detection-requires-staff-confirmation--no-auto-merge), [DEC-008: Digitization pipeline](decision-log.md#dec-008-riverside-paper-records--digitization-pipeline-not-bulk-data-entry) |
+| Architecture | [ADR-008: Duplicate Detection Algorithm](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [ADR-009: Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records), [ADR-010: Migration Pipeline](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback) |
+| Screens | [4.1 Migration Dashboard](../experience/screen-specs.md#41-admin--migration-dashboard), [4.2 Duplicate Review](../experience/screen-specs.md#42-admin--duplicate-review-screen) |
+| Flows | [Flow 13: First Visit After Migration](../experience/user-flows.md#13-riverside-migration--first-visit-after-migration), [Flow 14: Duplicate Detection — Staff Review](../experience/user-flows.md#14-duplicate-detection--staff-review-riverside) |
+| API | [POST /migration/batches](../architecture/api-spec.md#post-migrationbatches), [POST /migration/batches/{batch_id}/import](../architecture/api-spec.md#post-migrationbatchesbatch_idimport), [GET /migration/duplicates/{id}](../architecture/api-spec.md#get-migrationduplicatesid), [POST /migration/duplicates/{id}/resolve](../architecture/api-spec.md#post-migrationduplicatesidresolve), [POST /migration/batches/{batch_id}/rollback](../architecture/api-spec.md#post-migrationbatchesbatch_idrollback) |
+| Tests | [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records) through [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification) |

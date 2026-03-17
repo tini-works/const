@@ -53,3 +53,17 @@ A mobile-optimized web flow that lets patients complete check-in before arriving
 - 30% of appointments use mobile check-in within 3 months of launch
 - Average kiosk wait time decreases during peak hours
 - Patient satisfaction score for check-in experience improves
+
+---
+
+## Traceability
+
+| Link type | References |
+|-----------|------------|
+| Epic | [E2: Mobile Check-In](epics.md#e2-mobile-check-in) |
+| User Stories | [US-007: Pre-visit mobile check-in](user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008: Receptionist visibility of mobile check-ins](user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) |
+| Decisions | [DEC-004: Mobile web, not native app](decision-log.md#dec-004-mobile-check-in-via-mobile-web-not-native-app) |
+| Screens | [3.1 Mobile Landing](../experience/screen-specs.md#31-mobile--link-landing--identity-verification), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications), [3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen) |
+| Flows | [Flow 6: Mobile Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path), [Flow 7: Partial Completion](../experience/user-flows.md#7-mobile-check-in--partial-completion), [Flow 8: Duplicate Prevention](../experience/user-flows.md#8-mobile-check-in--kiosk-arrival-duplicate-prevention), [Flow 12: Mobile Multi-Location](../experience/user-flows.md#12-mobile-check-in--multi-location) |
+| API | [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [POST /mobile-checkin/send-link](../architecture/api-spec.md#post-mobile-checkinsend-link), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus) |
+| Tests | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path) through [TC-407](../quality/test-suites.md#tc-407-mobile--already-checked-in-via-mobile), [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
