@@ -8,7 +8,17 @@
 **Reported:** Round 2
 **Reporter:** Patient (via complaint)
 **Status:** Fix verified
-**Related:** US-002, ADR-001
+
+### Traceability
+
+| Link | Target |
+|------|--------|
+| **Affected story** | [US-002: Receptionist sees confirmed check-in data](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — AC violated: "confirmed data appears within 5 seconds" |
+| **Fix documented in** | [ADR-001: WebSocket with Polling Fallback](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates) |
+| **Screens affected** | [Screen 1.8 Confirmation](../experience/screen-specs.md#18-check-in-confirmation-screen) (sync failure state added), [Screen 2.1 Dashboard](../experience/screen-specs.md#21-receptionist-dashboard--main-view) (Syncing.../Failed badges added) |
+| **API changes** | [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (sync_status field), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id) (ack mechanism) |
+| **Regression tests** | [TC-201](test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](test-suites.md#tc-204-dashboard-real-time-update--websocket-push) |
+| **Production monitors** | [Sync Success Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [Sync Failure Rate High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard) |
 
 ### Summary
 Patient completed kiosk check-in, saw green confirmation checkmark, but the receptionist had no data on her screen. Patient was asked to fill out a paper form despite having "successfully" checked in at the kiosk.
@@ -44,9 +54,9 @@ Two specific failures:
 - **Heartbeat:** Server pings WebSocket every 30 seconds. No pong within 10 seconds = connection dead, cleanup triggered.
 
 ### Fix Verification
-- **TC-201:** Confirmed sync — green checkmark only after dashboard ack. PASS.
-- **TC-202:** Disconnected dashboard — kiosk shows yellow warning, not green. PASS.
-- **TC-203:** Reconnected dashboard picks up data via polling fallback. PASS.
+- **[TC-201](test-suites.md#tc-201-successful-sync--green-checkmark):** Confirmed sync — green checkmark only after dashboard ack. PASS.
+- **[TC-202](test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk):** Disconnected dashboard — kiosk shows yellow warning, not green. PASS.
+- **[TC-203](test-suites.md#tc-203-sync-failure--dashboard-retry):** Reconnected dashboard picks up data via polling fallback. PASS.
 - **Regression test:** 20 consecutive check-ins, all confirmed on both kiosk and dashboard. No false green checkmarks.
 
 ### Post-Mortem Notes
@@ -60,7 +70,16 @@ The fundamental mistake was showing a success state based on a partial operation
 **Reported:** Round 4
 **Reporter:** Patient (via complaint)
 **Status:** Fix verified
-**Related:** US-003, ADR-002, DD-001
+
+### Traceability
+
+| Link | Target |
+|------|--------|
+| **Affected story** | [US-003: Secure patient identification on scan](../product/user-stories.md#us-003-secure-patient-identification-on-scan) — AC violated: "no other patient's data is rendered, even transiently" |
+| **Fix documented in** | [ADR-002: Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) |
+| **Screens affected** | [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen) (added as safety barrier), [Screen 1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen) (security note added) |
+| **Regression tests** | [TC-301](test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) |
+| **Production monitors** | [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (`security_session_isolation_failure > 0` — pages immediately) |
 
 ### Summary
 A patient scanned their card at the kiosk and briefly saw another patient's name and allergies on screen before the display switched to their own data. The previous patient's PHI (name and allergy information) was visible for approximately 200-400 milliseconds. This is a data exposure incident and a potential HIPAA breach.
@@ -107,11 +126,11 @@ Three-layer defense-in-depth (Session Purge Protocol):
 **Sequencing:** Card scan -> state reset -> DOM destroy -> transition screen renders -> wait 800ms -> begin data fetch -> on data arrival, transition to identity confirmation.
 
 ### Fix Verification
-- **TC-301:** Sequential patients, normal timing — no data leakage. PASS.
-- **TC-302:** Rapid sequential scans (Patient B scans during Patient A's countdown) — no leakage. PASS.
-- **TC-303:** Sub-second timing automated test (200ms between scans) — zero frames contain Patient A's data. PASS.
-- **TC-304:** DOM inspection after session purge — zero patient data in DOM, sessionStorage, or component state. PASS.
-- **TC-305:** Browser back button does not reveal previous session data. PASS.
+- **[TC-301](test-suites.md#tc-301-sequential-patients--no-data-leakage):** Sequential patients, normal timing — no data leakage. PASS.
+- **[TC-302](test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage):** Rapid sequential scans (Patient B scans during Patient A's countdown) — no leakage. PASS.
+- **[TC-303](test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing):** Sub-second timing automated test (200ms between scans) — zero frames contain Patient A's data. PASS.
+- **[TC-304](test-suites.md#tc-304-session-purge--dom-inspection):** DOM inspection after session purge — zero patient data in DOM, sessionStorage, or component state. PASS.
+- **[TC-305](test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session):** Browser back button does not reveal previous session data. PASS.
 - **Manual security test:** Two testers, two cards. Frame-by-frame video analysis of screen during transition. No Patient A data visible after Patient B's scan. PASS.
 - **Penetration test:** Browser dev tools, memory dump, network cache — no extractable patient data from previous session after purge. PASS.
 
@@ -134,7 +153,17 @@ This bug exposed a fundamental architectural gap: the kiosk was built as a singl
 **Reported:** Round 7
 **Reporter:** Receptionist (Sarah)
 **Status:** Fix verified
-**Related:** US-004, ADR-003, DEC-003
+
+### Traceability
+
+| Link | Target |
+|------|--------|
+| **Affected story** | [US-004: Concurrent edit safety](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) — AC violated: "no silent data loss" |
+| **Fix documented in** | [ADR-003: Optimistic Concurrency Control](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field) |
+| **Screens affected** | [Screen 2.2 Patient Detail — conflict banner](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel) (conflict banner added) |
+| **API changes** | [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (version field required, 409 conflict response added) |
+| **Regression tests** | [TC-701](test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-704](test-suites.md#tc-704-no-conflict--normal-save), [TC-705](test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](test-suites.md#tc-1201-patch-patientsid--version-required) |
+| **Production monitors** | [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard) |
 
 ### Summary
 Two receptionists simultaneously opened and edited the same patient record (Mrs. Rodriguez). Receptionist A updated the insurance payer. Receptionist B updated the phone number. Both clicked Save. Receptionist A's save succeeded, but Receptionist B's save also "succeeded" — silently overwriting Receptionist A's insurance change. The insurance update was lost without any notification to either party.
@@ -170,14 +199,14 @@ No concurrency control mechanism existed on the patient record. The API accepted
 6. **Version history:** Each version change writes a full snapshot to `patient_record_versions` for audit trail and potential rollback.
 
 ### Fix Verification
-- **TC-701:** Two receptionists edit same patient, first save succeeds, second save is blocked with conflict banner. PASS.
-- **TC-702:** "View current version" refreshes panel, discards unsaved edits. PASS.
-- **TC-703:** "Re-apply my changes" shows edits as diffs on latest version. PASS.
-- **TC-704:** Normal save (no conflict) succeeds immediately. PASS.
-- **TC-705:** Same field edited by two users — conflict properly detected and surfaced. PASS.
+- **[TC-701](test-suites.md#tc-701-two-receptionists--conflict-detection):** Two receptionists edit same patient, first save succeeds, second save is blocked with conflict banner. PASS.
+- **[TC-702](test-suites.md#tc-702-conflict-resolution--view-current-version):** "View current version" refreshes panel, discards unsaved edits. PASS.
+- **[TC-703](test-suites.md#tc-703-conflict-resolution--re-apply-my-changes):** "Re-apply my changes" shows edits as diffs on latest version. PASS.
+- **[TC-704](test-suites.md#tc-704-no-conflict--normal-save):** Normal save (no conflict) succeeds immediately. PASS.
+- **[TC-705](test-suites.md#tc-705-concurrent-edit--same-field-by-two-users):** Same field edited by two users — conflict properly detected and surfaced. PASS.
 - **Stress test:** 10 concurrent edits to the same patient record. Only one succeeds, other 9 get conflict responses. Zero data loss. PASS.
 
 ### Post-Mortem Notes
 This is a textbook lost-update bug that should have been prevented from the start. Any multi-user system with shared mutable state needs a concurrency control strategy. For a clinic system where data integrity has patient safety implications (e.g., lost insurance update could delay treatment authorization), the "last write wins" model is unacceptable.
 
-The decision to use record-level (not field-level) optimistic locking is a deliberate trade-off: it produces false-positive conflicts when two users edit different fields on the same record. But the resolution flow is fast (review, re-apply), and the alternative (field-level tracking) adds significant complexity for a rare scenario. See ADR-003 for the full rationale.
+The decision to use record-level (not field-level) optimistic locking is a deliberate trade-off: it produces false-positive conflicts when two users edit different fields on the same record. But the resolution flow is fast (review, re-apply), and the alternative (field-level tracking) adds significant complexity for a rare scenario. See [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field) for the full rationale.
