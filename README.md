@@ -4,25 +4,23 @@ A framework for how teams work together — not by passing work down a chain, bu
 
 Born from a simple observation: most process failures happen at handoffs. Requirements get lost. Designs get misinterpreted. Code doesn't match the spec. Tests prove the wrong thing. Production breaks silently. Each team did their job — but the work between teams fell through the cracks.
 
-The Constitution replaces handoffs with **matching**. Each team independently discovers what must be true, negotiates checkboxes with the teams they touch, and proves their work with evidence. No waterfall. No ticket-passing. Just independent teams keeping honest inventories and matching at the seams.
+The Constitution replaces handoffs with **matching**. Each team independently discovers what must be true, negotiates boxes with the teams they touch, and proves their work with evidence. No waterfall. No ticket-passing. Just independent teams keeping honest inventories and matching at the seams.
 
 ## Read this
 
 | Document | What it is | Start here if... |
 |----------|-----------|------------------|
-| [CONST.md](CONST.md) | The framework — 4 fundamentals, 5 verticals, mechanics | You want the full operating model |
+| [CONST.md](CONST.md) | The framework — 3 fundamentals, 5 verticals, mechanics | You want the full operating model |
 | [ELI10.md](ELI10.md) | The same thing, explained with a treehouse | You want to understand the ideas first |
 | [clinic-checkin/](clinic-checkin/) | A working example — 10 rounds of real-world events | You want to see it in practice |
 
 ## The idea in 30 seconds
 
-1. **Don't derive, match.** When work crosses a team boundary, the receiving team doesn't blindly follow instructions. They figure out what must be true (checkboxes), negotiate with the sender, then match those checkboxes however they see fit.
+1. **Don't derive, match.** When work crosses a team boundary, the receiving team doesn't blindly follow instructions. They figure out what must be true (boxes), negotiate with the sender, then match those boxes however they see fit.
 
-2. **Start from the customer.** Everyone works from the same customer story — not from each other's documents. A patient says "I don't want to re-enter my info." Five teams hear the same sentence and each discovers what it means for their domain.
+2. **Start from the source.** Every piece of work has an origin — a change in reality that demands a response. Each vertical matches against verified items — from the origin, from other verticals, or both. They don't control what arrives. They control what they choose to match.
 
 3. **Own your inventory.** Each team keeps a warehouse of their work — with breadcrumbs showing where each item came from, what it matches, and who verified it. When something changes, the breadcrumbs tell you what else needs checking.
-
-4. **Iterate together, own separately.** Teams work in parallel, not in sequence. The overlap is real. But each team owns their domain. You can't skip the matching — that's how you know the work is coherent.
 
 ## The example
 

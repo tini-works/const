@@ -28,11 +28,11 @@ A working example of [the Constitution](../CONST.md) applied to a real product �
 
 | Folder | Owner | What's inside | Files |
 |--------|-------|---------------|-------|
-| [product/](product/) | Product Manager | Epics, user stories, PRDs, backlog, decision log | 7 |
-| [experience/](experience/) | Designer | Screen specs, interaction specs, user flows, components, design decisions | 6 |
-| [architecture/](architecture/) | Engineer | System design, ADRs, API spec, data model, tech design docs | 10 |
-| [quality/](quality/) | QA | Test plan, test suites, bug reports, coverage report | 4 |
-| [operations/](operations/) | DevOps | Infrastructure, deployment, monitoring, runbooks, environment guide | 11 |
+| [product/](product/) | Product Manager | Epics, user stories, PRDs, backlog, decision log, reconciliation log | 8 |
+| [experience/](experience/) | Designer | Screen specs, interaction specs, user flows, components, design decisions, reconciliation log | 7 |
+| [architecture/](architecture/) | Engineer | System design, ADRs, API spec, data model, tech design docs, reconciliation log | 11 |
+| [quality/](quality/) | QA | Test plan, test suites, bug reports, coverage report, reconciliation log | 5 |
+| [operations/](operations/) | DevOps | Infrastructure, deployment, monitoring, runbooks, environment guide, reconciliation log | 13 |
 
 Each area maintains its own inventory — the working documents that team uses day to day. See the full [responsibility matrix](MATRIX.md) for who owns, consumes, and gets notified on every document.
 
@@ -67,14 +67,14 @@ The framework's concepts are embedded in the work, not called out:
 | Constitution concept | Where it lives in practice |
 |---------------------|---------------------------|
 | **Don't derive, match** | Acceptance criteria in user stories are negotiated — Design pushes back ("editable or locked?"), Architecture surfaces constraints nobody else can see |
-| **Start from the customer's story** | Every round starts with verbatim customer words. "I tried three times" becomes an idempotency requirement. The words create the work. |
+| **Start from the Source** | Every round starts with an origin — a change in reality that demands a response. Customer complaints, compliance mandates, system failures, business bets. "I tried three times" becomes an idempotency requirement. The origin creates the work. |
 | **Own your inventory** | Each area owns its documents. Product doesn't write screen specs. Quality doesn't write architecture docs. |
-| **Iterate together, own separately** | PM, Design, and Engineering work in parallel from the same customer story. Each owns their domain. The overlap is real — but skipping the matching isn't allowed. |
 | **Boxes** | Acceptance criteria in user stories, assertions in test cases, thresholds in monitoring rules |
 | **Traces** | Each item records where it came from and what it matches. Traces are human judgments — they can be right or wrong. They're owned by the team, not shared infrastructure. |
 | **Proven** | Proof requires evidence, not assertion. A test execution record, a review sign-off, a dated walkthrough. "All criteria verified" without a date is a claim, not proof. |
-| **Transitions** | When architecture changes an API, traces identify which screens, tests, and monitors matched against it. Those items go suspect until re-verified. Notification requires acknowledgment. |
-| **Sanity** | Reconciliation checks evidence, not just structure. A test case that exists but was never run is not proof. Coverage gaps are tracked, not just listed. |
+| **Lifecycle** | When a traced item changes, dependents become suspect. The owning vertical acknowledges, assesses impact, and re-verifies. When architecture changes an API, traces identify which screens, tests, and monitors matched against it. |
+| **Reconciliation** | Inventory assumed legitimate until change arrives; each change is the signal to reevaluate staleness, correctness, and coverage. A test case that exists but was never run is not proof. Coverage gaps are tracked, not just listed. |
+| **Learning** | When a match broke — cause and preventive action are recorded alongside the new evidence. Re-proving without understanding why is patching, not fixing. |
 
 ## By the numbers
 
@@ -83,10 +83,10 @@ The framework's concepts are embedded in the work, not called out:
 | Customer events processed | 10 |
 | Epics | 6 |
 | User stories | 16 (13 features + 3 bugs) |
-| Screens | 16+ |
+| Screens | 20+ |
 | API endpoints | ~40 |
 | Architecture decisions | 10 |
-| Test cases | 72 |
+| Test cases | 67 |
 | Production monitors | 14+ |
-| Runbooks | 7 |
-| Documents total | 38 |
+| Runbooks | 8 |
+| Documents total | 44+ |
