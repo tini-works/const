@@ -1,6 +1,6 @@
 # Clinic Check-In System
 
-A working example of [the Constitution](../CONST.md) applied to a real product — a clinic patient check-in system that evolved through 10 rounds of customer complaints, bugs, feature requests, compliance mandates, and business changes.
+A working example of [the Constitution](../../CONST.md) applied to a real product — a clinic patient check-in system that evolved through 10 rounds of customer complaints, bugs, feature requests, compliance mandates, and business changes.
 
 ## How to read this
 

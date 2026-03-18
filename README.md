@@ -12,7 +12,7 @@ The Constitution replaces handoffs with **matching**. Each team independently di
 |----------|-----------|------------------|
 | [CONST.md](CONST.md) | The framework — 3 fundamentals, 5 verticals, mechanics | You want the full operating model |
 | [ELI10.md](ELI10.md) | The same thing, explained with a treehouse | You want to understand the ideas first |
-| [clinic-checkin/](clinic-checkin/) | A working example — 10 rounds of real-world events | You want to see it in practice |
+| [examples/](examples/) | Working examples — real-world events driving real inventories | You want to see it in practice |
 
 ## The idea in 30 seconds
 
@@ -22,12 +22,10 @@ The Constitution replaces handoffs with **matching**. Each team independently di
 
 3. **Own your inventory.** Each team keeps a warehouse of their work — with breadcrumbs showing where each item came from, what it matches, and who verified it. When something changes, the breadcrumbs tell you what else needs checking.
 
-## The example
+## Examples
 
-The [clinic-checkin/](clinic-checkin/) directory is a complete worked example. A clinic patient check-in system that evolved through 10 rounds:
+### [Clinic Check-In](examples/clinic-checkin/)
+A clinic patient check-in system that evolved through 10 rounds of complaints, bugs, features, compliance mandates, and business changes. A patient complained about re-entering data. Then a bug broke the receptionist's screen. Then another patient's data leaked. Then the clinic opened a second location. Then it acquired another practice with 4,000 patients. Five teams responded — each maintaining their own inventory. **Stresses:** external customers, healthcare compliance, data sensitivity, gradual evolution.
 
-A patient complained about re-entering data. Then a bug broke the receptionist's screen. Then someone asked for mobile check-in. Then another patient's data leaked. Then the clinic opened a second location. Then the state mandated medication lists. Then two receptionists edited the same patient. Then someone wanted to photograph their insurance card. Then Monday mornings crushed the system. Then the clinic acquired another practice with 4,000 patients.
-
-Five teams responded — product, experience, architecture, quality, operations — each maintaining their own inventory with their own documents, their own verification evidence, and their own traces. No team told another team what documents to keep. Each chose what works for their job.
-
-Browse [clinic-checkin/README.md](clinic-checkin/README.md) to see how the inventories connect.
+### [Pave — Internal Deploy Platform](examples/pave/)
+An internal deploy platform serving ~20 product teams at a mid-size tech company. A Friday deploy broke checkout. Then a team SSH'd to prod to bypass the platform. Then the platform's own database migration took it down for 4 hours. Then the VP mandated deploy frequency as a KPI and teams gamed it. Then the CTO proposed replacing the whole thing with a managed platform. Six platform engineers responded — each proving their work against internal customers who think they know better. **Stresses:** internal customers, origin ambiguity, platform eating itself, political pressure, existential justification.
