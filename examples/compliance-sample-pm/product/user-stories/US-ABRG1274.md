@@ -1,0 +1,19 @@
+## US-ABRG1274 — System must generate a detailed transmission protocol documenting what was...
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-ABRG1274 |
+| **Traced from** | [ABRG1274](../compliances/SV/ABRG1274.md) |
+| **Source** | AKA Q1-26-1 |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a practice doctor, I want generate a detailed transmission protocol documenting what was transmitted and when, so that billing submissions are accepted without rejection.
+
+### Acceptance Criteria
+
+1. Given a billing transmission, when completed, then a detailed Übertragungsprotokoll with content and timestamps is generated

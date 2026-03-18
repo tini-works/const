@@ -1,0 +1,19 @@
+## US-VERE563 — System must display daily notification for unsent TEs
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-VERE563 |
+| **Traced from** | [VERE563](../compliances/SV/VERE563.md) |
+| **Source** | AKA Q1-26-1 |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a patient, I want display daily notification for unsent TEs, so that my enrollment is processed correctly.
+
+### Acceptance Criteria
+
+1. Given unsent TEs exist, when the user logs in daily, then a notification listing unsent TEs is displayed

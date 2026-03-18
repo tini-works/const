@@ -1,0 +1,19 @@
+## US-VERE1559 — Enrollment procedure type must be selectable per contract
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-VERE1559 |
+| **Traced from** | [VERE1559](../compliances/SV/VERE1559.md) |
+| **Source** | AKA Q1-26-1 |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a patient, I want enrollment procedure type is selectable per contract, so that my enrollment is processed correctly.
+
+### Acceptance Criteria
+
+1. Given a Vertrag with multiple Einschreibeverfahren, when TE is created, then the correct procedure type is selectable

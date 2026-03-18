@@ -1,0 +1,19 @@
+## US-VSST1020 — eDMP transmission
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-VSST1020 |
+| **Traced from** | [VSST1020](../compliances/SV/VSST1020.md) |
+| **Source** | AKA Q1-26-1 |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a practice staff, I want eDMP transmission, so that the software meets regulatory requirements.
+
+### Acceptance Criteria
+
+1. Given eDMP data ready, when transmission is triggered, then the data is sent to the DMP-Datenstelle

@@ -1,0 +1,19 @@
+## US-VERT1880 — The Vertragssoftware must allow importing a Patiententeilnehmerverzeichnis even when a...
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-VERT1880 |
+| **Traced from** | [VERT1880](../compliances/SV/VERT1880.md) |
+| **Source** | AKA Q1-26-1 |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a practice owner, I want the Vertragssoftware allow importing a Patiententeilnehmerverzeichnis even when a previously initiated Vollimport has not yet completed, so that contract participation is managed correctly.
+
+### Acceptance Criteria
+
+1. Given a Vollimport is in progress, when the user initiates a new Patiententeilnehmerverzeichnis import, then the new import is allowed to proceed
