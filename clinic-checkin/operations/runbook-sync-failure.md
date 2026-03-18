@@ -15,6 +15,7 @@
 | **Watches:** | [Notification Service](../architecture/architecture.md#notification-service), [WebSocket /ws/dashboard](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) |
 | **Proves:** | [US-002: Receptionist sees confirmed data](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — data within 5 seconds |
 | **Detects:** | [TC-202: Sync timeout](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203: Sync failure/retry](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry) failing in production |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — killed Notification Service in staging, verified every diagnosis step and recovery procedure |
 
 ---
 

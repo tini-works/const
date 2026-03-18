@@ -2,6 +2,8 @@
 
 Maps [user stories](../product/user-stories.md) and [bug fixes](bug-reports.md) to [test cases](test-suites.md). Identifies what is covered, what has gaps, and which [acceptance criteria](../product/user-stories.md) are verified. Links to [architecture](../architecture/api-spec.md), [experience](../experience/screen-specs.md), and [operations](../operations/monitoring-alerting.md) artifacts for full traceability.
 
+**Confirmed by:** Chen Wei (QA Lead), 2024-03-10
+
 ---
 
 ## Coverage Matrix

@@ -15,6 +15,7 @@
 | **Watches:** | [Check-In Service](../architecture/architecture.md#check-in-service-core), [PgBouncer](../architecture/architecture.md#connection-pooling-round-9), [Redis](../architecture/architecture.md#caching-round-9), [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) |
 | **Proves:** | [US-006: Peak-hour performance](../product/user-stories.md#us-006-peak-hour-check-in-performance) — 50 concurrent sessions, p95 < 3s, search < 2s |
 | **Detects:** | [TC-901: 50 concurrent check-ins](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902: Search under load](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903: Dashboard stability](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904: Degraded mode](../quality/test-suites.md#tc-904-degraded-mode--slow-backend) failing in production |
+| **Confirmed by** | Jordan Lee (DevOps Lead), 2026-03-17 — load test with 50 concurrent sessions in staging, verified every response step and scaling procedure |
 
 ---
 

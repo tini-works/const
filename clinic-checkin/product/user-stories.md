@@ -22,6 +22,7 @@
   - API: [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid)
 - Proven by: [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-102](../quality/test-suites.md#tc-102-returning-patient--edit-demographics-during-check-in), [TC-103](../quality/test-suites.md#tc-103-new-patient--kiosk-check-in), [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search)
 - Verification: **proven** — TC-101 through TC-105 passing in staging, all 5 AC covered. Verified 2024-03-15.
+- Confirmed by: Sarah Chen (PM Lead), 2024-03-15
 
 ### US-002: Receptionist sees confirmed check-in data
 **As a** receptionist,
@@ -46,6 +47,7 @@
 - Proven by: [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push)
 - Bug: [BUG-001](../quality/bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing)
 - Verification: **proven** — TC-201 through TC-204 passing, end-to-end sync verified in staging. ADR-001 implemented. Verified 2024-03-18.
+- Confirmed by: Sarah Chen (PM Lead), 2024-03-18
 
 ### US-003: Secure patient identification on scan
 **As a** patient,
@@ -70,6 +72,7 @@
 - Proven by: [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
 - Bug: [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan)
 - Verification: **proven** (partial gap) — TC-301 through TC-305 passing, security test signed off. Audit log AC (scan events logged with patient ID + timestamp) lacks explicit test coverage — see [coverage report](../quality/coverage-report.md). Verified 2024-03-20.
+- Confirmed by: Dr. Martinez (Medical Director), 2024-03-20
 
 ### US-004: Concurrent edit safety for patient records
 **As a** receptionist,
@@ -95,6 +98,7 @@
 - Proven by: [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-704](../quality/test-suites.md#tc-704-no-conflict--normal-save), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users)
 - Bug: [BUG-003](../quality/bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss)
 - Verification: **proven** — TC-701 through TC-705 passing, ADR-003 optimistic locking implemented. Verified 2024-03-22.
+- Confirmed by: Sarah Chen (PM Lead), 2024-03-22
 
 ### US-005: Medication list confirmation at check-in
 **As a** patient,
@@ -120,6 +124,7 @@
   - [ADR-004: Immutable Medication Confirmation Audit Records](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records)
 - Proven by: [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none), [TC-605](../quality/test-suites.md#tc-605-medication-confirmation--immutability), [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile)
 - Verification: **proven** — TC-601 through TC-606 passing, immutability audit confirmed, ADR-004 implemented. Verified 2024-03-25.
+- Confirmed by: Dr. Martinez (Medical Director), 2024-03-25
 
 ### US-006: Peak-hour check-in performance
 **As a** receptionist,
@@ -144,6 +149,7 @@
   - Decision: [DEC-007](decision-log.md#dec-007-performance-target--50-concurrent-sessions-p95-under-3-seconds)
 - Proven by: [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable)
 - Verification: **proven** — TC-901 through TC-905 passing, load test report shows p95 < 3s at 50 concurrent sessions. Verified 2024-04-02.
+- Confirmed by: Alex Kim (Engineering), 2024-04-02
 
 ---
 
@@ -171,6 +177,7 @@
   - Decision: [DEC-004: Mobile web, not native app](decision-log.md#dec-004-mobile-check-in-via-mobile-web-not-native-app)
 - Proven by: [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-402](../quality/test-suites.md#tc-402-mobile--identity-verification-failure), [TC-403](../quality/test-suites.md#tc-403-mobile--expired-link), [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume), [TC-405](../quality/test-suites.md#tc-405-mobile-then-kiosk--duplicate-prevention), [TC-406](../quality/test-suites.md#tc-406-mobile--session-timeout), [TC-407](../quality/test-suites.md#tc-407-mobile--already-checked-in-via-mobile)
 - Verification: **suspect** — TC-401 through TC-407 passing for core flow, but SMS/email link delivery untested (Twilio sandbox dependency). Cross-browser matrix (iOS Safari, Chrome Android) not verified. Last verified 2024-04-05.
+- Confirmed by: Sarah Chen (PM Lead), 2024-04-05
 
 ### US-008: Receptionist visibility of mobile check-ins
 **As a** receptionist,
@@ -191,6 +198,7 @@
   - API: [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) (check_in_channel, mobile_partial status)
 - Proven by: [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path) (dashboard shows "Mobile — Complete"), [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume) (dashboard shows "Mobile — Partial")
 - Verification: **proven** — all 4 AC covered by TC-401 and TC-404 dashboard assertions. Verified 2024-04-05.
+- Confirmed by: Sarah Chen (PM Lead), 2024-04-05
 
 ---
 
@@ -216,6 +224,7 @@
   - Decision: [DEC-005: Centralized patient record](decision-log.md#dec-005-centralized-patient-record-for-multi-location-not-syncreplicate)
 - Proven by: [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search)
 - Verification: **suspect** — TC-501 and TC-503 cover centralized record and search, but appointment history UI showing cross-location visits lacks explicit verification. Verified 2024-04-10.
+- Confirmed by: Sarah Chen (PM Lead), 2024-04-10
 
 ### US-010: Location-aware check-in
 **As a** patient,
@@ -237,6 +246,7 @@
   - [ADR-005: Centralized Database](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication) (location scoping model)
 - Proven by: [TC-502](../quality/test-suites.md#tc-502-location-aware-kiosk), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed)
 - Verification: **proven** — TC-502 through TC-504 cover all 4 AC. Verified 2024-04-10.
+- Confirmed by: Sarah Chen (PM Lead), 2024-04-10
 
 ---
 
@@ -265,6 +275,7 @@
   - [ADR-006: OCR Service](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009: Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records)
 - Proven by: [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-803](../quality/test-suites.md#tc-803-photo-capture--camera-permission-denied), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile), [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff)
 - Verification: **suspect** — TC-801 through TC-805 cover primary insurance flow, but secondary insurance card photo capture and client-side blurry image detection are untested. Verified 2024-04-15.
+- Confirmed by: Alex Kim (Engineering), 2024-04-15
 
 ---
 
@@ -291,6 +302,7 @@
   - Decision: [DEC-008: Digitization pipeline](decision-log.md#dec-008-riverside-paper-records--digitization-pipeline-not-bulk-data-entry)
 - Proven by: [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1008](../quality/test-suites.md#tc-1008-first-visit-after-migration--patient-confirmation), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
 - Verification: **suspect** — TC-1001, TC-1002, TC-1007 through TC-1009 cover core import and rollback. Gaps: medication frequency mapping (BID -> twice_daily), batch review flow, and migration dashboard live counts untested. Verified 2024-04-18.
+- Confirmed by: Sarah Chen (PM Lead), 2024-04-18
 
 ### US-013: Duplicate patient detection and merge
 **As a** clinic administrator,
@@ -315,6 +327,7 @@
   - Decision: [DEC-006: No auto-merge](decision-log.md#dec-006-duplicate-detection-requires-staff-confirmation--no-auto-merge)
 - Proven by: [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1004](../quality/test-suites.md#tc-1004-duplicate-detection--no-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
 - Verification: **proven** — TC-1003 through TC-1006, TC-1010, TC-1011 cover all 6 AC including no-auto-merge. Verified 2024-04-18.
+- Confirmed by: Chen Wei (QA Lead), 2024-04-18
 
 ---
 
@@ -338,6 +351,7 @@
 - Proven by: [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry)
 - Bug report: [BUG-001](../quality/bug-reports.md#bug-001-kiosk-confirmation-shows-green-checkmark-but-receptionist-sees-nothing)
 - Verification: **proven** — TC-201 through TC-203 passing, ADR-001 WebSocket + polling fallback verified end-to-end. Verified 2024-03-18.
+- Confirmed by: Chen Wei (QA Lead), 2024-03-18
 
 ### BUG-002: Data leak — previous patient's data visible on scan
 **Priority:** P0 (Security)
@@ -359,6 +373,7 @@
 - Proven by: [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage) through [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
 - Bug report: [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan)
 - Verification: **proven** — TC-301 through TC-305 passing, ADR-002 session purge protocol verified including DOM inspection and penetration test. Verified 2024-03-20.
+- Confirmed by: Dr. Martinez (Medical Director), 2024-03-20
 
 ### BUG-003: Concurrent edit causes silent data loss
 **Priority:** P1
@@ -379,3 +394,4 @@
 - Proven by: [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection) through [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users)
 - Bug report: [BUG-003](../quality/bug-reports.md#bug-003-concurrent-edit-by-two-receptionists-causes-silent-data-loss)
 - Verification: **proven** — TC-701 through TC-705 passing, ADR-003 optimistic concurrency control verified with multi-user scenarios. Verified 2024-03-22.
+- Confirmed by: Chen Wei (QA Lead), 2024-03-22

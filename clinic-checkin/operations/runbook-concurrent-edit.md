@@ -15,6 +15,7 @@
 | **Watches:** | [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) — version field enforcement, [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | **Proves:** | [US-004: Concurrent edit safety](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) — no silent data loss |
 | **Detects:** | [TC-701: Conflict detection](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-705: Same field conflict](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users) failing in production |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — walked through Scenario A (frequent conflicts) and Scenario B (stale cache) in staging |
 
 ---
 

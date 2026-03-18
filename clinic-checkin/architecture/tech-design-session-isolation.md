@@ -5,6 +5,7 @@
 **Flows:** [4. Data Leak Prevention](../experience/user-flows.md#4-data-leak-prevention--between-patients-bug-002-fix)
 **Tested by:** [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
 **Monitored by:** [Data Leak Detected (P0)](../operations/monitoring-alerting.md#p0----page-immediately-any-time), [security_session_isolation_failure metric](../operations/monitoring-alerting.md#check-in-service)
+**Confirmed by:** Priya Patel (Senior Engineer), 2024-11-05
 
 ---
 

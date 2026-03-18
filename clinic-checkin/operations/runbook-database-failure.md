@@ -5,6 +5,17 @@
 **Last tested:** 2026-03-17 — Type A (PgBouncer restart) and Type B (RDS failover) exercised in staging. Type C (manual promote) and Type D (storage full) verified as documentation-only.
 **Last triggered:** Never in production.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by** | Alert: [Database Unreachable](./monitoring-alerting.md#p0----page-immediately-any-time) (`pg_up == 0` for 30s) |
+| **Caused by** | PgBouncer failure, PostgreSQL primary crash, storage exhaustion, connection limit reached, or replication failure |
+| **Watches** | [PostgreSQL Primary](../architecture/architecture.md#database), [Read Replica](../architecture/architecture.md#database), [PgBouncer](../architecture/architecture.md#connection-pooling-round-9), [Data Model](../architecture/data-model.md) |
+| **Proves** | [US-006: Peak-hour performance](../product/user-stories.md#us-006-peak-hour-check-in-performance) — system availability, [US-002: Receptionist sees confirmed data](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) — data freshness |
+| **Detects** | [TC-905: Backend unreachable](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) in production |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — exercised Type A (PgBouncer restart) and Type B (RDS failover) in staging |
+
 ---
 
 ## Detection

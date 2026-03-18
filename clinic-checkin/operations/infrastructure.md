@@ -17,6 +17,7 @@ Owner: DevOps
 | PgBouncer | [architecture.md — Connection Pooling](../architecture/architecture.md#connection-pooling-round-9) |
 | **Monitored by** | [monitoring-alerting.md](./monitoring-alerting.md) |
 | **Deployed via** | [deployment-procedure.md](./deployment-procedure.md) |
+| **Confirmed by** | Jordan Lee (DevOps Lead), 2026-03-17 — verified all component references, capacity numbers, and network topology against production |
 
 ---
 

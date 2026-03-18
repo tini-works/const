@@ -17,6 +17,7 @@ This runbook covers any incident where one patient's PHI is exposed to another p
 | **Watches:** | [Check-In Service session isolation](../architecture/architecture.md#check-in-service-core), [Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) |
 | **Proves:** | [US-003: Secure patient identification on scan](../product/user-stories.md#us-003-secure-patient-identification-on-scan) — no PHI leakage between sessions |
 | **Detects:** | [TC-301: Sequential patients no leakage](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302: Rapid scans](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303: Sub-second timing](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304: DOM inspection](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305: Back button](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) — any of these failing in production |
+| **Confirmed by** | Jordan Lee (DevOps Lead), 2026-03-17 — tabletop exercise with BUG-002 scenario, HIPAA assessment steps reviewed with compliance officer |
 
 ---
 

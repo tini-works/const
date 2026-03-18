@@ -64,3 +64,4 @@ Centralized patient records accessible from any location. Each location has its 
 | Flows | [Flow 11: Multi-Location Check-In](../experience/user-flows.md#11-multi-location-check-in), [Flow 12: Mobile Multi-Location](../experience/user-flows.md#12-mobile-check-in--multi-location) |
 | API | [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) (location_id filter), [POST /checkins](../architecture/api-spec.md#post-checkins) (location_id), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id) |
 | Tests | [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency), [TC-502](../quality/test-suites.md#tc-502-location-aware-kiosk), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed) |
+| Confirmed by | Sarah Chen (PM Lead), 2024-02-15 |

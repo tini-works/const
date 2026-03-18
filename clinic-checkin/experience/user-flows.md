@@ -9,7 +9,9 @@ Journey maps for all user types and scenarios. Covers happy paths, error paths, 
 | Trace | Link |
 |-------|------|
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [E1](../product/epics.md#e1-returning-patient-recognition), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins](../architecture/api-spec.md#post-checkins), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 The core flow. Patient has visited before. Data is on file.
 
@@ -74,7 +76,9 @@ Patient arrives at clinic
 | Trace | Link |
 |-------|------|
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid), [POST /checkins](../architecture/api-spec.md#post-checkins), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-103](../quality/test-suites.md#tc-103-new-patient--kiosk-check-in) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 Patient has never visited. No data on file.
 
@@ -130,7 +134,9 @@ Patient arrives at clinic
 | Trace | Link |
 |-------|------|
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (card_scan + name_search), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-105](../quality/test-suites.md#tc-105-card-scan--no-matching-record) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 ```
 Patient scans card
@@ -163,7 +169,9 @@ Patient scans card
 | Trace | Link |
 |-------|------|
 | Traced from | [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [Check-In Service](../architecture/architecture.md#check-in-service-core) (session management), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) |
 | Proven by | [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) |
+| Confirmed by | Jamie Park (Design Lead), 2024-11-05 |
 
 ```
 Patient A completes check-in
@@ -215,7 +223,9 @@ Patient A's success screen (countdown at 6 seconds)
 | Trace | Link |
 |-------|------|
 | Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-15 |
 
 ```
 Patient taps "Confirm and check in"
@@ -254,7 +264,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [POST /mobile-checkin/send-link](../architecture/api-spec.md#post-mobile-checkinsend-link), [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 ```
   24 hours before appointment:
@@ -312,7 +324,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [PATCH /checkins/{id}/progress](../architecture/api-spec.md#patch-checkinsidprogress), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 ```
   Patient opens link, verifies identity
@@ -348,7 +362,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [POST /checkins](../architecture/api-spec.md#post-checkins) (409 already_checked_in), [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-405](../quality/test-suites.md#tc-405-mobile-then-kiosk--duplicate-prevention) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 ```
   Patient completes mobile check-in
@@ -376,7 +392,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
+| Matched by | [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [GET /patients/{id}/insurance/{type}/photo/status/{processing_id}](../architecture/api-spec.md#get-patientsidinsurancetypephotostatusprocessing_id), [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [OCR Service](../architecture/architecture.md#ocr-service-round-8) |
 | Proven by | [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-803](../quality/test-suites.md#tc-803-photo-capture--camera-permission-denied), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-15 |
 
 ```
   Patient is on Insurance Review step (kiosk or mobile)
@@ -430,7 +448,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (version conflict 409), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-10 |
 
 ```
   Receptionist A opens patient record (version 5)
@@ -477,7 +497,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E3](../product/epics.md#e3-multi-location-support) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue), [GET /dashboard/search](../architecture/api-spec.md#get-dashboardsearch), [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency), [TC-502](../quality/test-suites.md#tc-502-location-aware-kiosk), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search) |
+| Confirmed by | Sarah Chen (PM), 2024-11-12 |
 
 ```
   Patient has visited Location A before.
@@ -514,7 +536,9 @@ Patient taps "Confirm and check in"
 | Trace | Link |
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E2](../product/epics.md#e2-mobile-check-in), [E3](../product/epics.md#e3-multi-location-support) |
+| Matched by | [POST /mobile-checkin/send-link](../architecture/api-spec.md#post-mobile-checkinsend-link), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus), [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed) |
+| Confirmed by | Jamie Park (Design Lead), 2024-11-12 |
 
 ```
   Patient has appointments at Location A and Location B.
@@ -541,7 +565,9 @@ If a patient has two appointments on the same day at different locations, they r
 | Trace | Link |
 |-------|------|
 | Traced from | [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [ADR-010](../architecture/adrs.md#adr-010-migration-pipeline-architecture--batch-import-with-rollback), [Migration Service](../architecture/architecture.md#migration-service-round-10) |
 | Proven by | [TC-1008](../quality/test-suites.md#tc-1008-first-visit-after-migration--patient-confirmation) |
+| Confirmed by | Sarah Chen (PM), 2024-12-22 |
 
 ```
   Riverside patient record migrated into the system
@@ -591,7 +617,9 @@ If a patient has two appointments on the same day at different locations, they r
 | Trace | Link |
 |-------|------|
 | Traced from | [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
+| Matched by | [POST /migration/batches/{batch_id}/import](../architecture/api-spec.md#post-migrationbatchesbatch_idimport), [GET /migration/duplicates/{id}](../architecture/api-spec.md#get-migrationduplicatesid), [POST /migration/duplicates/{id}/resolve](../architecture/api-spec.md#post-migrationduplicatesidresolve), [ADR-008](../architecture/adrs.md#adr-008-duplicate-detection-algorithm-for-riverside-migration), [Migration Service](../architecture/architecture.md#migration-service-round-10) |
 | Proven by | [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification) |
+| Confirmed by | Sarah Chen (PM), 2024-12-22 |
 
 ```
   Migration import runs for a batch of Riverside records
@@ -648,7 +676,9 @@ If a patient has two appointments on the same day at different locations, they r
 | Trace | Link |
 |-------|------|
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-18 |
 
 ```
   Monday 8:15 AM — 35 patients checking in simultaneously

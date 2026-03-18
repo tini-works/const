@@ -23,6 +23,7 @@
 | **API changes** | [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete) (sync_status field), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id) (ack mechanism) |
 | **Regression tests** | [TC-201](test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](test-suites.md#tc-204-dashboard-real-time-update--websocket-push) |
 | **Production monitors** | [Sync Success Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard), [Sync Failure Rate High](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [WebSocket Connections](../operations/monitoring-alerting.md#1-operations-overview-primary-dashboard) |
+| **Confirmed by** | Li Zhang (QA Engineer), 2024-03-10 |
 
 ### Summary
 Patient completed kiosk check-in, saw green confirmation checkmark, but the receptionist had no data on her screen. Patient was asked to fill out a paper form despite having "successfully" checked in at the kiosk.
@@ -66,6 +67,14 @@ Two specific failures:
 ### Post-Mortem Notes
 The fundamental mistake was showing a success state based on a partial operation. "Saved to DB" is not the same as "receptionist can see it." The fix gates the success indicator on the thing the patient actually cares about: the receptionist knows they're checked in. Honest feedback (yellow warning) is better than false confidence (green checkmark).
 
+### Preventive Action
+- Added: WebSocket ack mechanism — confirmation state now requires dashboard acknowledgment, not just DB write (TC-201, TC-202)
+- Added: polling fallback with automatic reconnection so silent WebSocket drops are self-healing (TC-203, TC-204)
+- Added: heartbeat + pong timeout (30s/10s) to detect dead connections before they cause missed updates
+- Rule: any new user-facing "success" state must be gated on end-to-end delivery confirmation, not intermediate persistence — reviewed as part of API contract sign-off
+- Rule: all real-time push channels require an ack mechanism; fire-and-forget is prohibited for state-critical messages
+- Traced to: [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), TC-201 through TC-204, [monitoring-alerting.md Sync Failure Rate](../operations/monitoring-alerting.md#p1----notify-during-business-hours)
+
 ---
 
 ## BUG-002: Previous Patient's Data Briefly Visible on Kiosk After Card Scan
@@ -88,6 +97,7 @@ The fundamental mistake was showing a success state based on a partial operation
 | **Screens affected** | [Screen 1.2 Session Transition](../experience/screen-specs.md#12-session-transition-screen) (added as safety barrier), [Screen 1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen) (security note added) |
 | **Regression tests** | [TC-301](test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session) |
 | **Production monitors** | [Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time) (`security_session_isolation_failure > 0` — pages immediately) |
+| **Confirmed by** | Chen Wei (QA Lead), 2024-03-08 |
 
 ### Summary
 A patient scanned their card at the kiosk and briefly saw another patient's name and allergies on screen before the display switched to their own data. The previous patient's PHI (name and allergy information) was visible for approximately 200-400 milliseconds. This is a data exposure incident and a potential HIPAA breach.
@@ -153,6 +163,15 @@ This bug exposed a fundamental architectural gap: the kiosk was built as a singl
 
 **Classification:** This fix is a security control. Any code change to the kiosk session lifecycle must be reviewed against the Session Purge Protocol. Regressions on session isolation are treated as security incidents, not bugs.
 
+### Preventive Action
+- Added: three-layer Session Purge Protocol (state reset + DOM destruction + transition screen barrier) as mandatory kiosk architecture (TC-301 through TC-305)
+- Added: TC-303 sub-second automated frame inspection to CI gate — runs on every kiosk PR
+- Added: TC-304 DOM inspection test to CI gate — asserts zero patient data in DOM/storage after session end
+- Rule: kiosk session lifecycle changes require security review against ADR-002 Session Purge Protocol before merge
+- Rule: session isolation regressions are classified as P0 security incidents, not functional bugs
+- Rule: all new kiosk components must mount inside the SessionBoundary (keyed component tree) — enforced by lint rule
+- Traced to: [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation), TC-301 through TC-305, [monitoring-alerting.md Data Leak Detected](../operations/monitoring-alerting.md#p0----page-immediately-any-time)
+
 ---
 
 ## BUG-003: Concurrent Edit by Two Receptionists Causes Silent Data Loss
@@ -176,6 +195,7 @@ This bug exposed a fundamental architectural gap: the kiosk was built as a singl
 | **API changes** | [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid) (version field required, 409 conflict response added) |
 | **Regression tests** | [TC-701](test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-704](test-suites.md#tc-704-no-conflict--normal-save), [TC-705](test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](test-suites.md#tc-1201-patch-patientsid--version-required) |
 | **Production monitors** | [Version Conflicts Today](../operations/monitoring-alerting.md#4-check-in-flow-dashboard) |
+| **Confirmed by** | Li Zhang (QA Engineer), 2024-03-10 |
 
 ### Summary
 Two receptionists simultaneously opened and edited the same patient record (Mrs. Rodriguez). Receptionist A updated the insurance payer. Receptionist B updated the phone number. Both clicked Save. Receptionist A's save succeeded, but Receptionist B's save also "succeeded" — silently overwriting Receptionist A's insurance change. The insurance update was lost without any notification to either party.
@@ -222,3 +242,12 @@ No concurrency control mechanism existed on the patient record. The API accepted
 This is a textbook lost-update bug that should have been prevented from the start. Any multi-user system with shared mutable state needs a concurrency control strategy. For a clinic system where data integrity has patient safety implications (e.g., lost insurance update could delay treatment authorization), the "last write wins" model is unacceptable.
 
 The decision to use record-level (not field-level) optimistic locking is a deliberate trade-off: it produces false-positive conflicts when two users edit different fields on the same record. But the resolution flow is fast (review, re-apply), and the alternative (field-level tracking) adds significant complexity for a rare scenario. See [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field) for the full rationale.
+
+### Preventive Action
+- Added: concurrent-write tests to CI gate (TC-701 through TC-705)
+- Added: ADR-003 mandates `version` field on all mutable entities — PATCH without version returns 400
+- Added: TC-1201 API contract test enforces version requirement at the contract level
+- Rule: new shared-mutable-state features require a concurrency strategy documented in an ADR before implementation begins
+- Rule: any new mutable entity table must include a `version INTEGER NOT NULL DEFAULT 1` column — enforced by migration review checklist
+- Rule: API endpoints accepting writes to shared records must return 409 with `conflicting_changes` on version mismatch, not silent overwrite
+- Traced to: [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), TC-701 through TC-705, TC-1201, [test-plan.md entry criteria](test-plan.md#4-entry-and-exit-criteria)

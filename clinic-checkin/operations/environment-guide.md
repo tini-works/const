@@ -3,6 +3,14 @@
 Last updated: 2026-03-17
 Owner: DevOps
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Traced from** | [infrastructure.md](./infrastructure.md) — compute, database, cache, and storage configuration referenced throughout |
+| **Matched by** | [deployment-procedure.md](./deployment-procedure.md) — deploy targets and secrets management align with environments defined here |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — verified local, staging, and production setup instructions against running environments |
+
 ---
 
 ## Environments

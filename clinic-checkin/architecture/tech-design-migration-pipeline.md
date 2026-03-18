@@ -5,6 +5,7 @@
 **Flows:** [13. First Visit After Migration](../experience/user-flows.md#13-riverside-migration--first-visit-after-migration), [14. Duplicate Detection Staff Review](../experience/user-flows.md#14-duplicate-detection--staff-review-riverside)
 **Tested by:** [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1004](../quality/test-suites.md#tc-1004-duplicate-detection--no-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1007](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1008](../quality/test-suites.md#tc-1008-first-visit-after-migration--patient-confirmation), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline), [TC-1010](../quality/test-suites.md#tc-1010-duplicate-detection--near-miss-below-threshold), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
 **Monitored by:** [Migration Dashboard](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+**Confirmed by:** Alex Kim (Tech Lead), 2024-12-22
 
 ---
 

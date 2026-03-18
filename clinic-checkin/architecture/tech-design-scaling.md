@@ -5,6 +5,7 @@
 **Flows:** [15. Peak Load Degraded Experience](../experience/user-flows.md#15-peak-load-degraded-experience-round-9)
 **Tested by:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable)
 **Monitored by:** [p95 Response Time, Concurrent Sessions, DB Pool Utilization, Cache Hit Rate, Read Replica Lag](../operations/monitoring-alerting.md#p1----notify-during-business-hours); [Database Dashboard](../operations/monitoring-alerting.md#2-database-dashboard); [Cache Dashboard](../operations/monitoring-alerting.md#3-cache-dashboard-redis)
+**Confirmed by:** Alex Kim (Tech Lead), 2024-12-15
 
 ---
 

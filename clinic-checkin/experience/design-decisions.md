@@ -7,6 +7,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-001: Mandatory Session Transition Screen (not just a tech fix)
 
 **Triggered by:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan)
+**Confirmed by:** Jamie Park (Design Lead), 2024-11-05
 
 **PM said:** BUG-002 is a backend/session issue — fix the data leak.
 
@@ -21,6 +22,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-002: "Confirm and check in" requires end-to-end sync proof
 
 **Triggered by:** [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data)
+**Confirmed by:** Jamie Park (Design Lead), 2024-10-15
 
 **PM said:** BUG-001 — kiosk confirmation should sync to receptionist.
 
@@ -35,6 +37,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-003: Medications step is non-skippable but designed to be fast
 
 **Triggered by:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in)
+**Confirmed by:** Sarah Chen (PM), 2024-11-20
 
 **PM said:** Medication confirmation is mandatory per state regulation. Cannot be skipped.
 
@@ -55,6 +58,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-004: Mobile check-in uses one-step-per-screen, not a single long form
 
 **Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
+**Confirmed by:** Jamie Park (Design Lead), 2024-10-28
 
 **PM said:** Mobile check-in follows the same flow as kiosk — demographics, insurance, allergies, medications.
 
@@ -69,6 +73,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-005: Edits use bottom-sheet on mobile, inline on kiosk
 
 **Triggered by:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
+**Confirmed by:** Jamie Park (Design Lead), 2024-10-28
 
 **PM didn't specify** how editing should work on different surfaces.
 
@@ -83,6 +88,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-006: Side-by-side comparison for duplicate review, not a diff list
 
 **Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition)
+**Confirmed by:** Sarah Chen (PM), 2024-12-22
 
 **PM said:** Duplicate detection requires staff review with confidence scores. Staff can merge, keep separate, or flag.
 
@@ -100,6 +106,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-007: Skeleton screens instead of spinners for data loading
 
 **Triggered by:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition)
+**Confirmed by:** Jamie Park (Design Lead), 2024-12-18
 
 **PM said (via US-006):** System must remain responsive during peak hours. Show a loading state, not a frozen screen.
 
@@ -114,6 +121,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-008: No "currently being edited by" indicator
 
 **Triggered by:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss)
+**Confirmed by:** Jamie Park (Design Lead), 2024-12-10
 
 **PM said (BUG-003):** Optimistic concurrency control. Detect conflicts on save.
 
@@ -131,6 +139,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-009: Kiosk auto-return countdown is visible and interruptible
 
 **Triggered by:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan)
+**Confirmed by:** Jamie Park (Design Lead), 2024-11-05
 
 **PM didn't specify** what happens after check-in completion on the kiosk.
 
@@ -147,6 +156,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-010: Migration notice is informational, not alarming
 
 **Triggered by:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [E5](../product/epics.md#e5-riverside-practice-acquisition)
+**Confirmed by:** Sarah Chen (PM), 2024-12-22
 
 **PM said:** First visit after Riverside migration should prompt patient to review all migrated data.
 
@@ -161,6 +171,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-011: Mobile session timeout at 5 minutes, with warning at 4
 
 **Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
+**Confirmed by:** Jamie Park (Design Lead), 2024-10-28
 
 **PM said:** HTTPS, session timeout, no data cached on device after completion.
 
@@ -179,6 +190,7 @@ Where I pushed back on PM, where I added requirements PM didn't specify, trade-o
 ## DD-012: Search always searches all locations
 
 **Triggered by:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E3](../product/epics.md#e3-multi-location-support)
+**Confirmed by:** Sarah Chen (PM), 2024-11-12
 
 **PM said:** Cross-location search as a should-have for staff.
 
@@ -197,6 +209,7 @@ Two different tools for two different needs. They don't need to be coupled.
 ## DD-013: Confidence scores are visible but not decisive
 
 **Triggered by:** [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition)
+**Confirmed by:** Sarah Chen (PM), 2024-12-22
 
 **PM said:** Duplicate detection surfaces potential matches with confidence scores. No auto-merge.
 
@@ -215,6 +228,7 @@ Two different tools for two different needs. They don't need to be coupled.
 ## DD-014: "Already checked in" kiosk message for mobile-first patients
 
 **Triggered by:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in)
+**Confirmed by:** Jamie Park (Design Lead), 2024-10-28
 
 **PM said:** If the patient checks in via mobile and also tries kiosk, the system recognizes them and skips redundant steps.
 

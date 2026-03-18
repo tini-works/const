@@ -15,6 +15,7 @@ Owner: DevOps
 | Frontend SPAs | [Architecture — Clients](../architecture/architecture.md#system-context) | [infrastructure.md — Kiosks](./infrastructure.md#kiosks-per-location) |
 | **Post-deploy monitoring:** | [monitoring-alerting.md](./monitoring-alerting.md) — error rate auto-rollback ties to [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) |
 | **Hotfix process references:** | [BUG-002 class](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) for P0 deploy procedure |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — walked full pipeline, verified rollback matrix, staging deploy tested end-to-end |
 
 ---
 
@@ -378,10 +379,170 @@ If a migration breaks production and reverse migration isn't ready:
 
 > **Infra:** [infrastructure.md — Kiosks](./infrastructure.md#kiosks-per-location), [CDN](./infrastructure.md#network-topology) · **Session isolation critical:** changes to kiosk SPA must be reviewed against [ADR-002 Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) per [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan) post-mortem
 
-- Static files deployed to CDN
-- Cache invalidation on deploy (CloudFront invalidation or equivalent)
-- After deploy: hard-refresh a kiosk browser to pick up new assets
-- Version check: SPAs include a version heartbeat; if server version differs, force reload
+#### Build and Deploy
+
+Static assets are built in CI and deployed to CDN (CloudFront or equivalent). Each SPA has its own build and deploy step.
+
+```bash
+# 1. Build all SPAs (CI step)
+npm run build:kiosk       # → dist/kiosk/
+npm run build:mobile      # → dist/mobile/
+npm run build:dashboard   # → dist/dashboard/
+
+# 2. Upload to S3 (CDN origin)
+aws s3 sync dist/kiosk/ s3://clinic-checkin-spa/kiosk/ --delete
+aws s3 sync dist/mobile/ s3://clinic-checkin-spa/mobile/ --delete
+aws s3 sync dist/dashboard/ s3://clinic-checkin-spa/dashboard/ --delete
+```
+
+#### CDN Cache Invalidation
+
+Every SPA deploy **must** invalidate the CDN cache. Stale assets cause version mismatches between client and API.
+
+```bash
+# Invalidate all SPA paths on CloudFront
+aws cloudfront create-invalidation \
+  --distribution-id $CDN_DISTRIBUTION_ID \
+  --paths "/kiosk/*" "/mobile/*" "/dashboard/*"
+
+# Verify invalidation completed (takes 30-90 seconds)
+aws cloudfront get-invalidation \
+  --distribution-id $CDN_DISTRIBUTION_ID \
+  --id $INVALIDATION_ID \
+  | jq '.Invalidation.Status'
+# Should return "Completed"
+
+# Alternative: if only one SPA changed, invalidate selectively
+aws cloudfront create-invalidation \
+  --distribution-id $CDN_DISTRIBUTION_ID \
+  --paths "/kiosk/*"
+```
+
+**Cache headers on assets:**
+- `index.html`: `Cache-Control: no-cache` (always revalidated)
+- Hashed assets (`*.{hash}.js`, `*.{hash}.css`): `Cache-Control: public, max-age=31536000, immutable`
+- `version.json`: `Cache-Control: no-cache`
+
+#### Version Heartbeat Verification
+
+Each SPA includes a `/version.json` file and a version heartbeat mechanism:
+
+```bash
+# After deploy, verify each SPA is serving the new version
+curl -s https://checkin.clinic.example.com/version.json | jq .
+# → {"version": "1.4.2", "build": "a1b2c3d", "deployed_at": "2026-03-17T10:00:00Z"}
+
+curl -s https://dashboard.clinic.example.com/version.json | jq .
+# → same format
+
+# Compare against the expected version (from CI build output)
+# If versions don't match, CDN invalidation may not have completed
+```
+
+The SPAs poll `/version.json` every 60 seconds. If the server version differs from the loaded version, the app shows a "New version available" banner and triggers a hard reload after the current user action completes. On kiosks, the reload is immediate (no user action in progress between patients).
+
+#### Rollback Procedure for Static Assets
+
+```bash
+# 1. Identify the previous good build artifacts
+#    Check CI/CD for the previous successful deploy's S3 snapshot
+#    Or use S3 versioning to restore:
+
+# List versions of index.html to find the previous one
+aws s3api list-object-versions \
+  --bucket clinic-checkin-spa \
+  --prefix kiosk/index.html \
+  --max-items 5 | jq '.Versions[] | {VersionId, LastModified}'
+
+# 2. Restore previous version (copy old version over current)
+aws s3api copy-object \
+  --bucket clinic-checkin-spa \
+  --copy-source clinic-checkin-spa/kiosk/index.html?versionId=$PREVIOUS_VERSION_ID \
+  --key kiosk/index.html
+
+# 3. Invalidate CDN cache for the rolled-back SPA
+aws cloudfront create-invalidation \
+  --distribution-id $CDN_DISTRIBUTION_ID \
+  --paths "/kiosk/*"
+
+# 4. Verify rollback
+curl -s https://checkin.clinic.example.com/version.json | jq .version
+# Should show the previous version
+
+# 5. For full rollback (all assets, not just index.html):
+#    Re-deploy from the previous CI build artifacts:
+#    In CI/CD, re-run the SPA deploy job with the previous git SHA
+```
+
+Rollback time target: < 3 minutes from decision to CDN serving old assets.
+
+#### Post-Deploy Smoke Tests
+
+**Kiosk SPA:**
+
+```bash
+# 1. Verify SPA loads
+curl -s -o /dev/null -w "%{http_code}" https://checkin.clinic.example.com
+# Should return 200
+
+# 2. Verify version.json is current
+curl -s https://checkin.clinic.example.com/version.json | jq .version
+
+# 3. On a kiosk device (or staging kiosk):
+#    - Hard-refresh the browser (Ctrl+Shift+R or MDM-triggered restart)
+#    - Scan TEST-CARD-001 → verify patient lookup works
+#    - Complete a test check-in flow end-to-end
+#    - Verify session purge: scan TEST-CARD-002 immediately after → no data from TEST-CARD-001 visible
+```
+
+**Mobile SPA:**
+
+```bash
+# 1. Verify SPA loads on mobile viewport
+curl -s -o /dev/null -w "%{http_code}" https://checkin.clinic.example.com/mobile/
+
+# 2. Test token redemption flow:
+#    - Generate a test mobile token
+#    - Open the mobile link in a phone browser
+#    - Verify the check-in flow loads with correct patient context
+#    - Complete the check-in and verify dashboard receives the event
+```
+
+**Dashboard SPA:**
+
+```bash
+# 1. Verify SPA loads
+curl -s -o /dev/null -w "%{http_code}" https://dashboard.clinic.example.com
+
+# 2. Open in a browser:
+#    - Verify WebSocket connection establishes (check browser dev tools → Network → WS)
+#    - Verify patient queue loads for the selected location
+#    - Trigger a test check-in → verify dashboard updates in real time
+```
+
+#### Notification Service Rollback Considerations
+
+The Notification Service has stateful connections (WebSocket to dashboards, Redis pub/sub subscriptions) that require special handling during rollback:
+
+**WebSocket state:** Rolling back the Notification Service drops all active WebSocket connections. Dashboards automatically reconnect (exponential backoff 1s-30s) and fall back to polling. After rollback:
+
+```bash
+# Verify WebSocket connections re-establish
+curl -s https://api.clinic-checkin.example.com/metrics | grep ws_connections_active
+# Should show connections returning for each location with open dashboards (within 30-60 seconds)
+```
+
+**Redis pub/sub:** The Notification Service subscribes to Redis channels on startup. After a rollback restart, subscriptions are re-established automatically. Check that events flow:
+
+```bash
+# Verify pub/sub channels are active
+redis-cli -h $REDIS_HOST -p 6379 --tls PUBSUB CHANNELS 'checkin:*'
+# Should show channels for active locations
+
+# Verify event delivery: trigger a test check-in and confirm dashboard receives it
+```
+
+**In-flight notifications:** SMS/email delivery requests that were in-flight during the rollback may be lost. The Notification Service does not persist outbound message queue (Twilio/SendGrid are fire-and-forget). If a mobile check-in link SMS was being sent during the restart, the patient won't receive it. Staff can re-trigger from the dashboard.
 
 ---
 

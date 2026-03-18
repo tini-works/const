@@ -15,6 +15,7 @@
 | **Watches:** | [Migration Service](../architecture/architecture.md#migration-service-round-10), [OCR Service](../architecture/architecture.md#ocr-service-round-8), [Migration API endpoints](../architecture/api-spec.md#9-migration-round-10) |
 | **Proves:** | [US-012: Patient data migration](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013: Duplicate detection and merge](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge) |
 | **Detects:** | [TC-1001: Valid import](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002: Validation failures](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1003: Duplicate detection](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1007: Rollback](../quality/test-suites.md#tc-1007-migration-rollback), [TC-1009: OCR pipeline](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline) failing in production |
+| **Confirmed by** | Sam Rivera (SRE), 2026-03-17 — ran Type 1 (schema mapping) and Type 4 (transaction failure) against test batch in staging |
 
 ---
 

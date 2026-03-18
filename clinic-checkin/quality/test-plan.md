@@ -3,6 +3,7 @@
 **QA Lead:** QA Team
 **Last updated:** After Round 10
 **System:** Clinic Check-In (Kiosk, Mobile Web, Receptionist Dashboard, Admin Panel)
+**Confirmed by:** Chen Wei (QA Lead), 2024-03-10
 
 **Traceability:** This plan references [user stories](../product/user-stories.md), [screen specs](../experience/screen-specs.md), [API spec](../architecture/api-spec.md), [ADRs](../architecture/adrs.md), and [monitoring/alerting](../operations/monitoring-alerting.md). Test cases are in [test-suites.md](test-suites.md). Coverage analysis is in [coverage-report.md](coverage-report.md). Bug history is in [bug-reports.md](bug-reports.md).
 

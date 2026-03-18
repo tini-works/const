@@ -15,6 +15,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-105](../quality/test-suites.md#tc-105-card-scan--no-matching-record) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:**
 - Full-screen kiosk display (landscape, 1920x1080 typical)
@@ -53,6 +54,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [Check-In Service](../architecture/architecture.md#check-in-service-core) (session management) |
 | Proven by | [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection) |
+| Confirmed by | Jamie Park (Design Lead), 2024-11-05 |
 
 **Added in:** Round 4 (BUG-002 fix)
 
@@ -79,6 +81,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-106](../quality/test-suites.md#tc-106-identity-confirmation--rejection-thats-not-me) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:**
 - Header with clinic branding
@@ -110,6 +113,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-102](../quality/test-suites.md#tc-102-returning-patient--edit-demographics-during-check-in), [TC-103](../quality/test-suites.md#tc-103-new-patient--kiosk-check-in) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:**
 - Scrollable content area with section cards
@@ -160,6 +164,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E1](../product/epics.md#e1-returning-patient-recognition), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
 | Matched by | [PUT /patients/{id}/insurance/{type}](../architecture/api-spec.md#put-patientsidinsurancetype), [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [Check-In Service](../architecture/architecture.md#check-in-service-core), [OCR Service](../architecture/architecture.md#ocr-service-round-8) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:** Same shell as Demographics (progress bar, sticky footer). Step 2 of 5 highlighted.
 
@@ -198,6 +203,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
 | Matched by | [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [GET /patients/{id}/insurance/{type}/photo/status/{processing_id}](../architecture/api-spec.md#get-patientsidinsurancetypephotostatusprocessing_id), [OCR Service](../architecture/architecture.md#ocr-service-round-8) |
 | Proven by | [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-803](../quality/test-suites.md#tc-803-photo-capture--camera-permission-denied), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-15 |
 
 **Added in:** Round 8 (E4: Insurance Card Photo Capture)
 
@@ -233,6 +239,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /patients/{id}/allergies](../architecture/api-spec.md#post-patientsidallergies), [DELETE /patients/{id}/allergies/{allergy_id}](../architecture/api-spec.md#delete-patientsidallergiesallergy_id), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:** Same shell. Step 3 of 5.
 
@@ -271,6 +278,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in) |
 | Matched by | [POST /patients/{id}/medications](../architecture/api-spec.md#post-patientsidmedications), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-603](../quality/test-suites.md#tc-603-medication-confirmation--modified), [TC-604](../quality/test-suites.md#tc-604-medication-confirmation--confirmed-none) |
+| Confirmed by | Sarah Chen (PM), 2024-11-20 |
 
 **Added in:** Round 6 (E6: Compliance — Medication List)
 
@@ -328,6 +336,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-15 |
 
 **Layout:** Summary view with all sections collapsed but visible.
 
@@ -365,6 +374,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify) (name_search), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-08 |
 
 **Layout:**
 - Search input at top
@@ -385,6 +395,46 @@ All screens are specified by region, content, and states. Organized by feature a
 
 ---
 
+### 1.10 Kiosk Idle Timeout
+
+**Purpose:** Prompts an inactive patient to continue or restart, then purges the session on expiry to protect PHI.
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [Check-In Service](../architecture/architecture.md#check-in-service-core) (session management) |
+| Proven by | [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection) |
+| Confirmed by | Jamie Park (Design Lead), 2024-11-05 |
+
+**Triggered by:** 2 minutes of inactivity (no touch input) on any kiosk screen that contains patient data (Screens 1.3 through 1.8). Defined in [Interaction Specs Section 4.3](interaction-specs.md#43-timeout-behavior).
+
+**Layout:**
+- Modal overlay on top of the current screen
+- Background dimmed (0.5 opacity)
+- Centered dialog card, max-width 480px
+
+**Regions:**
+
+| Region | Content | Notes |
+|--------|---------|-------|
+| Title | "Are you still there?" | Large, accessible text (min 24px) |
+| Countdown | "This screen will reset in [30]..." | Visible countdown from 30 seconds, ticks down each second |
+| Primary action | "Yes, I'm still here" (primary button) | Resets the idle timer, dismisses the dialog, returns to the screen the patient was on |
+| Secondary action | "Start over" (secondary button) | Immediate session purge, return to welcome screen |
+
+**States:**
+
+| State | What the user sees |
+|-------|-------------------|
+| Counting down | Dialog visible with countdown ticking. Background screen dimmed but visible (patient can see they haven't lost their progress). |
+| Patient taps "Yes" | Dialog dismisses instantly. Idle timer resets. Patient continues where they left off. |
+| Patient taps "Start over" | Full session purge (same protocol as between-patient purge). Return to welcome screen. |
+| Countdown reaches 0 | Full session purge. Welcome screen shown. No patient data remains in DOM, state, or cache. |
+
+**Security:** On expiry, the session purge follows the same protocol as the between-patient purge (ADR-002): DOM clear, component state reset, cached data flush, API connections closed.
+
+---
+
 ## 2. Receptionist Dashboard
 
 ### 2.1 Receptionist Dashboard — Main View
@@ -396,6 +446,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins), [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [E1](../product/epics.md#e1-returning-patient-recognition), [E3](../product/epics.md#e3-multi-location-support) |
 | Matched by | [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue), [GET /dashboard/search](../architecture/api-spec.md#get-dashboardsearch), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-22 |
 
 **Layout:**
 - Top bar with location context and controls
@@ -457,6 +508,7 @@ All screens are specified by region, content, and states. Organized by feature a
 | Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-702](../quality/test-suites.md#tc-702-conflict-resolution--view-current-version), [TC-703](../quality/test-suites.md#tc-703-conflict-resolution--re-apply-my-changes), [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-10 |
 
 **Layout:** Slide-in panel from the right, ~40% screen width.
 
@@ -509,6 +561,7 @@ When a staff member opens this panel, the system records the record version. On 
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [POST /checkins](../architecture/api-spec.md#post-checkins), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in) (shared flow patterns) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-22 |
 
 **Flow:**
 1. Receptionist clicks "Check in walk-in" button (top bar)
@@ -535,6 +588,7 @@ All mobile screens are responsive web views, optimized for phones (360-428px wid
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-010](../product/user-stories.md#us-010-location-aware-check-in), [E2](../product/epics.md#e2-mobile-check-in), [E3](../product/epics.md#e3-multi-location-support) |
 | Matched by | [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-402](../quality/test-suites.md#tc-402-mobile--identity-verification-failure), [TC-403](../quality/test-suites.md#tc-403-mobile--expired-link), [TC-504](../quality/test-suites.md#tc-504-mobile-check-in--location-displayed) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 **Layout:** Single-column mobile layout. Clinic branding at top.
 
@@ -571,6 +625,7 @@ All mobile screens are responsive web views, optimized for phones (360-428px wid
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E2](../product/epics.md#e2-mobile-check-in), [E6](../product/epics.md#e6-compliance--medication-list-at-check-in) |
 | Matched by | [GET /patients/{id}](../architecture/api-spec.md#get-patientsid), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid), [PATCH /checkins/{id}/progress](../architecture/api-spec.md#patch-checkinsidprogress), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
 | Proven by | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume), [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 **Layout:** Single-column. One section per screen (not all-on-one-page like kiosk). Swipe or button navigation between steps.
 
@@ -607,6 +662,7 @@ Each step follows the same content and interaction model as the corresponding ki
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins), [E2](../product/epics.md#e2-mobile-check-in) |
 | Matched by | [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-407](../quality/test-suites.md#tc-407-mobile--already-checked-in-via-mobile) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 **Regions:**
 
@@ -622,6 +678,84 @@ Each step follows the same content and interaction model as the corresponding ki
 
 ---
 
+### 3.4 Mobile — Failed Attempts Lockout
+
+**Purpose:** After 3 failed identity verification attempts, the form is disabled and the patient is directed to call the clinic for help.
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
+| Proven by | [TC-402](../quality/test-suites.md#tc-402-mobile--identity-verification-failure) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
+
+**Triggered by:** 3 consecutive failed identity verification attempts on Screen 3.1. Defined in [Interaction Specs Section 3.1](interaction-specs.md#31-link-open--identity-verification).
+
+**Layout:** Single-column mobile layout. Replaces the identity verification form.
+
+**Regions:**
+
+| Region | Content | Notes |
+|--------|---------|-------|
+| Header | Clinic logo | Same branding as Screen 3.1 |
+| Icon | Lock icon | Visual indicator that the form is locked |
+| Message | "We weren't able to verify your identity." | Empathetic, not accusatory |
+| Help text | "Please contact the clinic for help:" | |
+| Phone number | Clinic phone number (e.g., "(555) 867-5309") | Tappable tel: link on mobile |
+| Subtext | "You can also check in at the kiosk when you arrive." | Alternative path |
+
+**States:**
+
+| State | What the user sees |
+|-------|-------------------|
+| Locked | Layout above. No form inputs visible. No way to retry from this screen. The identity verification form is fully removed from the DOM — not just disabled. |
+
+**Security:** The lockout is tied to the mobile check-in token, not a device cookie. Opening the same link in another browser still counts against the same attempt counter (server-side tracking).
+
+---
+
+### 3.5 Mobile — Session Timeout
+
+**Purpose:** Warns the patient before their mobile session expires due to inactivity, then shows an expiry screen requiring them to start over.
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
+| Proven by | [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
+
+**Timing:** 5-minute inactivity timeout with 1-minute warning. Defined in [Interaction Specs Section 3.5](interaction-specs.md#35-session-security-on-mobile) and [DD-011](design-decisions.md#dd-011-mobile-session-timeout-at-5-minutes-with-warning-at-4).
+
+**Warning banner (at 4 minutes of inactivity):**
+
+| Region | Content | Notes |
+|--------|---------|-------|
+| Banner | "Your session will expire in 1 minute due to inactivity" | Subtle banner at the top of the current screen. Yellow background (#FFF8E1). Any touch dismisses the banner and resets the timer. |
+
+The banner overlays the current review screen. The patient can continue their check-in by interacting with any element.
+
+**Expiry screen (at 5 minutes of inactivity):**
+
+| Region | Content | Notes |
+|--------|---------|-------|
+| Header | Clinic logo | Same branding |
+| Icon | Clock/timeout icon | |
+| Message | "Your session has expired for security." | Clear, not alarming |
+| Subtext | "Your progress has been saved. You can pick up where you left off." | Reassurance that data is not lost |
+| Action | "Start over" (primary button, full-width) | Returns to identity verification (Screen 3.1) |
+
+**States:**
+
+| State | What the user sees |
+|-------|-------------------|
+| Warning | Yellow banner visible at top of current screen. Rest of screen remains interactive. |
+| Expired | Full-screen expiry layout. No patient data visible. Session terminated in browser. |
+
+**Post-expiry cleanup:** Same as post-completion cleanup — no PHI in localStorage, sessionStorage, or cookies. Back button after expiry shows the expiry screen, not cached data.
+
+---
+
 ## 4. Admin Screens
 
 ### 4.1 Admin — Migration Dashboard
@@ -633,6 +767,7 @@ Each step follows the same content and interaction model as the corresponding ki
 | Traced from | [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
 | Matched by | [GET /migration/batches/{batch_id}](../architecture/api-spec.md#get-migrationbatchesbatch_id), [GET /migration/records](../architecture/api-spec.md#get-migrationrecords), [Migration Service](../architecture/architecture.md#migration-service-round-10) |
 | Proven by | [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records), [TC-1002](../quality/test-suites.md#tc-1002-emr-import--validation-failures), [TC-1008](../quality/test-suites.md#tc-1008-first-visit-after-migration--patient-confirmation) |
+| Confirmed by | Sarah Chen (PM), 2024-12-22 |
 
 **Added in:** Round 10 (E5: Riverside Acquisition)
 
@@ -671,6 +806,7 @@ Each step follows the same content and interaction model as the corresponding ki
 | Traced from | [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), [E5](../product/epics.md#e5-riverside-practice-acquisition) |
 | Matched by | [GET /migration/duplicates/{id}](../architecture/api-spec.md#get-migrationduplicatesid), [POST /migration/duplicates/{id}/resolve](../architecture/api-spec.md#post-migrationduplicatesidresolve), [Migration Service](../architecture/architecture.md#migration-service-round-10) |
 | Proven by | [TC-1003](../quality/test-suites.md#tc-1003-duplicate-detection--exact-match), [TC-1005](../quality/test-suites.md#tc-1005-staff-merge-review--field-level-merge), [TC-1006](../quality/test-suites.md#tc-1006-staff-review--keep-separate), [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification) |
+| Confirmed by | Sarah Chen (PM), 2024-12-22 |
 
 **Added in:** Round 10 (E5: Riverside Acquisition)
 
@@ -713,6 +849,7 @@ These states apply across ALL screens (kiosk, mobile, receptionist).
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Matched by | [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service) |
 | Proven by | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-18 |
 
 ### 5.1 Loading States
 
@@ -753,3 +890,41 @@ For every data-loading transition, a skeleton version of the target screen is sh
 - Skeleton appears instantly (no delay), content fills in when loaded
 
 This prevents the perception of freezing or broken UI during high-load periods.
+
+---
+
+### 5.5 Kiosk — Already Checked In
+
+**Purpose:** Friendly acknowledgment when a patient who already checked in via mobile scans their card at the kiosk. Prevents redundant check-in steps.
+
+| Trace | Link |
+|-------|------|
+| Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [E2](../product/epics.md#e2-mobile-check-in) |
+| Matched by | [POST /checkins](../architecture/api-spec.md#post-checkins) (409 already_checked_in response), [Check-In Service](../architecture/architecture.md#check-in-service-core) |
+| Proven by | [TC-405](../quality/test-suites.md#tc-405-mobile-then-kiosk--duplicate-prevention) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
+
+**Reached via:** [Flow 8: Mobile Check-In then Kiosk Arrival](user-flows.md#8-mobile-check-in-then-kiosk-arrival-duplicate-prevention). Design rationale in [DD-014](design-decisions.md#dd-014-already-checked-in-kiosk-message-for-mobile-first-patients).
+
+**Layout:**
+- Full-screen kiosk display (same shell as welcome screen)
+- Centered content area, max-width 800px
+
+**Regions:**
+
+| Region | Content | Notes |
+|--------|---------|-------|
+| Header | Clinic logo + location name | Same as welcome screen |
+| Icon | Green checkmark (large) | Consistent with the check-in success icon |
+| Primary message | "You're already checked in!" | Large text, min 24px |
+| Secondary message | "We received your information earlier. Please have a seat in the waiting area." | Friendly, reassuring |
+| Countdown | "Returning to start in [10]..." | Visible countdown, same pattern as post-check-in success |
+
+**States:**
+
+| State | What the user sees |
+|-------|-------------------|
+| Displayed | Layout above. 10-second auto-return countdown visible. Tapping the screen resets countdown to 10 (same interruptible pattern as Screen 1.8 success state). |
+| Countdown reaches 0 | Full session purge. Return to welcome screen. |
+
+**Flow:** Card scan -> Session Transition Screen -> Identity Confirmation (patient sees their name/DOB) -> system detects active mobile check-in -> this screen replaces the normal check-in flow. The patient still goes through identity confirmation so they know the kiosk read their card correctly.

@@ -12,6 +12,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 1: Core Kiosk Check-In (Round 1)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-101: Returning patient — happy path check-in
 - **Proves:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients) AC: scan retrieval, pre-populated data, confirm-all action, confirmation timestamp; [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5s
@@ -177,6 +178,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 2: Kiosk-to-Receptionist Sync — BUG-001 Fix (Round 2)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-201: Successful sync — green checkmark
 - **Proves:** [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data) AC: confirmed data appears within 5 seconds of patient tapping Confirm, all fields visible; [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) AC: after patient confirms, data appears on receptionist screen within 5s
@@ -262,6 +264,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 3: Session Isolation — BUG-002 Fix (Round 4)
 
 > **Last run:** 2024-03-08 | **Environment:** staging | **Result:** all pass | **Run by:** manual (Chen Wei, security review)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-03-08
 
 ### TC-301: Sequential patients — no data leakage
 - **Proves:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan) AC: no other patient's data is rendered, even transiently; session state is fully cleared before loading a new patient's data
@@ -393,6 +396,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 4: Mobile Check-In (Round 3)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-401: Mobile check-in — happy path
 - **Proves:** [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) AC: mobile-optimized web flow, identity verification, demographics/insurance/allergy/medication confirmation, check-in valid 24h before; [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) AC: channel shown, timestamp, confirmed data viewable
@@ -540,6 +544,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 5: Multi-Location (Round 5)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-501: Cross-location patient record — data consistency
 - **Proves:** [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access) AC: patient record is centralized, changes at Location A immediately visible at Location B, same pre-populated data
@@ -622,6 +627,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 6: Medication Compliance (Round 6)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-03-10
 
 ### TC-601: Medication step is mandatory — cannot skip
 - **Proves:** [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) AC: medication list is displayed as a mandatory step (cannot be skipped), applies to every visit
@@ -749,6 +755,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 7: Concurrent Edit Safety — BUG-003 Fix (Round 7)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-701: Two receptionists — conflict detection
 - **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: on save, if record has been modified since loaded, system blocks save and shows conflict notice with what changed and who changed it; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking, version mismatch blocks save with clear conflict message
@@ -858,6 +865,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 8: Insurance Card Photo Capture — OCR (Round 8)
 
 > **Last run:** 2024-03-10 | **Environment:** staging | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-801: Photo capture — happy path on kiosk
 - **Proves:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) AC: camera capture at kiosk, patient guided to capture front/back, OCR extracts fields, extracted fields shown for review, low-confidence flagged
@@ -964,6 +972,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 9: Performance — Peak Load (Round 9)
 
 > **Last run:** 2024-03-07 | **Environment:** staging (load-test cluster) | **Result:** all pass | **Run by:** manual (DevOps — James Park)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-03-07
 
 ### TC-901: 50 concurrent kiosk check-ins — response time
 - **Proves:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) AC: system handles 50 concurrent sessions, p95 < 3s, no freezes or timeouts
@@ -1067,6 +1076,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 10: Riverside Data Migration (Round 10)
 
 > **Last run:** 2024-03-09 | **Environment:** staging (migration sandbox) | **Result:** all pass | **Run by:** manual (migration team — Lisa Nguyen)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-03-09
 
 ### TC-1001: EMR import — valid records
 - **Proves:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside) AC: electronic records mapped and imported, migration report shows counts
@@ -1292,6 +1302,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 11: Accessibility
 
 > **Last run:** 2024-02-28 | **Environment:** staging | **Result:** all pass | **Run by:** manual (a11y review — Maria Santos)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-02-28
 
 ### TC-1101: Kiosk screen reader compatibility
 - **Proves:** Accessibility requirements (WCAG compliance, implicit in all user stories)
@@ -1351,6 +1362,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 12: API Contract Verification
 
 > **Last run:** 2024-03-10 | **Environment:** CI | **Result:** all pass | **Run by:** automated (CI)
+> **Confirmed by:** Li Zhang (QA Engineer), 2024-03-10
 
 ### TC-1201: PATCH /patients/{id} — version required
 - **Proves:** [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records) AC: optimistic locking, record version checked on save; [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) AC: optimistic locking

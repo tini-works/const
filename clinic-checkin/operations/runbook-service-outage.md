@@ -5,6 +5,17 @@
 **Last tested:** 2026-03-17 — Killed Check-In Service in staging, verified detection (alert within 90s), recovery (container restart < 2 min), and kiosk auto-reconnect.
 **Last triggered:** Never in production.
 
+### Traceability
+
+| Link | Reference |
+|------|-----------|
+| **Triggered by** | Alert: [Service Down](./monitoring-alerting.md#p0----page-immediately-any-time) (`up{job="checkin"} == 0` for 1 min) |
+| **Caused by** | Container crash (OOM, unhandled exception), load balancer misconfiguration, DNS/certificate expiry, or network/VPC issue |
+| **Watches** | [Check-In Service](../architecture/architecture.md#check-in-service-core), [Notification Service](../architecture/architecture.md#notification-service), [OCR Service](../architecture/architecture.md#ocr-service-round-8), [Migration Service](../architecture/architecture.md#migration-service-round-10) |
+| **Proves** | [US-006: Peak-hour performance](../product/user-stories.md#us-006-peak-hour-check-in-performance) — system uptime and availability |
+| **Detects** | [TC-905: Backend unreachable](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) failing in production |
+| **Confirmed by** | Jordan Lee (DevOps Lead), 2026-03-17 — killed Check-In Service in staging, verified detection, restart, and kiosk auto-reconnect |
+
 ---
 
 ## Detection

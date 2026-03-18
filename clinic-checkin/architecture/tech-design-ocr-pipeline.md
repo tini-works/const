@@ -5,6 +5,7 @@
 **Flows:** [9. Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture)
 **Tested by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-803](../quality/test-suites.md#tc-803-photo-capture--camera-permission-denied), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile), [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
 **Monitored by:** [OCR Service Slow alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [OCR Processing Time](../operations/monitoring-alerting.md#ocr-service)
+**Confirmed by:** Priya Patel (Senior Engineer), 2024-12-05
 
 ---
 

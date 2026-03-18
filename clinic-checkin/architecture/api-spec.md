@@ -25,6 +25,7 @@ Look up a patient by card scan or name search. Used by kiosk and receptionist.
 > **Matches:** Screen [1.1 Kiosk Welcome](../experience/screen-specs.md#11-kiosk-welcome-screen), Screen [1.9 Name Search](../experience/screen-specs.md#19-kiosk-name-search-screen), Screen [2.1 Dashboard Search](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Flows [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), [2. New Patient Kiosk](../experience/user-flows.md#2-new-patient--kiosk-check-in), [3. Card Scan Failures](../experience/user-flows.md#3-card-scan-failures)
 > **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-104](../quality/test-suites.md#tc-104-card-scan-failure--fallback-to-name-search), [TC-105](../quality/test-suites.md#tc-105-card-scan--no-matching-record), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-1203](../quality/test-suites.md#tc-1203-rate-limiting-on-patient-search)
 > **If this changes:** Screens 1.1, 1.9, 2.1 become suspect. TC-101, TC-104, TC-105, TC-902, TC-1203 need re-verification. Kiosk card scan flow and dashboard search are the primary blast radius.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-10-15
 
 **Request:**
 ```json
@@ -104,6 +105,7 @@ Mobile check-in identity verification.
 > **Matches:** Screen [3.1 Mobile Identity Verification](../experience/screen-specs.md#31-mobile--link-landing--identity-verification); Flow [6. Mobile Check-In Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path)
 > **Proven by:** [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-402](../quality/test-suites.md#tc-402-mobile--identity-verification-failure), [TC-1204](../quality/test-suites.md#tc-1204-mobile-token-expiry-enforcement)
 > **If this changes:** Screen 3.1 and mobile check-in flow become suspect. Token expiry and identity verification tests need re-run.
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-02
 
 **Request:**
 ```json
@@ -168,6 +170,7 @@ Full patient record. Used after identity confirmation.
 > **Matches:** Screens [1.4 Demographics](../experience/screen-specs.md#14-check-in-review-screen--demographics), [1.5 Insurance](../experience/screen-specs.md#15-check-in-review-screen--insurance), [1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications), [2.2 Patient Detail Panel](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications)
 > **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path), [TC-501](../quality/test-suites.md#tc-501-cross-location-patient-record--data-consistency)
 > **If this changes:** All review screens (1.4-1.7, 2.2, 3.2) become suspect. Response shape changes cascade to kiosk, mobile, and dashboard clients.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-10-15
 
 **Response (200):**
 ```json
@@ -251,6 +254,7 @@ Update patient record. Supports partial updates. Enforces optimistic locking.
 > **Matches:** Screens [1.4 Demographics Edit](../experience/screen-specs.md#14-check-in-review-screen--demographics), [2.2 Patient Detail Panel](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel); Flow [10. Concurrent Edit Conflict](../experience/user-flows.md#10-concurrent-edit-conflict-bug-003-fix)
 > **Proven by:** [TC-102](../quality/test-suites.md#tc-102-returning-patient--edit-demographics-during-check-in), [TC-701](../quality/test-suites.md#tc-701-two-receptionists--conflict-detection), [TC-704](../quality/test-suites.md#tc-704-no-conflict--normal-save), [TC-705](../quality/test-suites.md#tc-705-concurrent-edit--same-field-by-two-users), [TC-1201](../quality/test-suites.md#tc-1201-patch-patientsid--version-required)
 > **If this changes:** Conflict resolution flow (Flow 10), version mechanism (ADR-003), and all concurrency tests become suspect. Dashboard conflict banner rendering depends on the 409 response shape.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-11-25
 
 **Request:**
 ```json
@@ -316,6 +320,7 @@ The client uses `conflicting_changes` to render the conflict banner.
 
 > **Matches:** Screens [1.6 Allergies](../experience/screen-specs.md#16-check-in-review-screen--allergies), [1.7 Medications](../experience/screen-specs.md#17-check-in-review-screen--medications); Stories [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in)
 > **Proven by:** [TC-601](../quality/test-suites.md#tc-601-medication-step-is-mandatory--cannot-skip) through [TC-606](../quality/test-suites.md#tc-606-medication-step-on-mobile)
+> **Confirmed by:** Chen Wei (QA Lead), 2024-11-15
 
 ### POST /patients/{id}/allergies
 
@@ -378,6 +383,7 @@ Update insurance record. `type` is `primary` or `secondary`.
 
 > **Matches:** Screen [1.5 Insurance Review](../experience/screen-specs.md#15-check-in-review-screen--insurance); Story [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card)
 > **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk) through [TC-805](../quality/test-suites.md#tc-805-insurance-card-photos-stored-and-accessible-to-staff)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-12-05
 
 ```json
 {
@@ -395,6 +401,7 @@ Upload insurance card photos. Multipart form data.
 
 > **Matches:** Screen [1.5a Photo Capture Overlay](../experience/screen-specs.md#15a-insurance-card-photo-capture-overlay); Flow [9. Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture)
 > **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-12-05
 
 **Request:**
 ```
@@ -418,6 +425,7 @@ Poll for OCR results.
 
 > **Matches:** Screen [1.5 Insurance Review (OCR processing state)](../experience/screen-specs.md#15-check-in-review-screen--insurance); Flow [9. Insurance Card Photo Capture](../experience/user-flows.md#9-insurance-card-photo-capture)
 > **Proven by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-12-05
 
 **Response (200 — complete):**
 ```json
@@ -464,6 +472,7 @@ Start a new check-in.
 > **Matches:** Screen [1.3 Identity Confirmation](../experience/screen-specs.md#13-patient-identification-confirmation-screen); Flow [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), Flow [8. Mobile to Kiosk Duplicate Prevention](../experience/user-flows.md#8-mobile-check-in--kiosk-arrival-duplicate-prevention)
 > **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-405](../quality/test-suites.md#tc-405-mobile-then-kiosk--duplicate-prevention), [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time)
 > **If this changes:** Duplicate prevention logic (Flow 8), dashboard queue sync (WebSocket push), and check-in completion flow all become suspect. The 409 "already checked in" response shape is consumed by both kiosk and mobile clients.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-10-15
 
 ```json
 {
@@ -504,6 +513,7 @@ Update check-in progress (step completed).
 
 > **Matches:** Screens [1.4](../experience/screen-specs.md#14-check-in-review-screen--demographics)–[1.7](../experience/screen-specs.md#17-check-in-review-screen--medications), [3.2 Mobile Review](../experience/screen-specs.md#32-mobile--review-screens-demographics-insurance-allergies-medications); Flow [7. Mobile Partial Completion](../experience/user-flows.md#7-mobile-check-in--partial-completion)
 > **Proven by:** [TC-404](../quality/test-suites.md#tc-404-mobile--partial-completion-and-resume)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-02
 
 ```json
 {
@@ -533,6 +543,7 @@ Finalize the check-in. Creates the medication confirmation audit record.
 > **Matches:** Screen [1.8 Confirmation](../experience/screen-specs.md#18-check-in-confirmation-screen), Screen [3.3 Mobile Confirmation](../experience/screen-specs.md#33-mobile--confirmation-screen); Flows [1. Returning Patient Kiosk](../experience/user-flows.md#1-returning-patient--kiosk-check-in-happy-path), [5. Kiosk-to-Receptionist Sync](../experience/user-flows.md#5-kiosk-to-receptionist-sync-bug-001-fix), [6. Mobile Check-In](../experience/user-flows.md#6-mobile-check-in--happy-path)
 > **Proven by:** [TC-101](../quality/test-suites.md#tc-101-returning-patient--happy-path-check-in), [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-602](../quality/test-suites.md#tc-602-medication-confirmation--confirmed-unchanged), [TC-1202](../quality/test-suites.md#tc-1202-post-checkinsidcomplete--medication-confirmation-required)
 > **If this changes:** Medication confirmation audit trail (ADR-004), kiosk sync ack mechanism (ADR-001), WebSocket push, and both confirmation screens become suspect. This is the highest-impact endpoint — it writes to `check_ins`, `medication_confirmations`, and triggers the dashboard sync.
+> **Confirmed by:** Chen Wei (QA Lead), 2024-11-15
 
 ```json
 {
@@ -587,6 +598,7 @@ Trigger sending a check-in link to a patient. Called by the scheduler or manuall
 
 > **Matches:** Flow [6. Mobile Check-In Happy Path](../experience/user-flows.md#6-mobile-check-in--happy-path); Story [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device)
 > **Proven by:** [TC-401](../quality/test-suites.md#tc-401-mobile-check-in--happy-path)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-02
 
 ```json
 {
@@ -611,6 +623,7 @@ Check if a mobile check-in link is valid.
 
 > **Matches:** Screen [3.1 Mobile Link Landing](../experience/screen-specs.md#31-mobile--link-landing--identity-verification)
 > **Proven by:** [TC-403](../quality/test-suites.md#tc-403-mobile--expired-link), [TC-407](../quality/test-suites.md#tc-407-mobile--already-checked-in-via-mobile), [TC-1204](../quality/test-suites.md#tc-1204-mobile-token-expiry-enforcement)
+> **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-02
 
 **Response (200):**
 ```json
@@ -635,6 +648,7 @@ Get today's appointment queue for a location.
 
 > **Matches:** Screen [2.1 Dashboard Main View](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Stories [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins)
 > **Proven by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push), [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak)
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-10-18
 
 **Query params:**
 - `location_id` (required, or `all` for cross-location)
@@ -693,6 +707,7 @@ Search patients across all locations.
 
 > **Matches:** Screen [2.1 Dashboard Search](../experience/screen-specs.md#21-receptionist-dashboard--main-view); Flow [11. Multi-Location Check-In](../experience/user-flows.md#11-multi-location-check-in)
 > **Proven by:** [TC-503](../quality/test-suites.md#tc-503-receptionist--location-filter-and-search), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load)
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-12-15
 
 **Query params:**
 - `q` (required, min 2 chars)
@@ -729,6 +744,7 @@ Server pushes check-in status updates to connected receptionist dashboards.
 > **Proven by:** [TC-201](../quality/test-suites.md#tc-201-successful-sync--green-checkmark), [TC-202](../quality/test-suites.md#tc-202-sync-timeout--yellow-warning-on-kiosk), [TC-203](../quality/test-suites.md#tc-203-sync-failure--dashboard-retry), [TC-204](../quality/test-suites.md#tc-204-dashboard-real-time-update--websocket-push)
 > **Monitored by:** [WebSocket Connections per location](../operations/monitoring-alerting.md#p1----notify-during-business-hours), [Sync Failure Rate](../operations/monitoring-alerting.md#4-check-in-flow-dashboard)
 > **If this changes:** ADR-001 (ack mechanism), kiosk confirmation screen (green/yellow checkmark), polling fallback, and all sync tests become suspect. Message format changes break both the dashboard client and the kiosk completion flow.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-10-18
 
 **Message format (server -> client):**
 ```json
@@ -765,6 +781,7 @@ This ack is the "end-to-end sync confirmation" that triggers the green checkmark
 > **Proven by:** [TC-1001](../quality/test-suites.md#tc-1001-emr-import--valid-records) through [TC-1011](../quality/test-suites.md#tc-1011-no-auto-merge-verification)
 > **Monitored by:** [Migration Dashboard](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
 > **If this changes:** ADR-008 (dedup algorithm), ADR-010 (pipeline architecture), rollback mechanism, and duplicate review screens become suspect. Schema mapping changes affect the `patients` table shape — cascades to `GET /patients/{id}` and all downstream consumers.
+> **Confirmed by:** Alex Kim (Tech Lead), 2024-12-22
 
 ### POST /migration/batches
 

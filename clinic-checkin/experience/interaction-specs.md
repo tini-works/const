@@ -10,6 +10,7 @@ How things behave. Transitions, animations, error handling, edge cases, timing. 
 |-------|------|
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Proven by | [Suite 1](../quality/test-suites.md#suite-1-core-kiosk-check-in-round-1), [Suite 3](../quality/test-suites.md#suite-3-session-isolation--bug-002-fix-round-4) |
+| Confirmed by | Jamie Park (Design Lead), 2024-11-05 |
 
 ### 1.1 Card Scan → Data Display (Session Lifecycle)
 
@@ -120,6 +121,7 @@ This prevents the next patient from seeing any residual data (reinforces BUG-002
 |-------|------|
 | Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [E1](../product/epics.md#e1-returning-patient-recognition), [E3](../product/epics.md#e3-multi-location-support) |
 | Proven by | [Suite 2](../quality/test-suites.md#suite-2-kiosk-to-receptionist-sync--bug-001-fix-round-2), [Suite 7](../quality/test-suites.md#suite-7-concurrent-edit-safety--bug-003-fix-round-7) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-10 |
 
 ### 2.1 Real-Time Queue Updates
 
@@ -195,6 +197,7 @@ When the panel opens, the system records the record's version number.
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E2](../product/epics.md#e2-mobile-check-in), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
 | Proven by | [Suite 4](../quality/test-suites.md#suite-4-mobile-check-in-round-3), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
+| Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
 ### 3.1 Link Open → Identity Verification
 
@@ -278,6 +281,7 @@ This pattern is used because inline expansion doesn't work well on small screens
 |-------|------|
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) |
 | Proven by | [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
+| Confirmed by | Chen Wei (QA), 2024-12-18 |
 
 ### 4.1 Network Errors
 
@@ -330,6 +334,7 @@ Fields validate on blur (when the user moves to the next field) and on submit. N
 |-------|------|
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
 | Proven by | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak) |
+| Confirmed by | Jamie Park (Design Lead), 2024-12-18 |
 
 ### 5.1 Search Debouncing
 

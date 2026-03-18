@@ -17,11 +17,11 @@ Who owns what. Who consumes what. Where to find what.
 | [backlog.md](product/backlog.md) | **O** | C | C | C | C |
 | [decision-log.md](product/decision-log.md) | **O** | C | C | C | C |
 | **experience/** | | | | | |
-| [screen-specs.md](experience/screen-specs.md) | C | **O** | C | C | |
-| [interaction-specs.md](experience/interaction-specs.md) | | **O** | C | C | |
-| [user-flows.md](experience/user-flows.md) | C | **O** | C | C | |
+| [screen-specs.md](experience/screen-specs.md) | C | **O** | C | C | N |
+| [interaction-specs.md](experience/interaction-specs.md) | | **O** | C | C | N |
+| [user-flows.md](experience/user-flows.md) | C | **O** | C | C | N |
 | [component-inventory.md](experience/component-inventory.md) | | **O** | C | | |
-| [design-decisions.md](experience/design-decisions.md) | N | **O** | C | | |
+| [design-decisions.md](experience/design-decisions.md) | N | **O** | C | | N |
 | [flow-diagrams.md](experience/flow-diagrams.md) | C | **O** | C | C | |
 | **architecture/** | | | | | |
 | [architecture.md](architecture/architecture.md) | N | C | **O** | C | C |
