@@ -264,6 +264,7 @@ Test cases organized by feature area. Each case includes preconditions, steps, a
 ## Suite 3: Session Isolation — BUG-002 Fix (Round 4)
 
 > **Last run:** 2024-03-08 | **Environment:** staging | **Result:** all pass | **Run by:** manual (Chen Wei, security review)
+> **Note:** TC-306 added, not yet run.
 > **Confirmed by:** Chen Wei (QA Lead), 2024-03-08
 
 ### TC-301: Sequential patients — no data leakage

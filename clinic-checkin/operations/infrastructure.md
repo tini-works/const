@@ -154,7 +154,7 @@ Handles: EMR schema mapping, batch import pipeline, duplicate detection, merge o
 
 ### OCR Service
 
-> **Architecture:** [OCR Service](../architecture/architecture.md#ocr-service-round-8) · **API surface:** [Insurance photo endpoints](../architecture/api-spec.md#post-patientsidinsuracetypephoto) · **ADRs:** [ADR-006 OCR Service API Contract](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009 Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) · **Deploy:** [OCR Service deploy notes](#ocr-service-1)
+> **Architecture:** [OCR Service](../architecture/architecture.md#ocr-service-round-8) · **API surface:** [Insurance photo endpoints](../architecture/api-spec.md#post-patientsidinsurancetypephoto) · **ADRs:** [ADR-006 OCR Service API Contract](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract), [ADR-009 Object Storage](../architecture/adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) · **Deploy:** [OCR Service deploy notes](#ocr-service-1)
 
 | Property | Value |
 |----------|-------|

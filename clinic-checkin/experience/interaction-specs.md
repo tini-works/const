@@ -9,6 +9,7 @@ How things behave. Transitions, animations, error handling, edge cases, timing. 
 | Trace | Link |
 |-------|------|
 | Traced from | [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [POST /patients/identify](../architecture/api-spec.md#post-patientsidentify), [POST /checkins](../architecture/api-spec.md#post-checkins), [POST /checkins/{id}/complete](../architecture/api-spec.md#post-checkinsidcomplete), [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation) |
 | Proven by | [Suite 1](../quality/test-suites.md#suite-1-core-kiosk-check-in-round-1), [Suite 3](../quality/test-suites.md#suite-3-session-isolation--bug-002-fix-round-4) |
 | Confirmed by | Jamie Park (Design Lead), 2024-11-05 |
 
@@ -120,6 +121,7 @@ This prevents the next patient from seeing any residual data (reinforces BUG-002
 | Trace | Link |
 |-------|------|
 | Traced from | [US-002](../product/user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-004](../product/user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss), [E1](../product/epics.md#e1-returning-patient-recognition), [E3](../product/epics.md#e3-multi-location-support) |
+| Matched by | [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue), [GET /dashboard/search](../architecture/api-spec.md#get-dashboardsearch), [PATCH /patients/{id}](../architecture/api-spec.md#patch-patientsid), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), [ADR-005](../architecture/adrs.md#adr-005-centralized-database-for-multi-location-no-replication) |
 | Proven by | [Suite 2](../quality/test-suites.md#suite-2-kiosk-to-receptionist-sync--bug-001-fix-round-2), [Suite 7](../quality/test-suites.md#suite-7-concurrent-edit-safety--bug-003-fix-round-7) |
 | Confirmed by | Jamie Park (Design Lead), 2024-12-10 |
 
@@ -174,7 +176,7 @@ When the panel opens, the system records the record's version number.
 - If two staff members have the same patient's panel open, both can read freely
 - The first to save succeeds
 - The second to save gets the conflict banner
-- There is no locking indicator ("currently being edited by X") — we use optimistic concurrency, not pessimistic locking (DEC-003)
+- There is no locking indicator ("currently being edited by X") — we use optimistic concurrency, not pessimistic locking ([DEC-003](../product/decision-log.md#dec-003-optimistic-concurrency-control-for-patient-records))
 
 ### 2.4 Location Switching (Multi-Location)
 
@@ -196,6 +198,7 @@ When the panel opens, the system records the record's version number.
 | Trace | Link |
 |-------|------|
 | Traced from | [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), [E2](../product/epics.md#e2-mobile-check-in), [E4](../product/epics.md#e4-insurance-card-photo-capture) |
+| Matched by | [POST /patients/verify-identity](../architecture/api-spec.md#post-patientsverify-identity), [POST /mobile-checkin/send-link](../architecture/api-spec.md#post-mobile-checkinsend-link), [GET /mobile-checkin/{token}/status](../architecture/api-spec.md#get-mobile-checkintokenstatus), [PATCH /checkins/{id}/progress](../architecture/api-spec.md#patch-checkinsidprogress), [POST /patients/{id}/insurance/{type}/photo](../architecture/api-spec.md#post-patientsidinsurancetypephoto), [ADR-006](../architecture/adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract) |
 | Proven by | [Suite 4](../quality/test-suites.md#suite-4-mobile-check-in-round-3), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile) |
 | Confirmed by | Jamie Park (Design Lead), 2024-10-28 |
 
@@ -280,6 +283,7 @@ This pattern is used because inline expansion doesn't work well on small screens
 | Trace | Link |
 |-------|------|
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [BUG-001](../product/user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen) |
+| Matched by | [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) |
 | Proven by | [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable) |
 | Confirmed by | Chen Wei (QA), 2024-12-18 |
 
@@ -333,6 +337,7 @@ Fields validate on blur (when the user moves to the next field) and on submit. N
 | Trace | Link |
 |-------|------|
 | Traced from | [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [E1](../product/epics.md#e1-returning-patient-recognition) |
+| Matched by | [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions), [WebSocket /ws/dashboard/{location_id}](../architecture/api-spec.md#websocket-wsdashboardlocation_id), [GET /dashboard/queue](../architecture/api-spec.md#get-dashboardqueue) |
 | Proven by | [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak) |
 | Confirmed by | Jamie Park (Design Lead), 2024-12-18 |
 

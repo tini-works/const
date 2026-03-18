@@ -834,7 +834,7 @@ This cannot be undone automatically.
 [Confirm merge]  [Cancel]"
 ```
 
-**No auto-merge.** Every potential duplicate requires staff confirmation (DEC-006).
+**No auto-merge.** Every potential duplicate requires staff confirmation ([DEC-006](../product/decision-log.md#dec-006-duplicate-detection-requires-staff-confirmation--no-auto-merge)).
 
 ---
 

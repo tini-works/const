@@ -28,7 +28,30 @@ Changes triggered by bugs, new requirements, or cross-vertical shifts that requi
 
 ---
 
-## Entry 2: BUG-002 PHI Exposure (Round 4)
+## Entry 2: Mobile Check-In (Round 3)
+
+**Date:** 2024-11-02
+**Trigger:** Epic [E2](../product/epics.md#e2-mobile-check-in), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-008](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) — patients want to complete check-in from their phone before arriving. Kiosk is a bottleneck during peak hours.
+
+**Impact assessment:** Check-in flow needed a new channel (mobile). Data model, API spec, and dashboard all needed to support mobile token-based sessions alongside kiosk sessions.
+
+**Items re-evaluated:**
+- Data model: `check_ins` table (needed `mobile_token`, `mobile_token_expires`, `identity_verified`, `current_step`, `channel` fields)
+- API spec: needed mobile-specific endpoints (token validation, identity verification, step progress)
+
+**Items added/updated:**
+- [Tech Design: Mobile Pre-Check-In](tech-design-mobile-checkin.md) created — token-based link flow, identity verification, session management, kiosk duplicate prevention
+- `check_ins` schema updated with mobile token fields and `channel` column
+- API spec: mobile check-in endpoints added
+- Test cases TC-401 through TC-407 added
+
+**Result:** Mobile web check-in via tokenized links. No native app required. Partial completion with resume support. Dashboard shows mobile status badges.
+
+**Assessed by:** Alex Kim (Tech Lead)
+
+---
+
+## Entry 3: BUG-002 PHI Exposure (Round 4)
 
 **Date:** 2024-11-05
 **Trigger:** [BUG-002](../product/user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan) — P0 security incident. Patient B briefly saw Patient A's name and allergies on kiosk screen during session transition. PHI exposure, potentially HIPAA-reportable.
@@ -51,7 +74,55 @@ Changes triggered by bugs, new requirements, or cross-vertical shifts that requi
 
 ---
 
-## Entry 3: BUG-003 Concurrent Edit Data Loss (Round 7)
+## Entry 4: Multi-Location Support (Round 5)
+
+**Date:** 2024-11-10
+**Trigger:** Epic [E3](../product/epics.md#e3-multi-location-support), [US-009](../product/user-stories.md#us-009-cross-location-patient-record-access), [US-010](../product/user-stories.md#us-010-location-aware-check-in) — clinic opening a second location. Patients may visit both. Patient records must be consistent across locations.
+
+**Impact assessment:** Location as a new dimension across the system. Operational entities (appointments, check-ins, kiosks, staff) became location-scoped while clinical entities (patients, allergies, medications, insurance) remained universal.
+
+**Items re-evaluated:**
+- Data model: `appointments`, `check_ins` (needed `location_id` FK)
+- Dashboard queries (needed location scoping)
+
+**Items added/updated:**
+- [ADR-005](adrs.md#adr-005-centralized-database-for-multi-location-no-replication) created — centralized database, no replication
+- Data model: `locations`, `kiosks`, `staff_locations` tables added
+- Data model: `location_id` FK added to `appointments` and `check_ins`
+- API spec: dashboard and WebSocket endpoints scoped by location
+- Test cases TC-501 through TC-504 added
+
+**Result:** Centralized database model with location as a property of operational entities. Single source of truth across all locations.
+
+**Assessed by:** Priya Patel (Senior Engineer)
+
+---
+
+## Entry 5: Medication Confirmation Compliance (Round 6)
+
+**Date:** 2024-11-15
+**Trigger:** Epic [E6](../product/epics.md#e6-compliance--medication-list-at-check-in), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) — state health board requires medication list confirmation at every visit. Confirmation must be auditable for license renewal inspection.
+
+**Impact assessment:** New compliance requirement touching the check-in flow, data model, and audit trail. Immutable records needed for regulatory inspection.
+
+**Items re-evaluated:**
+- Check-in flow (needed mandatory medication confirmation step)
+- API spec: `POST /checkins/{id}/complete` (needed medication confirmation as prerequisite)
+
+**Items added/updated:**
+- [ADR-004](adrs.md#adr-004-immutable-medication-confirmation-audit-records) created — immutable confirmation records with medication snapshots
+- Data model: `medications`, `medication_confirmations` tables added
+- Data model: `his_medication_id` and `source` fields added to medications
+- API spec: medication CRUD endpoints and confirmation-required check-in completion
+- Test cases TC-601 through TC-606 added
+
+**Result:** INSERT-only medication confirmation audit table with frozen snapshots. Auditors can see exactly what was confirmed at any point in time.
+
+**Assessed by:** Chen Wei (QA Lead)
+
+---
+
+## Entry 6: BUG-003 Concurrent Edit Data Loss (Round 7)
 
 **Date:** 2024-11-25
 **Trigger:** [BUG-003](../product/user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) — two receptionists edited the same patient record simultaneously. Last write won silently, overwriting the first receptionist's insurance change.
@@ -76,7 +147,31 @@ Changes triggered by bugs, new requirements, or cross-vertical shifts that requi
 
 ---
 
-## Entry 4: Scaling Crisis (Round 9)
+## Entry 7: Insurance Card Photo Capture (Round 8)
+
+**Date:** 2024-12-05
+**Trigger:** Epic [E4](../product/epics.md#e4-insurance-card-photo-capture), [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card) — patients can photograph their insurance card at kiosk or mobile. OCR extracts structured fields with confidence scores.
+
+**Impact assessment:** New binary file storage requirement (photos), new external service dependency (OCR), and new fields on `insurance_records`. Photo capture needed on both kiosk and mobile channels.
+
+**Items re-evaluated:**
+- Data model: `insurance_records` table (needed photo URL and OCR fields)
+- Infrastructure: binary file storage strategy
+
+**Items added/updated:**
+- [ADR-006](adrs.md#adr-006-ocr-service-as-a-separate-service-behind-a-stable-api-contract) created — OCR Service behind stable API contract
+- [ADR-009](adrs.md#adr-009-object-storage-for-insurance-card-photos-and-scanned-records) created — S3/MinIO object storage for photos
+- Data model: `card_front_url`, `card_back_url`, `ocr_extracted`, `ocr_confidence` added to `insurance_records`
+- API spec: photo upload and OCR result endpoints added
+- Test cases TC-801, TC-802, TC-804, TC-805 added
+
+**Result:** OCR service as a separate service with swappable provider behind a stable contract. Images in object storage, not database. Async processing with polling for results.
+
+**Assessed by:** Alex Kim (Tech Lead), Priya Patel (Senior Engineer)
+
+---
+
+## Entry 8: Scaling Crisis (Round 9)
 
 **Date:** 2024-12-15
 **Trigger:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance) — Monday morning peak: 30 concurrent sessions caused kiosk freezes, slow search, dashboard stalls. Two patients left the clinic. Second location opening would make it worse.
@@ -102,7 +197,7 @@ Changes triggered by bugs, new requirements, or cross-vertical shifts that requi
 
 ---
 
-## Entry 5: Riverside Acquisition (Round 10)
+## Entry 9: Riverside Acquisition (Round 10)
 
 **Date:** 2024-12-22
 **Trigger:** [US-012](../product/user-stories.md#us-012-patient-data-migration-from-riverside), [US-013](../product/user-stories.md#us-013-duplicate-patient-detection-and-merge), Epic [E5](../product/epics.md#e5-riverside-practice-acquisition) — acquiring Riverside Family Practice with 4,000 patient records (2,000 electronic, 2,000 paper). 5-15% overlap with existing patients.

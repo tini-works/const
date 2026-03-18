@@ -35,7 +35,7 @@
 - All fields the patient confirmed or edited are visible to the receptionist
 - If check-in is incomplete or failed, receptionist sees a clear status (not just absence of data)
 
-**Bug context (Round 2):** Original implementation showed green checkmark to patient but data did not propagate to receptionist screen. Root cause: [Engineering to determine — sync failure between kiosk and staff system]. This story's acceptance criteria must be verified end-to-end, not just on the patient-facing side.
+**Bug context (Round 2):** Original implementation showed green checkmark to patient but data did not propagate to receptionist screen. Root cause: No acknowledgment mechanism on WebSocket sync — kiosk displayed success before confirming receptionist system received the data. Fixed by ADR-001 (WebSocket with polling fallback + ack verification). This story's acceptance criteria must be verified end-to-end, not just on the patient-facing side.
 
 **Traceability:**
 - Traced from: [E1: Returning Patient Recognition](epics.md#e1-returning-patient-recognition) — Round 2 sync failure
@@ -71,7 +71,7 @@
   - [ADR-002: Session Purge Protocol](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation)
 - Proven by: [TC-301](../quality/test-suites.md#tc-301-sequential-patients--no-data-leakage), [TC-302](../quality/test-suites.md#tc-302-rapid-sequential-scans--no-data-leakage), [TC-303](../quality/test-suites.md#tc-303-rapid-sequential-scans--sub-second-timing), [TC-304](../quality/test-suites.md#tc-304-session-purge--dom-inspection), [TC-305](../quality/test-suites.md#tc-305-browser-back-button-does-not-reveal-previous-session)
 - Bug: [BUG-002](../quality/bug-reports.md#bug-002-previous-patients-data-briefly-visible-on-kiosk-after-card-scan)
-- Verification: **proven** (partial gap) — TC-301 through TC-305 passing, security test signed off. Audit log AC (scan events logged with patient ID + timestamp) lacks explicit test coverage — see [coverage report](../quality/coverage-report.md). Verified 2024-03-20.
+- Verification: **suspect** — TC-301 through TC-305 passing, security test signed off. 4/5 AC proven. Audit log AC (TC-306) not yet executed — item remains suspect until TC-306 passes. Verified 2024-03-20.
 - Confirmed by: Dr. Martinez (Medical Director), 2024-03-20
 
 ### US-004: Concurrent edit safety for patient records

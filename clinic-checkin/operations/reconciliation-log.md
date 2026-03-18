@@ -4,6 +4,20 @@ This log tracks how operational documents were reevaluated and updated in respon
 
 ---
 
+## Round 3 — Mobile Check-In Delivery Monitoring
+
+| Field | Value |
+|-------|-------|
+| **Date** | 2025-12-15 |
+| **Change** | US-007 (pre-visit check-in from personal device) and US-008 (receptionist visibility of mobile check-ins) introduced mobile check-in link delivery via SMS/email and token-based redemption |
+| **Impact** | No monitoring existed for SMS delivery failures, token expiry, or token redemption errors. No runbook existed for mobile delivery pipeline outages. |
+| **Items reevaluated** | monitoring-alerting.md (added SMS Delivery Failure Rate, Token Expiry Rate High, Token Redemption Failure Rate alerts), infrastructure.md (Notification Service section updated with Twilio/SendGrid integration) |
+| **Items added** | runbook-mobile-delivery.md (full mobile delivery failure response covering SMS/email, token lifecycle, and mobile SPA issues), "SMS Delivery Failure Rate" / "Token Expiry Rate High" / "Token Redemption Failure Rate" alerts in traceability table and alert rules |
+| **Result** | Mobile delivery pipeline fully monitored: SMS failures detected within 10 minutes, token lifecycle issues caught via daily checks, and runbook covers all four links in the delivery chain |
+| **Assessed by** | Jordan Lee (DevOps Lead), 2025-12-15 |
+
+---
+
 ## Round 4 — BUG-002 Security Incident Response
 
 | Field | Value |
@@ -15,6 +29,34 @@ This log tracks how operational documents were reevaluated and updated in respon
 | **Items added** | `security_session_isolation_failure` alert (P0 — immediate page), runbook-data-leak.md (full HIPAA incident response runbook), "Data Leak Detected" row in traceability table |
 | **Result** | DevOps vertical now covers session isolation monitoring end-to-end: detection → alert → runbook → HIPAA assessment → remediation |
 | **Assessed by** | Jordan Lee (DevOps Lead), 2026-01-20 |
+
+---
+
+## Round 5 — Multi-Location Monitoring Additions
+
+| Field | Value |
+|-------|-------|
+| **Date** | 2026-01-28 |
+| **Change** | US-009 (cross-location patient record access) and US-010 (location-aware check-in) introduced centralized multi-location data model per ADR-005 |
+| **Impact** | No monitoring existed for cross-location query failures or location data inconsistency. Existing alerts lacked `location_id` dimension for multi-location differentiation. |
+| **Items reevaluated** | monitoring-alerting.md (added Cross-Location Query Failures and Location Data Inconsistency alerts, verified location-scoped metrics across existing dashboards) |
+| **Items added** | "Cross-Location Query Failures" alert (P1), "Location Data Inconsistency" alert (P2), cross-location rows in traceability table |
+| **Result** | Multi-location data integrity monitored: cross-location query failures detected within 5 minutes, location data inconsistency caught immediately, all alerts traceable to US-009 and US-010 |
+| **Assessed by** | Sam Rivera (SRE), 2026-01-28 |
+
+---
+
+## Round 6 — Medication Confirmation Monitoring Additions
+
+| Field | Value |
+|-------|-------|
+| **Date** | 2026-02-10 |
+| **Change** | US-005 (medication list confirmation at check-in) mandated by state health board, implemented with ADR-004 immutable audit records |
+| **Impact** | No monitoring existed for medication confirmation flow failures or patients bypassing the mandatory confirmation step. Compliance violations could go undetected. |
+| **Items reevaluated** | monitoring-alerting.md (added Medication Confirmation Flow Failure and Medication Confirmation Skip Rate alerts, added Audit Log Growth alert for compliance audit trail) |
+| **Items added** | "Medication Confirmation Flow Failure" alert (P1), "Medication Confirmation Skip Rate" alert (P2), "Audit Log Growth" alert (P2), medication confirmation rows in traceability table |
+| **Result** | Medication confirmation compliance fully monitored: flow failures detected within 10 minutes, skip rate anomalies caught via daily checks, audit log growth tracked to ensure compliance trail integrity |
+| **Assessed by** | Jordan Lee (DevOps Lead), 2026-02-10 |
 
 ---
 

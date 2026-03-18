@@ -22,6 +22,7 @@ This is where design meets reality. Everything here exists to prove the system r
 | `runbook-peak-load.md` | System is slow during rush hours -- p95 spiking, pool exhaustion, search hanging. |
 | `runbook-concurrent-edit.md` | Version conflict errors spiking, or worse, silent data loss from concurrent edits. |
 | `runbook-import-failure.md` | Riverside migration batch failing -- schema mapping, OCR, dedup, or transaction errors. |
+| `runbook-mobile-delivery.md` | Mobile check-in link delivery failing -- SMS/email not sent, tokens not redeemable, or mobile SPA unreachable. |
 
 ## How to use this
 

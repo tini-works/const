@@ -9,7 +9,7 @@ If architecture is "how," this folder is "what" and "why."
 | File | What it does |
 |------|-------------|
 | `epics.md` | The six major initiatives (E1-E6), each with goals, scope, dependencies, and current verification status. Start here for the big picture. |
-| `user-stories.md` | Every story and bug, with acceptance criteria, context on why it exists, and full traceability links. This is the source of truth for "what does done look like." |
+| `user-stories.md` | Every story and bug, with acceptance criteria, context on why it exists, and full traceability links. The living record of what done looks like. |
 | `backlog.md` | Prioritized work queue (P0-P3) with sequencing rationale. Also tracks coverage gaps identified from QA. |
 | `decision-log.md` | Eight key product decisions (DEC-001 through DEC-008) with options considered, what we chose, and why. Read this before proposing something we already decided. |
 | `prd-mobile-checkin.md` | PRD for mobile check-in (E2). Problem, solution, requirements, risks, success metrics. |

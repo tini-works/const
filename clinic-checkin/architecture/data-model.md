@@ -122,6 +122,7 @@ Each kiosk is bound to a location.
 
 > **Read by:** [`POST /checkins`](api-spec.md#post-checkins) (kiosk_id validation)
 > **Stories:** [US-010](../product/user-stories.md#us-010-location-aware-check-in)
+> **If schema changes:** Re-verify check-in kiosk_id validation (POST /checkins), kiosk location binding, and location-scoped dashboard queries (ADR-005).
 > **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-10
 
 ```sql
@@ -140,6 +141,8 @@ CREATE TABLE kiosks (
 
 > **Read by:** [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue) (staff permissions), [Authentication](api-spec.md#authentication)
 > **Stories:** [US-010](../product/user-stories.md#us-010-location-aware-check-in) (staff location assignments)
+> **If schema changes (staff):** Re-verify dashboard queue staff permissions, authentication flow, and migration merge `resolved_by` FK (duplicate_candidates).
+> **If schema changes (staff_locations):** Re-verify staff location assignments, dashboard location-scoped access control, and multi-location queries (ADR-005).
 > **Confirmed by:** Priya Patel (Senior Engineer), 2024-11-10
 
 ```sql
@@ -169,6 +172,8 @@ Appointments are location-specific.
 
 > **Read by:** [`POST /patients/identify`](api-spec.md#post-patientsidentify), [`GET /dashboard/queue`](api-spec.md#get-dashboardqueue), [`GET /mobile-checkin/{token}/status`](api-spec.md#get-mobile-checkintokenstatus)
 > **Written by:** [`POST /checkins`](api-spec.md#post-checkins) (status update on check-in)
+> **Stories:** [US-001](../product/user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-007](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device), [US-010](../product/user-stories.md#us-010-location-aware-check-in)
+> **If schema changes:** Re-verify dashboard queue display, check-in flow (POST /checkins status update), mobile token validation (GET /mobile-checkin/{token}/status), and appointment-scoped queries across locations (ADR-005).
 > **Confirmed by:** Alex Kim (Tech Lead), 2024-10-15
 
 ```sql
@@ -370,7 +375,9 @@ CREATE INDEX idx_insurance_patient ON insurance_records (patient_id);
 All PHI access and modifications.
 
 > **Written by:** All API endpoints that read or modify patient data
+> **Stories:** [US-003](../product/user-stories.md#us-003-secure-patient-identification-on-scan), [US-005](../product/user-stories.md#us-005-medication-list-confirmation-at-check-in) (HIPAA compliance, audit trail)
 > **Monitored by:** [Audit Log Growth alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day)
+> **If schema changes:** Re-verify all PHI access logging, HIPAA audit trail completeness, migration merge audit entries (ADR-010), and medication confirmation audit linkage (ADR-004).
 > **Confirmed by:** Chen Wei (QA Lead), 2024-10-15
 
 ```sql

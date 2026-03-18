@@ -7,7 +7,7 @@ Proof integrity for the clinic check-in system. This area audits that things act
 | File | What it does |
 |------|-------------|
 | [test-plan.md](test-plan.md) | Strategy, scope, environments, entry/exit criteria, and risk prioritization across all 10 rounds of development. The "why" and "how" of testing. |
-| [test-suites.md](test-suites.md) | 73 test cases organized into 12 suites. Each case has preconditions, steps, expected results, and traceability links to user stories, screens, API endpoints, and production monitors. |
+| [test-suites.md](test-suites.md) | 67 test cases organized into 12 suites. Each case has preconditions, steps, expected results, and traceability links to user stories, screens, API endpoints, and production monitors. |
 | [coverage-report.md](coverage-report.md) | Maps every user story and bug fix to its test cases. Shows what is covered, what has gaps, and links evidence — not assertions — for each claim. |
 | [bug-reports.md](bug-reports.md) | 3 bug reports (P0 data leak, P1 sync failure, P1 data loss). Each includes root cause, fix description, regression tests, and post-mortem. All verified. |
 
@@ -28,9 +28,9 @@ Proof integrity for the clinic check-in system. This area audits that things act
 
 | Metric | Count |
 |--------|-------|
-| Test cases | 73 |
+| Test cases | 67 |
 | Test suites | 12 |
 | Bug reports | 3 (all verified) |
 | User stories covered | 13 |
-| Acceptance criteria covered | 75 of 79 (4 partial gaps tracked) |
+| Acceptance criteria covered | 78 of 80 (4 partial gaps tracked) |
 | Critical areas with zero gaps | Session isolation, sync verification, concurrent edit safety, medication compliance |

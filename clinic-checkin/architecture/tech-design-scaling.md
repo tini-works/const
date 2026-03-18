@@ -1,6 +1,6 @@
 # Technical Design: Scaling for Peak Load
 
-**Related:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), DEC-007, [ADR-007](adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions)
+**Related:** [US-006](../product/user-stories.md#us-006-peak-hour-check-in-performance), [DEC-007](../product/decision-log.md#dec-007-performance-target--50-concurrent-sessions-p95-under-3-seconds), [ADR-007](adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions)
 **Screens:** [5.1 Loading States](../experience/screen-specs.md#51-loading-states), [5.2 Degraded Mode — Slow Backend](../experience/screen-specs.md#52-degraded-mode--slow-backend), [5.3 Degraded Mode — Backend Unreachable](../experience/screen-specs.md#53-degraded-mode--backend-unreachable), [1.9 Name Search](../experience/screen-specs.md#19-kiosk-name-search-screen), [2.1 Dashboard](../experience/screen-specs.md#21-receptionist-dashboard--main-view)
 **Flows:** [15. Peak Load Degraded Experience](../experience/user-flows.md#15-peak-load-degraded-experience-round-9)
 **Tested by:** [TC-901](../quality/test-suites.md#tc-901-50-concurrent-kiosk-check-ins--response-time), [TC-902](../quality/test-suites.md#tc-902-patient-search-performance-under-load), [TC-903](../quality/test-suites.md#tc-903-dashboard-stability-during-peak), [TC-904](../quality/test-suites.md#tc-904-degraded-mode--slow-backend), [TC-905](../quality/test-suites.md#tc-905-degraded-mode--backend-unreachable)

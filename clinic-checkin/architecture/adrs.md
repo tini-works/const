@@ -152,7 +152,7 @@ WHERE id = $patient_id AND version = $expected_version;
 1. Fetch the current record (latest version)
 2. Diff against the version the user loaded
 3. Return 409 with `conflicting_changes`: who changed what, when
-4. Client renders conflict banner (Design spec 2.2)
+4. Client renders conflict banner ([Screen 2.2](../experience/screen-specs.md#22-receptionist--patient-detail-side-panel))
 5. User chooses "View current version" (discard their edits) or "Re-apply my changes" (see their edits as a diff on top of the latest version)
 
 **Version history:**
@@ -291,7 +291,7 @@ All locations connect to the same cloud-hosted database. If connectivity is lost
 
 **Triggered by:** [US-011](../product/user-stories.md#us-011-photo-capture-of-insurance-card), Epic [E4](../product/epics.md#e4-insurance-card-photo-capture)
 **Verified by:** [TC-801](../quality/test-suites.md#tc-801-photo-capture--happy-path-on-kiosk), [TC-802](../quality/test-suites.md#tc-802-photo-capture--ocr-failure), [TC-804](../quality/test-suites.md#tc-804-photo-capture-on-mobile), [TC-1009](../quality/test-suites.md#tc-1009-paper-record-ocr-pipeline)
-**Monitored by:** [OCR Service Slow alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [OCR Processing Time](../operations/monitoring-alerting.md#5-migration-dashboard-temporary----during-riverside-migration)
+**Monitored by:** [OCR Service Slow alert](../operations/monitoring-alerting.md#p2----investigate-during-next-business-day), [OCR Processing Time](../operations/monitoring-alerting.md#ocr-service)
 **Confirmed by:** Alex Kim (Tech Lead), 2024-12-05
 
 **Context:**

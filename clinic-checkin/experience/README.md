@@ -6,7 +6,7 @@ What patients and receptionists see and do. Every screen, flow, and interaction 
 
 | File | What it covers |
 |------|---------------|
-| **user-flows.md** | End-to-end journeys for every scenario: returning patient, new patient, mobile check-in, card scan failure, data leak prevention, concurrent edits, migration. The "story" version of the product. |
+| **user-flows.md** | End-to-end journeys for every scenario: returning patient, new patient, mobile check-in, card scan failure, data leak prevention, concurrent edits, migration. The narrative version of the product. |
 | **screen-specs.md** | Every screen broken down by region, content, and states. Kiosk (welcome through confirmation), receptionist dashboard, mobile check-in, admin migration tools. Engineers build from this. |
 | **interaction-specs.md** | How things behave: transitions, animations, timing, error handling, edit patterns, session security. Companion to screen-specs. |
 | **component-inventory.md** | Reusable UI components (status badges, progress indicators, medication cards, conflict banners, skeleton loaders) with variants, states, and sizing across kiosk/mobile/desktop. |
@@ -15,7 +15,7 @@ What patients and receptionists see and do. Every screen, flow, and interaction 
 
 ## How to find what you need
 
-- **"What does screen X look like?"** -- `screen-specs.md`. Sections are numbered: 1.x = kiosk, 2.x = receptionist dashboard, 3.x = mobile, 4.x = admin.
+- **"What does screen X look like?"** -- `screen-specs.md`. Sections are numbered: 1.x = kiosk, 2.x = receptionist dashboard, 3.x = mobile, 4.x = admin, 5.x = loading & degraded states.
 - **"What's the user journey for scenario Y?"** -- `user-flows.md`. 15 flows covering happy paths, error paths, and edge cases.
 - **"How does this animation/transition/error work?"** -- `interaction-specs.md`. Organized by surface (kiosk, receptionist, mobile) plus cross-cutting error handling.
 - **"What reusable components exist?"** -- `component-inventory.md`. Each component has kiosk and mobile variants with exact sizing and color specs.

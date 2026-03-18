@@ -19,19 +19,19 @@
 
 **Compliance impact:** Medication list must be collected and confirmed at every visit per state mandate (Round 6). Added to check-in confirmation flow.
 
-**Performance requirement:** System must handle 30+ concurrent check-ins during peak hours without degradation (Round 9).
+**Performance requirement:** System must handle 50 concurrent check-ins during peak hours without degradation (Round 9).
 
 **Traceability:**
 
 | Link type | References |
 |-----------|------------|
-| User Stories | [US-001](user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-003](user-stories.md#us-003-secure-patient-identification-on-scan), [US-004](user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [US-005](user-stories.md#us-005-medication-list-confirmation-at-check-in), [US-006](user-stories.md#us-006-peak-hour-check-in-performance) |
+| User Stories | [US-001](user-stories.md#us-001-pre-populated-check-in-for-returning-patients), [US-002](user-stories.md#us-002-receptionist-sees-confirmed-check-in-data), [US-003](user-stories.md#us-003-secure-patient-identification-on-scan), [US-004](user-stories.md#us-004-concurrent-edit-safety-for-patient-records), [US-006](user-stories.md#us-006-peak-hour-check-in-performance) |
 | Bug Stories | [BUG-001](user-stories.md#bug-001-kiosk-confirmation-not-syncing-to-receptionist-screen), [BUG-002](user-stories.md#bug-002-data-leak--previous-patients-data-visible-on-scan), [BUG-003](user-stories.md#bug-003-concurrent-edit-causes-silent-data-loss) |
 | Decisions | [DEC-001](decision-log.md#dec-001-bug-002-elevated-to-p0-blocks-all-e1-feature-work), [DEC-002](decision-log.md#dec-002-medication-confirmation-is-mandatory-in-the-check-in-flow-not-optional), [DEC-003](decision-log.md#dec-003-optimistic-concurrency-control-for-patient-records), [DEC-007](decision-log.md#dec-007-performance-target--50-concurrent-sessions-p95-under-3-seconds) |
 | Architecture | [ADR-001](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates), [ADR-002](../architecture/adrs.md#adr-002-session-purge-protocol-for-kiosk-state-isolation), [ADR-003](../architecture/adrs.md#adr-003-optimistic-concurrency-control-via-version-field), [ADR-004](../architecture/adrs.md#adr-004-immutable-medication-confirmation-audit-records), [ADR-007](../architecture/adrs.md#adr-007-scaling-strategy-for-50-concurrent-sessions) |
 | Confirmed by | Sarah Chen (PM Lead), 2024-04-02 |
 
-**Verification:** 6/6 stories proven, 3/3 bugs proven. US-003 has a partial gap on audit log AC (no explicit test for scan event logging). Last verified 2024-04-02.
+**Verification:** 4/5 stories proven, 1 suspect (US-003 — audit log AC lacks test coverage, TC-306 not yet executed), 3/3 bugs proven. Last verified 2024-04-02.
 
 ---
 
@@ -47,7 +47,7 @@
 - Time-bounded: check-in valid within a window before the appointment
 - Receptionist sees mobile check-in status — no need to re-process at arrival
 
-**Dependencies:** E1 (returning patient data must exist), E4 (medication confirmation mandate applies to mobile too).
+**Dependencies:** E1 (returning patient data must exist), E6 (medication confirmation mandate applies to mobile too).
 
 **See:** [PRD — Mobile Check-In](prd-mobile-checkin.md)
 

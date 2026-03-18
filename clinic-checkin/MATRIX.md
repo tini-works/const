@@ -2,7 +2,9 @@
 
 Who owns what. Who consumes what. Where to find what.
 
-## RACI by document
+## Ownership matrix
+
+> Column headers map to Constitution verticals: Product = PM, Experience = Design, Architecture = Engineer, Quality = QA, Operations = DevOps.
 
 **O** = Owns (creates, maintains, reconciles) · **C** = Reads (matches against) · **N** = Notified (must acknowledge change + assess impact)
 
@@ -16,13 +18,15 @@ Who owns what. Who consumes what. Where to find what.
 | [prd-riverside-acquisition.md](product/prd-riverside-acquisition.md) | **O** | C | C | C | C |
 | [backlog.md](product/backlog.md) | **O** | C | C | C | C |
 | [decision-log.md](product/decision-log.md) | **O** | C | C | C | C |
+| [reconciliation-log.md](product/reconciliation-log.md) | **O** | N | N | N | N |
 | **experience/** | | | | | |
 | [screen-specs.md](experience/screen-specs.md) | C | **O** | C | C | N |
 | [interaction-specs.md](experience/interaction-specs.md) | | **O** | C | C | N |
 | [user-flows.md](experience/user-flows.md) | C | **O** | C | C | N |
-| [component-inventory.md](experience/component-inventory.md) | | **O** | C | | |
-| [design-decisions.md](experience/design-decisions.md) | N | **O** | C | | N |
+| [component-inventory.md](experience/component-inventory.md) | | **O** | C | C | |
+| [design-decisions.md](experience/design-decisions.md) | N | **O** | C | C | N |
 | [flow-diagrams.md](experience/flow-diagrams.md) | C | **O** | C | C | |
+| [reconciliation-log.md](experience/reconciliation-log.md) | N | **O** | N | N | N |
 | **architecture/** | | | | | |
 | [architecture.md](architecture/architecture.md) | N | C | **O** | C | C |
 | [api-spec.md](architecture/api-spec.md) | | C | **O** | C | C |
@@ -34,11 +38,13 @@ Who owns what. Who consumes what. Where to find what.
 | [tech-design-ocr-pipeline.md](architecture/tech-design-ocr-pipeline.md) | | | **O** | C | C |
 | [tech-design-scaling.md](architecture/tech-design-scaling.md) | N | | **O** | C | C |
 | [tech-design-migration-pipeline.md](architecture/tech-design-migration-pipeline.md) | C | | **O** | C | C |
+| [reconciliation-log.md](architecture/reconciliation-log.md) | N | N | **O** | N | N |
 | **quality/** | | | | | |
 | [test-plan.md](quality/test-plan.md) | C | C | C | **O** | C |
 | [test-suites.md](quality/test-suites.md) | C | | C | **O** | C |
 | [bug-reports.md](quality/bug-reports.md) | C | C | C | **O** | C |
 | [coverage-report.md](quality/coverage-report.md) | C | C | C | **O** | N |
+| [reconciliation-log.md](quality/reconciliation-log.md) | N | N | N | **O** | N |
 | **operations/** | | | | | |
 | [infrastructure.md](operations/infrastructure.md) | | | C | | **O** |
 | [deployment-procedure.md](operations/deployment-procedure.md) | | | C | N | **O** |
@@ -51,6 +57,8 @@ Who owns what. Who consumes what. Where to find what.
 | [runbook-import-failure.md](operations/runbook-import-failure.md) | C | | C | N | **O** |
 | [runbook-service-outage.md](operations/runbook-service-outage.md) | | | C | | **O** |
 | [runbook-database-failure.md](operations/runbook-database-failure.md) | | | C | | **O** |
+| [runbook-mobile-delivery.md](operations/runbook-mobile-delivery.md) | | | N | C | **O** |
+| [reconciliation-log.md](operations/reconciliation-log.md) | N | N | N | N | **O** |
 
 ## Content index
 
@@ -65,6 +73,7 @@ Who owns what. Who consumes what. Where to find what.
 | [prd-mobile-checkin.md](product/prd-mobile-checkin.md) | Full PRD: mobile pre-check-in from personal device | — |
 | [prd-multi-location.md](product/prd-multi-location.md) | Full PRD: shared patient data across clinic locations | — |
 | [prd-riverside-acquisition.md](product/prd-riverside-acquisition.md) | Full PRD: acquiring 4,000-patient practice, dedup, migration | — |
+| [reconciliation-log.md](product/reconciliation-log.md) | Reconciliation events: what changed, what was re-verified | — |
 
 ### experience/ — what users see and do
 
@@ -76,6 +85,7 @@ Who owns what. Who consumes what. Where to find what.
 | [component-inventory.md](experience/component-inventory.md) | 14 reusable components: badges, cards, banners, inputs | — |
 | [design-decisions.md](experience/design-decisions.md) | 14 design decisions with pushback context | DD-001–DD-014 |
 | [flow-diagrams.md](experience/flow-diagrams.md) | 5 interactive diagrams (embeddable SVG) | — |
+| [reconciliation-log.md](experience/reconciliation-log.md) | Reconciliation events: what changed, what was re-verified | — |
 
 ### architecture/ — how the system works
 
@@ -91,6 +101,7 @@ Who owns what. Who consumes what. Where to find what.
 | [tech-design-ocr-pipeline.md](architecture/tech-design-ocr-pipeline.md) | Insurance card OCR: upload, processing, confidence scoring | — |
 | [tech-design-scaling.md](architecture/tech-design-scaling.md) | Peak load strategy: pooling, caching, read replicas, HPA | — |
 | [tech-design-migration-pipeline.md](architecture/tech-design-migration-pipeline.md) | Riverside import: schema mapping, dedup algorithm, rollback | — |
+| [reconciliation-log.md](architecture/reconciliation-log.md) | Reconciliation events: what changed, what was re-verified | — |
 
 ### quality/ — what's proven, what's broken, what's risky
 
@@ -100,6 +111,7 @@ Who owns what. Who consumes what. Where to find what.
 | [test-suites.md](quality/test-suites.md) | 72 test cases across 12 suites | TC-101–TC-1204 |
 | [bug-reports.md](quality/bug-reports.md) | 3 bugs: sync failure, data leak, concurrent edit | BUG-001–BUG-003 |
 | [coverage-report.md](quality/coverage-report.md) | Story-to-test mapping, gaps, traceability completeness | — |
+| [reconciliation-log.md](quality/reconciliation-log.md) | Reconciliation events: what changed, what was re-verified | — |
 
 ### operations/ — what's running, what to do when it breaks
 
@@ -116,10 +128,12 @@ Who owns what. Who consumes what. Where to find what.
 | [runbook-import-failure.md](operations/runbook-import-failure.md) | Migration pipeline failure by stage, batch rollback | — |
 | [runbook-service-outage.md](operations/runbook-service-outage.md) | Total service outage: diagnosis, response, recovery | — |
 | [runbook-database-failure.md](operations/runbook-database-failure.md) | Database failure: failover, storage, connection exhaustion | — |
+| [runbook-mobile-delivery.md](operations/runbook-mobile-delivery.md) | Mobile delivery pipeline failure: build, signing, distribution | — |
+| [reconciliation-log.md](operations/reconciliation-log.md) | Reconciliation events: what changed, what was re-verified | — |
 
 ## How to read the matrix
 
-- **Start from your role.** Find the **O** column — those are your documents to maintain.
+- **Start from your vertical.** Find the **O** column — those are your documents to maintain.
 - **Follow C across.** Documents you read are your matching inputs. If they change, check if your matches still hold.
 - **Follow N.** Notification means you must acknowledge the change and assess impact to your inventory. Unacknowledged notifications leave items suspect.
 - **Traces, not chains.** Each item traces to what it matches. When something changes, its traces identify what needs re-verification — not through a linear chain, but through the web of matching decisions each team recorded.

@@ -11,8 +11,8 @@
 |------|-----------|
 | **Triggered by** | Alert: [SMS Delivery Failure Rate](./monitoring-alerting.md#p1----notify-during-business-hours) (`notification_sent_total{type="sms",status="failure"}` rate > 10%), Alert: [Token Redemption Failure Rate](./monitoring-alerting.md#p1----notify-during-business-hours) (> 5% of redemption attempts), Alert: [Token Expiry Rate High](./monitoring-alerting.md#p2----investigate-during-next-business-day) (> 20% of issued tokens unused) |
 | **Caused by** | Twilio/SendGrid service disruption, invalid phone numbers, token generation bug, or mobile SPA deployment issue |
-| **Watches** | [Notification Service](../architecture/architecture.md#notification-service), [Mobile Check-In Links API](../architecture/api-spec.md#6-mobile-check-in-links), [ADR mobile check-in](../architecture/adrs.md) |
-| **Proves** | [US-007: Mobile check-in link delivery](../product/user-stories.md#us-007-mobile-check-in-link-delivery) — SMS/email delivery, [US-008: Mobile check-in flow](../product/user-stories.md#us-008-mobile-check-in-flow) — token redemption and completion |
+| **Watches** | [Notification Service](../architecture/architecture.md#notification-service), [Mobile Check-In Links API](../architecture/api-spec.md#6-mobile-check-in-links), [ADR-001: WebSocket with Polling Fallback](../architecture/adrs.md#adr-001-websocket-with-polling-fallback-for-real-time-dashboard-updates) |
+| **Proves** | [US-007: Mobile check-in link delivery](../product/user-stories.md#us-007-pre-visit-check-in-from-personal-device) — SMS/email delivery, [US-008: Mobile check-in flow](../product/user-stories.md#us-008-receptionist-visibility-of-mobile-check-ins) — token redemption and completion |
 | **Detects** | Mobile delivery pipeline failure in production — SMS not sent, token not redeemable, or mobile SPA unreachable |
 | **Confirmed by** | Jordan Lee (DevOps Lead), 2026-03-17 — simulated Twilio outage in staging, verified detection and diagnosis steps |
 
