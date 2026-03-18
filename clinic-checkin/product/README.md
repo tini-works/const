@@ -15,6 +15,7 @@ If architecture is "how," this folder is "what" and "why."
 | `prd-mobile-checkin.md` | PRD for mobile check-in (E2). Problem, solution, requirements, risks, success metrics. |
 | `prd-multi-location.md` | PRD for multi-location support (E3). Driven by second clinic opening next month. |
 | `prd-riverside-acquisition.md` | PRD for migrating 4,000 patients from acquired practice (E5). Covers EMR import, paper digitization, and duplicate detection. |
+| `reconciliation-log.md` | Running record of when upstream changes arrived, what was reevaluated, and what was re-verified. The audit trail of inventory reconciliation. |
 
 ## Finding what you need
 
@@ -40,5 +41,6 @@ Every story traces in two directions:
 
 - **Where it came from** ("Traced from"): the epic, the round it was identified, or the PRD that defined it
 - **What matches it downstream** ("Matched by"): screen specs, user flows, API endpoints, architecture decisions, and test cases
+- **Who confirmed it** ("Confirmed by"): the person who verified the match and the date
 
 This means you can start at any story and follow links to see how it's designed (screens, flows), how it's built (APIs, ADRs), and how it's verified (test cases). Nothing exists in isolation.

@@ -12,6 +12,7 @@ What patients and receptionists see and do. Every screen, flow, and interaction 
 | **component-inventory.md** | Reusable UI components (status badges, progress indicators, medication cards, conflict banners, skeleton loaders) with variants, states, and sizing across kiosk/mobile/desktop. |
 | **design-decisions.md** | Where design pushed back on PM, added requirements, or made trade-offs. 14 decisions with rationale (e.g., mandatory transition screen for data leak prevention, honest sync status over false green checkmarks). |
 | **flow-diagrams.md** | Visual diagrams for the major flows: kiosk check-in, mobile check-in, kiosk-to-receptionist sync, concurrent edit resolution, Riverside migration pipeline. |
+| **reconciliation-log.md** | Running record of when upstream changes arrived, what design artifacts were reevaluated, and what was re-verified or added. |
 
 ## How to find what you need
 
@@ -29,6 +30,7 @@ Every screen, flow, and component traces back to the product story that asked fo
 - **Traced from** links to user stories and epics in `../product/`
 - **Matched by** links to API endpoints and services in `../architecture/`
 - **Proven by** links to test cases in `../quality/`
+- **Confirmed by** names the person who verified the match and when
 
 If a screen has no trace table, it's undocumented scope -- flag it.
 

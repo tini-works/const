@@ -10,6 +10,7 @@ This is where design meets reality. Everything here exists to prove the system r
 | `deployment-procedure.md` | CI/CD pipeline, rolling deploy strategy, rollback procedures, deploy windows, and secrets management. |
 | `monitoring-alerting.md` | Prometheus/Grafana dashboards, alert rules (P0/P1/P2), on-call rotation, and acknowledgment protocol. |
 | `environment-guide.md` | Local dev setup, staging access, production access rules, and environment parity requirements. |
+| reconciliation-log.md | Running record of when architecture or product changes triggered reevaluation of operational artifacts — infrastructure, deployment, monitoring, and runbooks. |
 
 ## Runbooks
 

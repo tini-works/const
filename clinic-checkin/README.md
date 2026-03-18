@@ -42,13 +42,13 @@ Each team owns their inventory independently. Items connect through **matching**
 
 ### Matching, not deriving
 
-Each team independently discovers what must be true and matches it. The result is a web of negotiated matches, not a pipeline of arrows:
+Each vertical matches against verified items — from the origin, from other verticals, or both. The result is a web of negotiated matches, not a pipeline of arrows:
 
 ![Matching relationships between inventories](https://diashort.apps.quickable.co/e/5b1445de)
 
 ### Inventory items and their traces
 
-Every item carries traces: where it came from, what it matches, and what proves it. When something changes, traces identify what goes suspect:
+Every item carries traces: where it came from, what it matches, and who confirmed the match. When something changes, traces identify what goes suspect:
 
 ![Inventory item relationships across all areas](https://diashort.apps.quickable.co/e/037d4aa3)
 
@@ -58,7 +58,7 @@ Each item moves through states. Proof requires evidence — a human confirmed th
 
 ![Verification lifecycle: unverified → proven → suspect → re-verified](https://diashort.apps.quickable.co/e/c6018808)
 
-Each team owns their traces. A trace says "we believe this matches that" — it's a human judgment recorded in that team's own inventory. When something changes, traces identify what's suspect.
+Each team owns their traces. A trace is a matching decision — confirmed by a human, recorded in that team's own inventory. When something changes, traces identify what's suspect.
 
 ## Where the Constitution shows up
 

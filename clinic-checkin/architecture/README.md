@@ -13,6 +13,7 @@ System-facing documents. How the clinic check-in system is built and why.
 | [api-spec.md](api-spec.md) | Full REST + WebSocket API specification. Request/response shapes, auth, error format, and traceability to screens and tests. |
 | [data-model.md](data-model.md) | PostgreSQL schema: all tables, indexes, relationships, and a round-by-round evolution history. |
 | [diagrams.md](diagrams.md) | Visual references: system architecture, ER diagram, sync sequence, concurrency flow, and migration pipeline. |
+| [reconciliation-log.md](reconciliation-log.md) | Running record of when changes triggered reevaluation of architecture artifacts. Covers all 10 rounds. |
 
 ### Tech design docs
 
@@ -40,3 +41,5 @@ System-facing documents. How the clinic check-in system is built and why.
 - **API endpoints** list an "If this changes" section showing which screens, flows, tests, and ADRs become suspect and need re-verification.
 - **Data model tables** list which API endpoints read/write them and what needs re-verification if the schema changes.
 - **Tech design docs** link to their test cases and monitoring dashboards for operational verification.
+- **Reconciliation log** records when upstream changes arrived, which items were reevaluated, and the outcome. Each change is a signal to reevaluate.
+- All trace headers include a **Confirmed by** field — the person who verified the match and the date.
