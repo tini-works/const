@@ -20,11 +20,11 @@ The result is a web of matched boxes across independent inventories — not a ch
 
 ### 2. Start from the Source
 
-Every piece of work has an **origin** — a change in reality that demands a response. A customer complaint, a regulation, a business bet, a system breaking under load.
+Every piece of work has an **origin** — a change in reality that demands a response.
 
-Each vertical discovers boxes from the same origin, in their own domain. They cannot control what another vertical requests — only what they choose to match.
+Each vertical matches against verified items — from the origin, from other verticals, or both. They cannot control what arrives. They control what they choose to match.
 
-Origins are **fractal**. Zoom in: one event becomes its own origin. Zoom out: that origin is just one event in a larger story. Every translation must trace back to the source.
+Origins are **fractal**. Zoom in: one event becomes its own origin. Zoom out: that origin is just one event in a larger story.
 
 ### 3. Own Your Inventory
 
