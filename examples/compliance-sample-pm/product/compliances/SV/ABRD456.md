@@ -1,4 +1,4 @@
-## ABRD456 — When a doctor documents services without code 0000 (Arzt-Patienten-Kontakt), system...
+## ABRD456 — When a doctor documents services without code 0000 (Arzt-Patienten-Kontakt), system must prompt to add it
 
 | Field | Value |
 |-------|-------|
@@ -9,7 +9,7 @@
 | **Status** | TBC |
 | **Goals** | BG-1a, BG-2 |
 | **Verification Method** | Validator unit test |
-| Matched by | [US-ABRD456](../../user-stories/US-ABRD456.md) |
+| **Matched by** | [US-ABRD456](../../user-stories/US-ABRD456.md) |
 
 ### Requirement
 
