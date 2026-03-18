@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+.env.*
+
+# Node
+node_modules/
+
+# OS files
+Thumbs.db
