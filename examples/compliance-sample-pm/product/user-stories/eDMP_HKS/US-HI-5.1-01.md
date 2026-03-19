@@ -1,0 +1,20 @@
+## US-HI-5.1-01 — When practice software generates eDMP HI XML, eHeader must contain HI-specific elements
+
+| Field | Value |
+|-------|-------|
+| **ID** | US-HI-5.1-01 |
+| **Traced from** | [HI-5.1-01](../../compliances/raw/eDMP-HKS/eDMP-HKS/Herzinsuffizienz/HI-5.1-01.md) |
+| **Source** | KBV eDMP HI V1.03 (KBV_ITA_VGEX_Schnittstelle_eDMP_HI.pdf) |
+| **Status** | TBC |
+| Matched by | — |
+| Proven by | — |
+| Confirmed by | — |
+
+### User Story
+
+As a practice software, I want to generate the eHeader with Herzinsuffizienz-specific differences from the general eDMP eHeader, so that the document is correctly identified as an eDMP HI documentation.
+
+### Acceptance Criteria
+
+1. Given an eDMP HI documentation is exported, when the eHeader is generated, then HI-specific KBV module identifiers are included
+2. Given the eHeader, when compared to the general eDMP eHeader, then all HI-specific deviations per V1.03 are applied

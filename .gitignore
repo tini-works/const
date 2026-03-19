@@ -17,3 +17,6 @@ node_modules/
 
 # OS files
 Thumbs.db
+
+# Large zip archives (exceed GitHub 100MB limit)
+*.zip
