@@ -21,7 +21,7 @@
 | Link type | References |
 |-----------|------------|
 | Catalog sections | AKA 3.8 ITVE, 3.9 DETE; KVDT 2.7 |
-| KVDT Requirements | [K26-01](../KVDT/KVDT/K26-01.md), [K26-02](../KVDT/KVDT/K26-02.md), [K26-03](../KVDT/KVDT/K26-03.md), [K26-04](../KVDT/KVDT/K26-04.md), [K26-05](../KVDT/KVDT/K26-05.md), [K26-06](../KVDT/KVDT/K26-06.md), [K26-07](../KVDT/KVDT/K26-07.md), [K26-08](../KVDT/KVDT/K26-08.md) |
+| KVDT Requirements | [K26-01](../compliances/KVDT/K26-01.md), [K26-02](../compliances/KVDT/K26-02.md), [K26-03](../compliances/KVDT/K26-03.md), [K26-04](../compliances/KVDT/K26-04.md), [K26-05](../compliances/KVDT/K26-05.md), [K26-06](../compliances/KVDT/K26-06.md), [K26-07](../compliances/KVDT/K26-07.md), [K26-08](../compliances/KVDT/K26-08.md) |
 | AVWG Requirements | — |
 | AKA Requirements | 7 user stories from ITVE/DETE sections |
 | Decisions | DEC-001, DEC-002 (AKA connectivity deferred) |

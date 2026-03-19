@@ -9,7 +9,7 @@
 | **Status** | TBC |
 | **Goals** | BG-1a (KBV eHKS Certification) |
 | **Verification Method** | Pruefmodul validation |
-| **Matched by** | [US-HKS-P-02](../../../../user-stories/eDMP_HKS/US-HKS-P-02.md) |
+| **Matched by** | [US-HKS-P-02](../../../../../user-stories/eDMP_HKS/US-HKS-P-02.md) |
 
 ### Requirement
 

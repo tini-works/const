@@ -9,7 +9,7 @@
 | **Status** | TBC |
 | **Goals** | BG-1a (KBV eHKS Certification) |
 | **Verification Method** | XML schema validation |
-| **Matched by** | [US-HKS-3.0-01](../../../../user-stories/eDMP_HKS/US-HKS-3.0-01.md) |
+| **Matched by** | [US-HKS-3.0-01](../../../../../user-stories/eDMP_HKS/US-HKS-3.0-01.md) |
 
 ### Requirement
 

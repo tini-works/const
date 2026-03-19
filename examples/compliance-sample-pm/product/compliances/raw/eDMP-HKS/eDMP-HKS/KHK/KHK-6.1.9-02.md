@@ -9,7 +9,7 @@
 | **Status** | TBC |
 | **Goals** | BG-1a (KBV eDMP Certification) |
 | **Verification Method** | UI functional test |
-| **Matched by** | [US-KHK-6.1.9-02](../../../../user-stories/eDMP_HKS/US-KHK-6.1.9-02.md) |
+| **Matched by** | [US-KHK-6.1.9-02](../../../../../user-stories/eDMP_HKS/US-KHK-6.1.9-02.md) |
 
 ### Requirement
 
