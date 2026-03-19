@@ -57,19 +57,19 @@ Every item must earn its place. If no downstream match needs it, it's ceremony �
 Five facing directions. Each defines what **proven** means.
 
 **PM — faces outward**
-Every item traces to an external source and has a matched response in another vertical. PM owns the commitments made to customers, regulators, and stakeholders — what was promised, what was accepted, what quality bar was set. The test: if someone outside the team asks "did you deliver this?" — PM's inventory is where the answer lives.
+Every item traces to an external source and has a matched response in another vertical. PM translates what customers need, regulators require, and the business demands into commitments other verticals can match against. Each commitment carries criteria clear enough that someone can look at the finished work and say yes or no. The test: if someone outside the team asks "did you deliver this?" — PM's inventory is where the answer lives.
 
 **Design — faces the user's experience**
-Every screen, transition, and flow matches a box from PM. No hanging states. Design owns every surface the user sees, every path they walk, every moment of the brand they experience. The test: if a user could screenshot it, walk through it, or feel it — Design owns it.
+Every screen, transition, and flow matches a box from PM. No hanging states. Design translates PM's commitments into what users actually see, touch, and walk through — the screens they land on, the flows that connect them, the brand that holds it together. The test: if a user could screenshot it, walk through it, or feel it — Design owns it.
 
 **Engineer — faces the system**
-Code implements what was committed. Tests verify what code implements. Engineer owns every endpoint the system exposes, every integration it maintains, every data structure it persists, every behavior it guarantees. The test: if it runs, computes, stores, or connects — Engineer owns it.
+Code implements what was committed. Tests verify what code implements. Engineer translates upstream commitments into the system that delivers them — the endpoints it exposes, the integrations it maintains, the data structures it persists, the behaviors it guarantees. The test: if it runs, computes, stores, or connects — Engineer owns it.
 
 **QA — faces proof integrity**
-The constitutional court. Every box has a verification path. Every path has a mechanism. QA owns the scenarios that prove matches hold across all verticals. The test: if someone asks "how do you know this works?" — QA's inventory is the answer.
+The constitutional court. Every box has a verification path. Every path has a mechanism. QA translates every match across every vertical into a scenario that proves it holds — and watches for the moment it doesn't. The test: if someone asks "how do you know this works?" — QA's inventory is the answer.
 
 **DevOps — faces operational reality**
-The system runs as designed, not just built as designed. Every deployment path is reproducible. Observability covers every flow. DevOps owns how the system lives in production — every deploy procedure, every signal that something is healthy or degrading, every runbook to respond when it isn't. The test: if the system is running and you need to know it's healthy, change it safely, or fix it fast — DevOps owns it.
+The system runs as designed, not just built as designed. Every deployment path is reproducible. Observability covers every flow. DevOps translates what was built into what runs reliably — the procedures to deploy it, the signals that it's healthy, the runbooks to respond when it isn't. The test: if the system is running and you need to know it's healthy, change it safely, or fix it fast — DevOps owns it.
 
 ---
 
