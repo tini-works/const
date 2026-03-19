@@ -40,7 +40,7 @@ Inventory is:
 
 - **Built** — structured for the nature of the work
 - **Optimized** — organized so matches can be found and verified efficiently
-- **Reconciled** — assumed legitimate until change arrives; each change is the signal to reevaluate staleness, correctness, and coverage
+- **Reconciled** — assumed legitimate until change arrives; each change is the signal to reevaluate staleness, correctness, and coverage. Every item should have a degradation signal — a leading indicator that the item is weakening before it actually breaks. A commitment nobody re-reads. A test nobody updates. A deploy procedure only one person can run. These are inventory maintenance failures, and every vertical is responsible for watching their own.
 
 Each item carries **traces**: where it came from, what it matches, who confirmed the match. Traces are the TODO list — they identify what needs re-verification when things change.
 
@@ -57,19 +57,19 @@ Every item must earn its place. If no downstream match needs it, it's ceremony �
 Five facing directions. Each defines what **proven** means.
 
 **PM — faces outward**
-Every item traces to an external source (customer, compliance, business goal) and has a matched response in another vertical. PM owns what was committed and to whom — the features promised, the compliance controls accepted, the quality thresholds agreed. If a client, regulator, or stakeholder could ask "did you deliver this?" — the answer lives in PM's inventory.
+Every item traces to an external source and has a matched response in another vertical. PM owns the commitments made to customers, regulators, and stakeholders — what was promised, what was accepted, what quality bar was set. The test: if someone outside the team asks "did you deliver this?" — PM's inventory is where the answer lives.
 
 **Design — faces the user's experience**
-Every screen, transition, and interaction matches a box from PM. No hanging states. Design owns what users see and do — the surfaces they touch, the flows they follow, the brand they experience. If a user could screenshot it or walk through it, it belongs to Design.
+Every screen, transition, and flow matches a box from PM. No hanging states. Design owns every surface the user sees, every path they walk, every moment of the brand they experience. The test: if a user could screenshot it, walk through it, or feel it — Design owns it.
 
 **Engineer — faces the system**
-Every flow matches boxes from upstream. Code implements what flows describe. Tests verify what code implements. Engineer owns how the system works — the components built, the contracts between them, the data they shape, the tests that prove behavior. If it runs, computes, stores, or integrates, Engineer maintains it.
+Code implements what was committed. Tests verify what code implements. Engineer owns every endpoint the system exposes, every integration it maintains, every data structure it persists, every behavior it guarantees. The test: if it runs, computes, stores, or connects — Engineer owns it.
 
 **QA — faces proof integrity**
-The constitutional court. Every box has a verification path. Every path has a mechanism. Every mechanism has a degradation signal — a leading indicator that verification is weakening before the match actually breaks. A test suite that passes but hasn't been updated in months. Coverage that shrinks as code grows. A manual check that used to happen weekly but now happens "when someone remembers." QA owns the proof that matches hold — the scenarios tested, the criteria applied, the coverage tracked. If someone asks "how do you know this works?" — QA's inventory is the answer.
+The constitutional court. Every box has a verification path. Every path has a mechanism. QA owns the scenarios that prove matches hold across all verticals. The test: if someone asks "how do you know this works?" — QA's inventory is the answer.
 
 **DevOps — faces operational reality**
-The system runs as designed, not just built as designed. Every deployment path is reproducible. Observability covers every flow. Incidents trace back to a broken match. DevOps owns how the system lives in production — the procedures to deploy, the monitoring to detect, the runbooks to respond, the evidence that operations match what was built.
+The system runs as designed, not just built as designed. Every deployment path is reproducible. Observability covers every flow. DevOps owns how the system lives in production — every deploy procedure, every signal that something is healthy or degrading, every runbook to respond when it isn't. The test: if the system is running and you need to know it's healthy, change it safely, or fix it fast — DevOps owns it.
 
 ---
 

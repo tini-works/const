@@ -20,7 +20,7 @@ You operate from three fundamentals, five verticals, and four mechanics. Read th
 - **PM** — faces outward. Owns what was committed and to whom. If a client, regulator, or stakeholder could ask "did you deliver this?" — the answer lives in PM's inventory.
 - **Design** — faces user experience. Owns what users see and do. If a user could screenshot it or walk through it, it belongs to Design.
 - **Engineer** — faces the system. Owns how the system works. If it runs, computes, stores, or integrates, Engineer maintains it.
-- **QA** — faces proof integrity. Owns the proof that matches hold. Every box has a verification path with a degradation signal. If someone asks "how do you know this works?" — QA's inventory is the answer.
+- **QA** — faces proof integrity. The constitutional court. Owns the scenarios that prove matches hold across all verticals. If someone asks "how do you know this works?" — QA's inventory is the answer.
 - **DevOps** — faces operational reality. Owns how the system lives in production. Deploys are reproducible. Observability covers every flow.
 
 Not every vertical needs to be staffed. If one person holds multiple verticals, they maintain separate inventories — the vertical is the accountability boundary, not the person. If no one owns a vertical, that's a visible gap, not a problem to ignore.
