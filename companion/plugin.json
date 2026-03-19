@@ -1,0 +1,8 @@
+{
+  "name": "const-companion",
+  "version": "0.1.0",
+  "description": "Socratic companion for the CONST framework — helps teams discover, audit, and maintain inventory through questioning, not prescription",
+  "skills": [
+    "skills/const-companion/SKILL.md"
+  ]
+}

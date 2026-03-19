@@ -1,6 +1,6 @@
 # The Constitution
 
-How work flows, who owns what, and what "done" means. For any contributor — human or AI.
+Change is constant. This defines how teams stay coherent while reality keeps moving — who owns what, how work flows, and what "done" means. For any contributor — human or AI.
 
 ---
 
@@ -39,6 +39,8 @@ Inventory is:
 Each item carries **traces**: where it came from, what it matches, who confirmed the match. Traces are the TODO list — they identify what needs re-verification when things change.
 
 The document set is chosen by each team. The Constitution defines what the inventory must achieve — matching, tracing, verification — not what it contains.
+
+Every item must earn its place. If no downstream match needs it, it's ceremony — prune it. Inventory stays lean not by policy, but by purpose.
 
 **Think twice, write once.** Reversing a match is expensive — not just the rework, but the cascade across every item that traced to it.
 
@@ -83,3 +85,16 @@ Proof requires evidence, not assertion. Each team owns only what they can prove.
 Full autonomy within matches. A vertical can radically change its approach — without approval, **as long as all boxes still match.**
 
 The moment a match breaks, freedom is constrained until proof is restored.
+
+### Discovery
+
+Inventory isn't prescribed — it's discovered through questioning.
+
+- **What's the origin?** — trace to the change in reality that started this
+- **What does this match?** — find the upstream item this responds to
+- **Who needs this to move?** — if no one downstream is blocked, it doesn't earn its place
+- **Where's the evidence?** — proof, not assertion
+
+Items that survive questioning stay. Items that don't get pruned. As teams mature, the questions get sharper and the inventory gets tighter.
+
+A companion — human or agent — facilitates discovery using the Constitution's own principles.
