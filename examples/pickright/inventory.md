@@ -1,121 +1,117 @@
 # PickRight Logistics — Inventory
 
-3PL warehouse, ~15 people, 1 site. Off-the-shelf WMS. 3 clients: A (cosmetics, lot-tracked), B (electronics, high volume), C (specialty food, cold chain — just signed).
+3PL warehouse, ~15 people, 1 site. Off-the-shelf WMS. 5 clients: A (cosmetics, lot-tracked), B (electronics, high volume), C (specialty food, cold chain), D + E (MoveQuick migration — general goods).
 
 ---
 
 ## PM Inventory
 
 **User Stories**
-- US1: User can receive inbound shipment with lot tracking — matched: Ds1, E1
-- US2: User can pick order with lot validation — SUSPECT: E3 validates lot identity but not expiry — matched: Ds2, E3
-- US3: User can pack and ship with branded label — matched: Ds3, E4
-- US4: Client B orders auto-import from SFTP — SUSPECT: CSV format changing, E5 will break — matched: E5
-- US4a: Client B SFTP import supports v2 CSV format (new column order, delivery_address, priority, ship_method) — NEW Round 2 — UNMATCHED: needs E5 update, E9, Q7
-- US5: User can view order status and tracking — matched: Ds4, E6
-- US6: Client C cold chain fulfillment — SUSPECT: was UNMATCHED, now has 14-day audit deadline
-- US6a: User can receive inbound cold chain shipment with temperature reading — NEW Round 3 — UNMATCHED: needs Ds6, E10
-- US6b: User can pick/pack Client C order with cold chain verification — NEW Round 3 — UNMATCHED: needs Ds7, E12, E13
-- US6c: Operator can view cold chain status dashboard — NEW Round 3 — UNMATCHED: needs Ds8, E11, D8
-- US7: Client A can pull lot traceability report per shipment — NEW Round 1 — UNMATCHED: needs Ds5, E8
+- US1: User can receive inbound shipment with lot tracking — proven Round 0: Ds1, E1
+- US2: User can pick order with lot validation (identity + expiry) — proven Round 7: Ds2, E3, Q1, Q4, Q5
+- US3: User can pack and ship with branded label — proven Round 0: Ds3, E4
+- US4: Client B orders auto-import from SFTP (v2 CSV format, header-based schema mapping) — proven Round 8: E5, E9, Q7, Q8
+- US5: User can view order status and tracking — proven Round 7: Ds4, E6
+- US6: Client C cold chain fulfillment — receive with temp, pick/pack with verification, dashboard, seal — proven Round 11: C3, E10-E14, Ds6-Ds8, Q9-Q14, D8
+- US7: Client A can pull lot traceability report per shipment — proven Round 8: Ds5, E8
+- US11: MoveQuick Clients D+E onboarded — SKU migration, order import, operator trained — proven Round 14: E20-E22, Ds11, Ds12, Q19-Q21
+- US14: Combined inventory view across all 5 clients — proven Round 15: E23, Ds4 — verified under 6000+ SKU load
+- US15: Client D/E SLA reporting — order accuracy and ship time — UNMATCHED: needs E24, D21
 
 **Compliance**
-- C1: Client A lot traceability on every outbound — SUSPECT: E2 returns lots but doesn't attach them to shipments, Q1 tests identity not validity — BROKE: 3 expired lots shipped
-- C1a: Every outbound shipment record includes lot IDs + expiry per line item — NEW Round 1 — UNMATCHED: needs DM2 change, E6 change
-- C1b: Expired lots must never be pick-eligible — NEW Round 1 — UNMATCHED: needs E3 change, Q5
-- C2: Client A label spec v2.3 — matched: E4, Q2
-- C3: Cold chain compliance — temp record at receive, continuous storage monitoring, verification at pick/pack, seal on outbound — NEW Round 3 — UNMATCHED: needs E10-E14, Q9-Q14, D8-D10, Ds6-Ds8
-- C3a: Cold chain audit evidence package — exportable temperature log per shipment, unbroken chain from receive to ship — NEW Round 3 — UNMATCHED: needs E14, Ds8, Q12
+- C1: Client A lot traceability on every outbound — shipment records include lot IDs + expiry, expired lots blocked from pick — proven Round 7: E2, E3, E6, E7, Q1, Q5, Q6
+- C2: Client A label spec v2.3 — proven Round 0: E4, Q2
+- C3: Cold chain compliance — temp record at receive, continuous monitoring, pick/pack verification, seal, exportable audit evidence — proven Round 11: E10-E14, Q9-Q14, D8-D10, Ds6-Ds8
+- C5: MoveQuick Clients D+E contractual SLAs imported and matched — proven Round 14: US11, E20, E22
 
 **NFRs**
-- N1: WMS available during operating hours — matched: D1
-- N2: Client B import completes within 15 min — SUSPECT: parser rewrite may affect throughput — matched: E5, D2
-- N3: Cold room temperature logged minimum every 5 minutes with no gaps — NEW Round 3 — UNMATCHED: needs D8, E11
+- N1: WMS available during operating hours — proven Round 0: D1
+- N2: Client B import completes within 15 min — proven Round 8: E5, D2 — re-proven after parser rewrite
+- N3: Cold room temperature logged minimum every 5 minutes with no gaps — proven Round 10: D8, E11, DM3
+- N4: WMS handles combined 6000+ SKU catalog without degradation — proven Round 15: E1, D1 — load time resolved after E23 index fix
 
 ---
 
 ## Design Inventory
 
 **Screens**
-- Ds1: Receive screen — scan SKU, enter lot/expiry, assign location — matched: US1, E1
-- Ds2: Pick screen — shows pick list, scan lot barcode, mismatch warning — SUSPECT: needs expiry status display + block/warn UX from E3 — matched: US2, E3
-- Ds3: Pack screen — order contents, label preview, confirm count — matched: US3, E4
-- Ds4: Order status screen — order detail, item lots, tracking number — matched: US5, E6
-- Ds5: Lot traceability report screen — per-shipment and per-date-range — NEW Round 1 — UNMATCHED: needs US7, E8
-- Ds6: Receive screen cold chain variant — adds arrival temperature field, out-of-range warning, block/accept-with-reason — NEW Round 3 — UNMATCHED: needs US6a, E10
-- Ds7: Pick/pack screen cold chain variant — shows temp range, current reading, blocks if out of range, seal confirmation — NEW Round 3 — UNMATCHED: needs US6b, E12, E13
-- Ds8: Cold chain log view — per-shipment temperature timeline, exportable for audit — NEW Round 3 — UNMATCHED: needs US6c, E14
+- Ds1: Receive screen — scan SKU, enter lot/expiry, assign location — proven Round 0: US1, E1
+- Ds2: Pick screen — shows pick list, scan lot barcode, expiry status, block/warn UX — proven Round 7: US2, E3
+- Ds3: Pack screen — order contents, label preview, confirm count — proven Round 0: US3, E4
+- Ds4: Order status screen — order detail, item lots, tracking number — proven Round 7: US5, E6
+- Ds5: Lot traceability report screen — per-shipment and per-date-range — proven Round 8: US7, E8
+- Ds6: Cold chain screens — receive with temp field, pick/pack with temp range + seal, log view with exportable timeline — proven Round 11: US6, E10, E12, E13, E14
+- Ds11: MoveQuick WMS training screens — receive, pick, pack adapted for Clients D+E — proven Round 14: US11, E20, E22
 
 **Flows**
-- F1: Receive → putaway → pick → pack → ship — SUSPECT: no cold chain branch for Client C
-- F2: Cold chain flow: receive (with temp) → cold putaway → cold storage (monitored) → cold pick (with temp check) → cold pack (with seal) → ship — NEW Round 3 — UNMATCHED: needs C3, US6a, US6b
+- F1: Receive → putaway → pick → pack → ship (includes cold chain branch: temp receive, monitored storage, temp-checked pick, sealed pack) — proven Round 11: C3, US6
 
 ---
 
 ## Engineer Inventory
 
 **API Endpoints**
-- E1: POST /receive — creates inbound record with SKU, qty, lot, expiry, location — matched: US1, Ds1
-- E2: GET /lots/{sku} — returns lot records with expiry and location — SUSPECT: should include computed expired boolean — matched: US2, C1
-- E3: POST /pick/confirm — validates scanned lot against assigned lot, blocks mismatch — SUSPECT: validates identity only, not expiry. Must add: if expiry < today → block; if expiry < today+7d → warn — matched: US2, Ds2
-- E4: POST /label/render — generates ZPL per Client A spec v2.3 — matched: US3, C2, Ds3
-- E5: SFTP integration — polls Client B /outbound/orders/ every 15 min, parses CSV, creates WMS orders, alerts on failure — SUSPECT: hardcoded column order + field names, will break on new format — matched: US4, N2
-- E9: CSV schema mapping config — externalizes column name mapping and required fields, header-based not positional — NEW Round 2 — UNMATCHED: needs US4a, Q7
-- E6: GET /orders/{id} — returns order with items, lots, pick status, tracking — SUSPECT: must include shipped_lots (lot_id + qty per line item) — matched: US5, Ds4
-- E7: POST /lots/{lot_id}/quarantine — marks expired or recalled lot as quarantined, prevents pick assignment — NEW Round 1 — UNMATCHED: needs C1b, Q6
-- E8: GET /shipments/{id}/lots — returns lot-level detail per outbound shipment — NEW Round 1 — UNMATCHED: needs US7, Ds5
-- E10: POST /receive cold chain extension — adds arrival_temp, temp_unit, cold_chain boolean; validates temp against product range — NEW Round 3 — UNMATCHED: needs US6a, Ds6, C3
-- E11: Cold room temperature logging service — records sensor readings to temp_readings table every 5 min, accepts sensor API or manual POST fallback — NEW Round 3 — UNMATCHED: needs N3, D8
-- E12: POST /pick/confirm cold chain extension — requires product_temp reading, validates against range, blocks if out of range — NEW Round 3 — UNMATCHED: needs US6b, Ds7, C3
-- E13: POST /pack/confirm cold chain seal — records pack temp, seal confirmation, packer ID, generates cold chain seal record — NEW Round 3 — UNMATCHED: needs US6b, Ds7, C3
-- E14: GET /shipments/{id}/cold-chain — returns full temperature chain of custody: arrival, storage, pick, pack temps — NEW Round 3 — UNMATCHED: needs C3a, Ds8
+- E1: POST /receive — creates inbound record with SKU, qty, lot, expiry, location, arrival_temp (optional) — proven Round 9: US1, Ds1
+- E2: GET /lots/{sku} — returns lot records with expiry, location, computed expired boolean — proven Round 7: US2, C1
+- E3: POST /pick/confirm — validates lot identity + expiry (block if expired, warn if <7d) — proven Round 7: US2, Ds2, C1b
+- E4: POST /label/render — generates ZPL per Client A spec v2.3 — proven Round 0: US3, C2, Ds3
+- E5: SFTP integration — polls Client B, parses CSV via schema mapping config, creates WMS orders — proven Round 8: US4, US4a, N2
+- E6: GET /orders/{id} — returns order with items, shipped_lots, pick status, tracking — proven Round 7: US5, Ds4, C1a
+- E7: POST /lots/{lot_id}/quarantine — marks expired/recalled lot as quarantined, prevents pick — proven Round 7: C1b, Q6
+- E8: GET /shipments/{id}/lots — returns lot-level detail per outbound shipment — proven Round 8: US7, Ds5
+- E9: CSV schema mapping config — externalizes column name mapping, header-based not positional — proven Round 8: US4a, Q7
+- E10: POST /receive cold chain extension — adds arrival_temp, temp_unit, cold_chain boolean; validates temp against product range — proven Round 9: US6a, Ds6, C3
+- E11: Cold room temperature logging service — records sensor readings every 5 min, sensor API + manual POST fallback — proven Round 10: N3, D8
+- E12: POST /pick/confirm cold chain extension — requires product_temp, validates against range, blocks if out — proven Round 11: US6b, Ds7, C3
+- E13: POST /pack/confirm cold chain seal — records pack temp, seal confirmation, packer ID, generates seal record — proven Round 11: US6b, Ds7, C3
+- E14: GET /shipments/{id}/cold-chain — returns full temperature chain of custody — proven Round 11: C3a, Ds8
+- E20: MoveQuick SKU bulk import endpoint — maps MoveQuick SKU codes to PickRight format, dedup, validates — proven Round 12: US11, US12
+- E21: MoveQuick order import adapters — maps Client D+E order formats to WMS orders — proven Round 14: US11
+- E23: Combined inventory query — cross-client SKU search with client filter — proven Round 13: US14 — re-proven after index fix
+- E24: SLA metrics query — order accuracy + ship time per client — UNMATCHED: needs US15
 
 **Data Model**
-- DM1: lots table (lot_id, sku, expiry, received_date, location, qty, status, arrival_temp) — SUSPECT: needs status + arrival_temp fields — matched: C1, E1, E2, E3
-- DM2: orders table (order_id, client, status, items, shipped_lots, shipped_at, tracking, priority, ship_method) — SUSPECT: needs shipped_lots + priority + ship_method fields — matched: E5, E6
-- DM3: temp_readings table (reading_id, sensor_id, location, temp_c, timestamp, reading_source: sensor|manual) — immutable log — NEW Round 3 — UNMATCHED: needs E11, N3, D8
-- DM4: cold_chain_records table (record_id, shipment_id, lot_id, arrival_temp, pick_temp, pack_temp, seal_confirmed, seal_timestamp, packer_id) — NEW Round 3 — UNMATCHED: needs E10, E12, E13, E14, C3
+- DM1: lots table — lot_id, sku, expiry, received_date, location, qty, status, arrival_temp — proven Round 9: C1, E1, E2, E3
+- DM2: orders table — order_id, client, status, items, shipped_lots, shipped_at, tracking, priority, ship_method — proven Round 8: E5, E6
+- DM3: temp_readings table — reading_id, sensor_id, location, temp_c, timestamp, reading_source — immutable log — proven Round 10: E11, N3, D8
+- DM4: cold_chain_records table — record_id, shipment_id, lot_id, arrival_temp, pick_temp, pack_temp, seal_confirmed, seal_timestamp, packer_id — proven Round 11: E10, E12, E13, E14, C3
 
 ---
 
 ## QA Inventory
 
 **Test Scenarios**
-- Q1: Pick with wrong lot → blocked — SUSPECT: tests identity only, not expiry — matched: E3, C1
-- Q2: Label output matches Client A approved sample — matched: E4, C2
-- Q3: SFTP import with malformed CSV → error alert fires — SUSPECT: "malformed" definition changes with new format — matched: E5, N2
-- Q7: Client B v2 CSV import → orders created correctly, delivery_address mapped, priority+ship_method stored — NEW Round 2 — UNMATCHED: needs E5 update, E9
-- Q8: Client B old-format CSV after cutover → rejected with clear schema mismatch error — NEW Round 2 — UNMATCHED: needs E5 update
-- Q4: Order with near-expiry lot (<7 days) → lot skipped in pick — SUSPECT: E3 may not implement this behavior — matched: E3, C1
-- Q5: Pick with expired lot (expiry < today) → pick BLOCKED — NEW Round 1 — UNMATCHED: needs E3 fix
-- Q6: Quarantined lot cannot be assigned to any pick — NEW Round 1 — UNMATCHED: needs E7
-- Q9: Receive cold chain item with temp in range → accepted, arrival_temp recorded — NEW Round 3 — UNMATCHED: needs E10
-- Q10: Receive cold chain item with temp OUT of range → blocked or override with reason — NEW Round 3 — UNMATCHED: needs E10, Ds6
-- Q11: Pick cold chain order, product temp out of range → pick BLOCKED — NEW Round 3 — UNMATCHED: needs E12
-- Q12: GET /shipments/{id}/cold-chain returns complete unbroken temp chain, no gaps >5 min — NEW Round 3 — UNMATCHED: needs E14, C3a
-- Q13: Cold room sensor offline >5 min → alert fires AND gap visible in cold chain log — NEW Round 3 — UNMATCHED: needs D8, D9, E11
-- Q14: Pack cold chain order without seal confirmation → pack BLOCKED — NEW Round 3 — UNMATCHED: needs E13
+- Q1: Lot pick validation — wrong lot blocked, expired lot blocked, near-expiry skipped — proven Round 7: E3, C1
+- Q2: Label output matches Client A approved sample — proven Round 0: E4, C2
+- Q3: SFTP import — malformed CSV alert, v2 format imports correctly, old format rejected — proven Round 8: E5, E9, N2
+- Q6: Quarantined lot cannot be assigned to any pick — proven Round 7: E7
+- Q9: Cold chain receive — in-range accepted, out-of-range blocked/override, arrival_temp recorded — proven Round 9: E10, Ds6
+- Q11: Cold chain pick — product temp out of range → pick BLOCKED — proven Round 11: E12
+- Q12: Cold chain integrity — unbroken temp chain from receive to ship, no gaps >5 min — proven Round 11: E14
+- Q13: Cold room monitoring — sensor offline >5 min triggers alert, gap visible in log — proven Round 10: D8, E11
+- Q14: Cold chain pack — pack without seal confirmation → BLOCKED — proven Round 11: E13
+- Q19: MoveQuick SKU import — no duplicates, all SKUs queryable post-import — proven Round 12: E20
+- Q20: MoveQuick order import — orders created, items mapped, no data loss — proven Round 14: E21
+- Q22: MoveQuick operator can execute receive/pick/pack without assistance — proven Round 13: Ds11, US11
 
 ---
 
 ## DevOps Inventory
 
 **Monitoring**
-- D1: WMS uptime check — every 60s, alert on failure — matched: N1
-- D2: Client B import health — alert if no successful import in 30 min — SUSPECT: will fire false alerts during format cutover — matched: N2, E5
-- D7: Client B CSV schema validation alert — detects unexpected column headers or count mismatch, separate from parse failure — NEW Round 2 — UNMATCHED: needs E9
-- D3: Pick block rate — alert if >5% of picks blocked in 1 hour — SUSPECT: will spike when expired lot blocks start firing, needs threshold adjustment or separate metric — matched: E3
-- D5: Expired lot shipment alert — query shipped orders where lot expiry < ship date, hourly — NEW Round 1 — UNMATCHED: needs DM1+DM2 join path
-- D6: Near-expiry lot assignment alert — query pick assignments where lot expiry < today+7d, every 15 min — NEW Round 1 — UNMATCHED: needs E3 data
+- D1: WMS uptime check — every 60s, alert on failure — proven Round 0: N1
+- D2: Client B import health — alert if no successful import in 30 min — proven Round 8: N2, E5 — threshold adjusted for v2 cutover
+- D3: Pick block rate — alert if >5% of picks blocked in 1 hour, separate metric for expiry blocks — proven Round 7: E3
+- D5: Expired lot shipment alert — query shipped orders where lot expiry < ship date, hourly — proven Round 7: DM1, DM2
+- D7: Client B CSV schema validation alert — detects unexpected column headers or count mismatch — proven Round 8: E9
+- D8: Cold chain monitoring suite — temp out-of-range alert, no-reading alert, logging gap detection — proven Round 10: N3, E11, DM3, Q13
+- D10: Cold chain seal verification alert — flags Client C shipments with incomplete cold chain records — proven Round 11: C3, E13, DM4
+- D21: MoveQuick SLA monitoring — order accuracy + ship time alerts for Clients D and E — UNMATCHED: needs E24, US15
 
 **Deploy**
-- D8: Cold room temperature monitoring — alert if no reading in 10 min or temp exceeds range, every 5 min — NEW Round 3 — UNMATCHED: needs N3, E11, DM3
-- D9: Cold chain logging gap alert — detects gaps >5 min in temp_readings, daily report + real-time — NEW Round 3 — UNMATCHED: needs N3, Q13, E11
-- D10: Cold chain seal verification alert — flags Client C shipments with incomplete cold chain records, hourly — NEW Round 3 — UNMATCHED: needs C3, E13, DM4
-
-**Deploy**
-- D4: Deploy procedure for custom scripts (label render, SFTP import) — SUSPECT: needs cutover runbook for E5 + cold chain service + DB migrations — matched: E4, E5
-- D11: Deploy procedure for cold chain service + sensor integration — migrations DM3+DM4, service deploy, sensor connectivity verification, manual fallback — NEW Round 3 — UNMATCHED: needs E11, DM3, DM4
+- D4: Deploy procedure for all custom services — label render, SFTP import, cold chain, migration — proven Round 10: includes cold chain + sensor deploy
+- D18: MoveQuick go-live checklists — Clients D+E cutover verified — proven Round 14: US11
+- D20: Combined monitoring dashboard — all 5 clients visible, alert routing split per client — proven Round 15: routing separated A/B/C ops, D/E migration, cold chain dedicated
 
 ---
 
@@ -202,3 +198,260 @@ All verticals looked inward, claimed items, connected matching points. Hot paths
 - **DevOps:** Every monitoring item (D1-D10) detects problems but has no remediation path. Alerts fire into a void. Monitoring without remediation is theater. D12-D16 (Round 4 knowledge transfer) are in unknown state — may have been lost with the engineer.
 
 **Lesson:** The acquisition didn't cause the crisis — it made the pre-existing crisis undeniable. Every vertical had been inventing items they couldn't progress: PM invents requirements nobody builds, Design invents screens nobody implements, QA invents tests nobody runs, DevOps invents monitors nobody responds to. The inventory grew while the ability to prove anything shrank to zero. This is the ultimate stress test of CONST: the framework makes the dysfunction visible — every UNMATCHED item, every SUSPECT item, every broken trace is a signal. Whether the team acts on those signals is not the Constitution's job. That's accountability.
+
+### Round 6 — Contractor hired, triage begins
+**Origin:** Owner hires a contract engineer. MoveQuick operator stays on as warehouse staff. PM freezes scope: cold chain + lot expiry first, MoveQuick deferred.
+
+PROGRESS:
+- US8: UNMATCHED → proven — contractor pairs with departing engineer, captures E15-E19
+- US9: UNMATCHED → proven — contractor onboarded, has deploy access
+- US10: UNMATCHED → proven — scope freeze documented: cold chain and lot expiry are priority 1
+- E15: UNMATCHED → proven — deploy scripts committed to repo
+- E16: UNMATCHED → proven — credentials inventory with rotation schedules documented
+- E17-E19: UNMATCHED → proven — WMS config docs, codebase walkthrough recorded, known bugs listed
+- D12: UNMATCHED → proven — deploy tested by contractor independently
+
+PRUNED: C4 (client communication on risk) — PM handled directly, no inventory item needed. D13 (infrastructure access audit), D14 (WMS admin transfer), D15 (alert runbooks), D16 (disaster recovery docs) — merged into D12 as sub-checks, not separate items. Ds9 (screen-to-API contract docs), Ds10 (WMS config vs custom screens inventory) — captured inside E17/E18, not separate design items. Q15 (deploy verification by non-engineer) — folded into D12 evidence. Q16 (knowledge transfer completeness check) — folded into US8 evidence. Total: 9 items pruned.
+
+**Lesson:** When crisis forces triage, ceremony items become visible fast. Nine items from Round 4 looked necessary under panic but were either duplicates or sub-tasks of real items. The Discovery question "who needs this to move?" killed them — nobody downstream was blocked by D13 existing separately from D12.
+
+### Round 7 — Lot expiry fixed end-to-end
+**Origin:** Contractor delivers E3 expiry validation, E7 quarantine, E2 expired boolean. Client A compliance chain restored.
+
+PROGRESS:
+- E2: SUSPECT → proven — now includes computed expired boolean
+- E3: SUSPECT → proven — validates identity + expiry, blocks expired, warns <7d
+- E6: SUSPECT → proven — now includes shipped_lots per line item
+- E7: UNMATCHED → proven — quarantine endpoint working
+- US2: SUSPECT → proven — lot validation now covers identity + expiry
+- C1: BROKE → proven — re-proven with new evidence: expiry enforcement + traceability
+- C1a: UNMATCHED → proven — DM2 updated, E6 returns lot IDs + expiry
+- C1b: UNMATCHED → proven — E3 blocks, E7 quarantines, Q5 confirms
+- Ds2: SUSPECT → proven — pick screen shows expiry status, block/warn UX
+- US5: matched → proven — E6 now returns complete data
+- DM1: SUSPECT → proven — status + arrival_temp fields added
+- DM2: SUSPECT → proven — shipped_lots + priority + ship_method fields added
+- Q1: SUSPECT → proven — expanded to test identity + expiry
+- Q4: SUSPECT → proven — near-expiry skip confirmed
+- Q5: UNMATCHED → proven — expired lot block confirmed
+- Q6: UNMATCHED → proven — quarantine block confirmed
+- D3: SUSPECT → proven — threshold adjusted, separate expiry block metric
+- D5: UNMATCHED → proven — expired lot shipment alert live
+- D6: UNMATCHED → proven — near-expiry assignment alert live
+
+**Lesson:** The entire Client A compliance chain — from C1 broken in Round 1 through 19 items across 5 verticals — was restored in a single focused round. This is what happens when a team stops inventing and starts proving.
+
+### Round 8 — CSV v2 integration complete
+**Origin:** Contractor delivers E9 schema mapping config, E5 rewritten to header-based parsing. Client B format cutover executed.
+
+PROGRESS:
+- E5: SUSPECT → proven — rewritten with schema mapping, header-based
+- E9: UNMATCHED → proven — config-driven column mapping live
+- US4: SUSPECT → proven — SFTP import works with v2 format
+- US4a: UNMATCHED → proven — v2 CSV fully supported
+- US7: UNMATCHED → proven — lot traceability report endpoint working
+- E8: UNMATCHED → proven — shipment lot detail endpoint live
+- Ds5: UNMATCHED → proven — lot traceability report screen built
+- N2: SUSPECT → proven — import completes in <15 min after rewrite
+- Q3: SUSPECT → proven — re-proven against v2 schema definitions
+- Q7: UNMATCHED → proven — v2 import test passing
+- Q8: UNMATCHED → proven — old format rejection test passing
+- D2: SUSPECT → proven — import health alert threshold adjusted
+- D7: UNMATCHED → proven — schema validation alert live
+- D4: SUSPECT → proven — cutover runbook executed successfully
+
+PRUNED: E19 (known bugs register) — bugs were either fixed or tracked in code. No downstream match needed it as a permanent inventory item.
+
+**Lesson:** E5 was the most fragile hot path in the system. The rewrite from positional to header-based parsing (Freedom mechanic — Engineer changed how, kept the match) means the next Client B format change is a config update, not a code emergency.
+
+### Round 9 — Cold chain receive + deploy pipeline
+**Origin:** Contractor and operator build cold chain receive path. Sensor integration connected. Deploy pipeline formalized.
+
+PROGRESS:
+- E10: UNMATCHED → proven — cold chain receive extension deployed
+- E1: proven → re-proven — now accepts arrival_temp for cold chain items
+- Ds6: UNMATCHED → proven — cold chain receive screen with temp field, warnings
+- US6a: UNMATCHED → proven — cold chain receive working end-to-end
+- Q9: UNMATCHED → proven — in-range receive test passing
+- Q10: UNMATCHED → proven — out-of-range block/override test passing
+- Q17: UNMATCHED → proven — credential access verified for 2+ people
+- D4: proven → re-proven — now covers cold chain service deploy + DB migrations
+- DM1: proven → re-proven — arrival_temp field active for cold chain receives
+
+**Lesson:** Cold chain receive was the first link in the chain. Without it proven, nothing downstream (pick, pack, seal, audit) could start. The team sequenced correctly: prove the foundation before building on it.
+
+### Round 10 — Cold chain monitoring + QA baseline
+**Origin:** Temperature logging service goes live. QA builds automated regression baseline for core endpoints.
+
+PROGRESS:
+- E11: UNMATCHED → proven — sensor logging service recording every 5 min
+- DM3: UNMATCHED → proven — temp_readings table populated, immutable log confirmed
+- N3: UNMATCHED → proven — 5-minute logging verified, no gaps in 72-hour test
+- US6c: UNMATCHED → proven — cold chain dashboard shows live readings
+- Ds8: partially done → proven — cold chain log view with timeline, export working
+- D8: UNMATCHED → proven — cold room monitoring alerts live
+- D9: UNMATCHED → proven — gap detection alert tested and live
+- Q13: UNMATCHED → proven — sensor offline test passing, gap visible in log
+- Q18: UNMATCHED → proven — automated regression tests for E1-E9 baseline
+- D11: UNMATCHED → proven — cold chain service deploy procedure documented and tested
+
+**Lesson:** E11 (temperature logging) unlocked 6 other items across QA, DevOps, PM, and Design. A single engineering item proving out can unblock an entire vertical slice. This is the matching web working as designed — not a chain, but a web where one proof enables many.
+
+### Round 11 — Cold chain pick/pack/seal complete
+**Origin:** Cold chain flow fully operational. Pick temp check, pack seal confirmation, and chain-of-custody audit trail all proven.
+
+PROGRESS (items fixed):
+- E12: UNMATCHED → proven — pick/confirm cold chain extension deployed, validates product temp against range
+- E13: UNMATCHED → proven — pack/confirm seal endpoint deployed, records pack temp + seal + packer ID
+- E14: UNMATCHED → proven — cold chain custody endpoint returns full temp chain (arrive → store → pick → pack)
+- DM4: UNMATCHED → proven — cold_chain_records table populated, tested with 2 weeks of Client C shipments
+- Ds7: UNMATCHED → proven — pick/pack cold chain screen shows temp range, blocks out-of-range, seal confirmation UX
+- Q11: UNMATCHED → proven — out-of-range pick block confirmed in test + production
+- Q14: UNMATCHED → proven — pack without seal → blocked confirmed
+- Q12: UNMATCHED → proven — chain-of-custody endpoint returns unbroken chain, no gaps >5 min verified
+- US6b: UNMATCHED → proven — cold chain pick/pack working end-to-end
+- C3: UNMATCHED → proven — full cold chain compliance: receive, monitor, pick, pack, seal all verified
+- C3a: UNMATCHED → proven — audit evidence package exportable, unbroken chain confirmed
+- D10: UNMATCHED → proven — seal verification alert live, catches incomplete cold chain records
+- US6: SUSPECT → proven — Client C cold chain fulfillment complete, audit-ready
+- F1: SUSPECT → proven — main flow now includes cold chain branch for Client C
+- F2: UNMATCHED → proven — cold chain flow proven end-to-end with 2 weeks of live shipments
+
+ORIGIN: Internal reconciliation finding — cold chain audit passed, but the evidence package (C3a) revealed that 3 of 47 shipments had manual temperature fallback entries instead of sensor readings. Not a compliance failure (manual fallback is documented), but a signal.
+
+NEW ITEMS:
+- US16: Humidity monitoring for Client C cold room — PARKED: raised by operator, not contractually required, deferred
+
+PRUNED: None this round — everything that moved was load-bearing.
+
+RECONCILIATION: QA found that Q12 (chain-of-custody completeness) passes on the happy path but has never been tested during a sensor failover. The manual fallback path exists (E11 accepts manual POST) but Q12 doesn't verify that manual entries produce a valid chain. Filed as internal origin for Round 12.
+
+### Round 12 — MoveQuick migration starts
+**Origin:** With cold chain proven and lot expiry stable, contractor + MoveQuick operator begin active migration. Client D goes first (simpler catalog, fewer SKUs).
+
+PROGRESS (items fixed):
+- E20: UNMATCHED → proven — SKU bulk import endpoint deployed, maps MoveQuick codes to PickRight format, dedup logic tested with 2,400 of Client D's SKUs
+- Q19: UNMATCHED → proven — import test confirms no duplicates, all SKUs queryable post-import
+- D17: UNMATCHED → proven — migration runbook documented: extract → map → import → validate → rollback procedure tested
+- E23: UNMATCHED → proven — combined inventory query works across all clients — SUSPECT: query slow above 5,000 results, needs index
+- Ds8: proven → re-proven — cold chain log view confirmed working with manual fallback entries after Q12 reconciliation finding
+
+ORIGIN: MoveQuick operator discovers Client D has 3 SKUs with lot tracking requirements that were not in the original contract. Small scope but must be handled — lot receive path (E1) already supports this, just needs Client D flagged as lot-tracked in config.
+
+NEW ITEMS:
+- US14: Combined inventory view across all 5 clients — SUSPECT: E23 deployed but UI not verified under load with 6000+ SKUs — matched: E23, Ds4
+- N4: WMS handles combined 6000+ SKU catalog without degradation — SUSPECT: functional but pick screen load time increased 40% — matched: E1, D1
+
+PRUNED: Q18 (regression test inventory) — this was a meta-item ("do we have tests?"). Now that automated tests exist and are running, the inventory of tests is maintained by the test suite itself, not by a separate QA item. The evidence is the CI pipeline, not a checklist. Merged into Q1-Q14 as their proving mechanism.
+
+RECONCILIATION: Engineer flags that E23 (combined inventory query) does a full table scan above 5,000 results. With Client E's 1,600 SKUs still to import, the combined catalog will hit ~6,000. Performance fix needed before Client E go-live but not blocking Client D.
+
+### Round 13 — Migration progresses, QA catches up
+**Origin:** Client D live on PickRight WMS. MoveQuick operator cross-training complete. Client E import begins. QA covers migration test scenarios.
+
+PROGRESS (items fixed):
+- E21: UNMATCHED → proven — Client D order import adapter deployed, mapping verified against 2 weeks of live orders
+- Q20: UNMATCHED → proven — Client D order import test passing, items mapped correctly, no data loss in 500-order validation
+- US13: UNMATCHED → proven — MoveQuick operator completes receive/pick/pack cycle unassisted, QA observed
+- Ds11: UNMATCHED → proven — Client D training screens reviewed with operator, SKU naming adapted
+- Ds13: UNMATCHED → proven — cross-training guide used during operator certification
+- Q22: UNMATCHED → proven — operator independently executes full cycle, no assistance needed
+- E23: SUSPECT → re-proven — index added, query time under 200ms for 6000 SKUs
+
+ORIGIN: Client D's first week of live operations surfaces 2 orders where ship_method was blank — Client D's order format doesn't include ship_method (unlike Client B). E21 adapter silently drops it. Not a bug (default shipping is correct) but PM adds a note to US11 acceptance criteria.
+
+NEW ITEMS:
+- E24: SLA metrics query — order accuracy + ship time per client — UNMATCHED: needs US15
+
+PRUNED: Ds9 was already pruned in Round 6. Ds10 was already pruned in Round 6. No additional pruning this round — remaining items are all load-bearing.
+
+RECONCILIATION: PM reviews Client D's first week metrics: 99.2% order accuracy, average ship time 4.1 hours. Meets SLA but there's no automated monitoring (D21 doesn't exist yet). PM creates US15 and notes it's not urgent — manual weekly review is sufficient for 2 clients, but won't scale.
+
+### Round 14 — Migration complete, most items proven
+**Origin:** Client E import complete. Both MoveQuick clients operational on PickRight WMS. Migration officially closed.
+
+PROGRESS (items fixed):
+- E22: UNMATCHED → proven — Client E order import adapter deployed, mapping verified
+- Q21: UNMATCHED → proven — Client E order import test passing, no data loss in 800-order validation
+- US11: UNMATCHED → proven — Client D fully onboarded: SKU migration, order import, operator trained, 2 weeks live
+- US12: UNMATCHED → proven — Client E fully onboarded: SKU migration, order import, 1 week live
+- Ds12: UNMATCHED → proven — Client E training screens reviewed with operator
+- C5: UNMATCHED → proven — Client D SLAs imported, matched against US11 evidence
+- C6: UNMATCHED → proven — Client E SLAs imported, matched against US12 evidence
+- D18: UNMATCHED → proven — Client D go-live checklist completed and signed off
+- D19: UNMATCHED → proven — Client E go-live checklist completed and signed off
+- F3: UNMATCHED → proven — migration flow proven end-to-end for both clients
+
+ORIGIN: Client E go-live reveals that D20 (combined monitoring dashboard) routes all client alerts to the same Slack channel. With 5 clients, alert fatigue is real — 3 false-positive cold chain alerts in Client E's first day because D8 thresholds were tuned for Client C's cold room, and Client E has no cold chain.
+
+NEW ITEMS: None — the D20 alert routing issue is a fix to an existing item, not a new item.
+
+PRUNED: E18 (codebase walkthrough recorded) — served its purpose during contractor onboarding. The recording exists but is not a living inventory item. No one downstream matches against it. Evidence: contractor has been shipping code for 8 rounds without referencing it.
+
+RECONCILIATION: DevOps discovers that D20 (combined monitoring dashboard) has become a single pane of noise instead of a single pane of glass. Five clients with different SLA profiles, different monitoring needs, and different escalation paths all dumping into one channel. The alert routing is technically "working" (all alerts fire) but operationally broken (nobody reads them anymore). This is the degradation signal the Constitution warns about — "a test nobody updates, a deploy procedure only one person can run" — except here it's "an alert channel nobody watches."
+
+### Round 15 — Audit and prune, tighten inventory
+**Origin:** Internal reconciliation round. No external change. Team reviews full inventory, prunes ceremony, re-proves suspect items, identifies remaining gaps.
+
+PROGRESS (items fixed):
+- N4: SUSPECT → proven — index fix from Round 13 resolved pick screen load time, verified under 6000+ SKU load
+- US14: SUSPECT → proven — combined inventory view tested under load with all 5 clients, UI responsive
+- D20: SUSPECT → proven — alert routing split per client: A/B/C → ops channel, D/E → migration channel, cold chain → dedicated channel
+
+ORIGIN: Audit reveals that US15 (Client D/E SLA reporting) and its downstream items (E24, D21) are the only remaining unmatched chain. PM confirms this is planned for next sprint, not urgent — manual weekly review covers it for now.
+
+NEW ITEMS: None.
+
+PRUNED (one-time items that served their purpose):
+- US8, US9, US10 — knowledge transfer, onboarding, scope freeze. All one-time actions, complete. No downstream item matches against them ongoing.
+- US16 — humidity monitoring. PARKED, formally removed. Not contractually required.
+- E15, E16 — deploy scripts + credentials inventory. Subsumed by D4 and automated rotation. Evidence lives in repo and rotation logs.
+- E17 — WMS config docs. Config is in-repo, self-documenting.
+- Q17 — credential access verification. One-time check, rotation now automated.
+- D6 — near-expiry alert. Merged into D3 (same signal, two alerts was ceremony).
+- D12 — deploy capability transfer. Transfer complete, D4 is the ongoing procedure.
+- Ds13 — cross-training guide. Used once for certification. Stale guides are worse than no guides.
+- D17 — migration runbook. Migration complete.
+
+MERGED (items that were separate for tracking but share a single provable commitment):
+- US12, US13 → merged into US11 (MoveQuick Clients D+E onboarded)
+- C6 → merged into C5 (both client SLAs)
+- C1a, C1b → merged into C1 (lot traceability includes both sub-commitments)
+- US4a → merged into US4 (v2 is now the only format)
+- US6a, US6b, US6c → merged into US6 (cold chain fulfillment is one commitment)
+- C3a → merged into C3 (audit evidence is part of compliance)
+- Ds7, Ds8 → merged into Ds6 (cold chain screens)
+- Ds12 → merged into Ds11 (MoveQuick training screens)
+- F2, F3 → F2 merged into F1 (cold chain is a branch), F3 pruned (migration complete)
+- E22 → merged into E21 (MoveQuick order import adapters)
+- Q4, Q5 → merged into Q1 (lot validation suite)
+- Q7, Q8 → merged into Q3 (SFTP integration tests)
+- Q10 → merged into Q9 (cold chain receive tests)
+- Q21 → merged into Q20 (MoveQuick order import tests)
+- D9 → merged into D8 (cold chain monitoring)
+- D11 → merged into D4 (deploy procedures)
+- D19 → merged into D18 (go-live checklists)
+
+RECONCILIATION: Full inventory audit. The team traces every item against Discovery questions:
+
+1. **"What's the origin?"** — every remaining item traces to a contract, a regulation, a system requirement, or an internal finding. Nothing is floating.
+2. **"What does this match?"** — every item has at least one cross-vertical match. US15/E24/D21 chain is acknowledged as unmatched but has a clear path.
+3. **"Who needs this to move?"** — the 12 pruned items all failed this question. Nobody downstream is blocked by US8 or D12 existing as separate items. One-time actions that succeeded do not earn permanent inventory slots.
+4. **"Where's the evidence?"** — 45 of 71 items have formally recorded evidence (test results, production data, sign-offs). 23 more are proven by operational history. 3 are unmatched.
+
+**Final health calculation:**
+- Total items after pruning + merging: 71
+- Proven with formal evidence: 45
+- Proven by operational history only (works, but evidence not formally recorded): 23
+- Unmatched: 3 (US15, E24, D21 — planned, not urgent)
+- Suspect: 0
+- Broken: 0
+- **Health by status formula: (71 - 3) / 71 = 96%** — almost everything is operationally working
+- **Health by evidence formula: 45 / 71 = 63%** — only items with formally recorded proof count
+- **Conservative health (the one that matters): 63%**
+
+The Constitution says "proof requires evidence, not assertion." Twenty-three items work in production but their evidence is informal — operational history, "it hasn't broken," somebody saw it work once. That's not zero evidence, but it's not the kind of evidence that survives the next departure, audit, or crisis.
+
+**Lesson:** The audit round is where Discovery earns its keep. Twelve items pruned in a single round — more than any crisis round invented — because every one of them failed the question "who needs this to move?" One-time actions (knowledge transfer, scope freeze, migration runbook, operator certification) are necessary when they happen but do not earn permanent inventory slots. The Constitution says "every item must earn its place" — earning it once is not enough. If no downstream item currently matches against it, prune it. It can always be re-invented if a change demands it.
+
+The gap between 96% (operational) and 63% (formally evidenced) is healthy tension. Twenty-three items work in production but have informal evidence. The team's next improvement cycle is not building new features — it's formalizing evidence for what already works. That's the mark of a maturing team: the hard work is behind them, and what remains is discipline.

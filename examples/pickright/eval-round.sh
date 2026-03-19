@@ -2,37 +2,35 @@
 set -euo pipefail
 
 # Evaluates PickRight inventory health after a round of changes
-# Counts: total items, matched, unmatched, suspect, new items, broken hot paths
+# Only counts items in the inventory sections (before Round Log)
 
 INV="examples/pickright/inventory.md"
 
 echo "=== PickRight Inventory Health ==="
 
-# Total items across all verticals
-total=$(grep -c '^\- ' "$INV" || true)
+# Extract only the inventory sections (everything before "## Round Log")
+inv_section=$(sed '/^## Round Log/,$d' "$INV")
+
+# Total items across all verticals (lines starting with "- ")
+total=$(echo "$inv_section" | grep -c '^\- ' || true)
 echo "Total items: $total"
 
-# Matched items (have "matched:" without UNMATCHED/SUSPECT)
-matched=$(grep -c 'matched:' "$INV" | head -1 || true)
-unmatched=$(grep -ci 'UNMATCHED\|unmatched' "$INV" || true)
-suspect=$(grep -ci 'SUSPECT\|suspect' "$INV" || true)
-broken=$(grep -ci 'BROKE\|broke' "$INV" || true)
-new_items=$(grep -ci 'NEW\|new.*round' "$INV" || true)
-
-# Net matched = total matched references minus unmatched/suspect/broken
-functional=$((matched - unmatched - suspect - broken))
+# Count items by state (only in inventory sections)
+matched=$(echo "$inv_section" | grep -c 'matched:' || true)
+unmatched=$(echo "$inv_section" | grep -ci 'UNMATCHED' || true)
+suspect=$(echo "$inv_section" | grep -ci 'SUSPECT' || true)
+broken=$(echo "$inv_section" | grep -ci 'BROKE' || true)
 
 echo "Matched references: $matched"
 echo "Unmatched items: $unmatched"
 echo "Suspect items: $suspect"
 echo "Broken items: $broken"
-echo "New items added: $new_items"
 
-# Count rounds completed
+# Count rounds completed (in the full file)
 rounds=$(grep -c '### Round' "$INV" || true)
 echo "Rounds completed: $rounds"
 
-# Health score: percentage of items that are functional (not unmatched/suspect/broken)
+# Health score: percentage of items that are NOT unmatched/suspect/broken
 if [ "$total" -gt 0 ]; then
   health=$(( (total - unmatched - suspect - broken) * 100 / total ))
 else
