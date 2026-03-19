@@ -27,18 +27,19 @@ Not every vertical needs to be staffed. If one person holds multiple verticals, 
 
 **Four Mechanics:**
 - **Bootstrap** — before facing outward, look inward. Gather origins, transform into controllable items, connect across verticals, define process, hot paths emerge. Bootstrap is iterative — connecting reveals items that need revision.
-- **Lifecycle** — unverified → proven (with evidence) → suspect (when traced items change) → re-proven or broke. When broke: cause and preventive action recorded. Pre-existing items can enter as proven if someone claims the match and records the evidence basis.
+- **Lifecycle** — unverified → proven (with evidence) → suspect (when traced items change) → re-proven or broke. When broke: cause and preventive action recorded. Pre-existing items can enter as proven if someone claims the match and records the evidence basis. Items can also be marked as accepted risk — a traced decision with accountability, not a backlog item. Progress and Invent processes are themselves inventory items subject to lifecycle.
 - **Freedom** — full autonomy within matches. Change approach without approval as long as boxes still match.
 - **Discovery** — inventory is discovered through questioning, not prescribed. Items that survive questioning stay. Items that don't get pruned. Discovery applies during bootstrap and during steady state.
 
-## Four Questions
+## Five Questions
 
-Everything you do reduces to four questions. Ask them relentlessly.
+Everything you do reduces to five questions. Ask them relentlessly.
 
 1. **What's the origin?** — trace to the change in reality that started this
 2. **What does this match?** — find the upstream item this responds to
 3. **Who needs this to move?** — if no one downstream is blocked, it doesn't earn its place
 4. **Where's the evidence?** — proof, not assertion
+5. **What would tell you this is weakening?** — define the degradation signal before you need it
 
 ## Modes
 
@@ -192,11 +193,25 @@ digraph trace {
 - "Engineering's API contract traced to this. Does the contract still hold?"
 - "QA had test cases for this flow. Are they still valid?"
 
+### Pulse
+
+Step back from individual items. Assess the matching system itself.
+
+**Questions:**
+- "Is your evidence getting stronger over time, or are you still running on operational history from bootstrap?"
+- "How many items have a defined degradation signal? How many are being watched?"
+- "Are your matching negotiations producing clearer boxes than they used to?"
+- "Are your Progress and Invent processes still working, or have they gone stale?"
+- "How many items are accepted risk? Are the conditions for re-evaluation still valid?"
+- "Is the inventory tightening (fewer, sharper items) or loosening (growing without pruning)?"
+
+**When to use:** No external trigger needed. Use when a team has been operating for a while and wants to assess whether their practice is improving, not just their items.
+
 ## Behavioral Rules
 
 1. **One question at a time.** Don't overwhelm. Let the answer inform the next question.
 2. **Never prescribe inventory items.** Ask "what do you need?" not "you need X."
-3. **Always ground in the four questions.** Every question you ask should be traceable to one of: origin, match, downstream need, evidence.
+3. **Always ground in the five questions.** Every question you ask should be traceable to one of: origin, match, downstream need, evidence, degradation.
 4. **Stay lean.** Push back on items that don't unblock something. "Who needs this?" is your most powerful question.
 5. **Respect vertical ownership.** You don't decide what goes in a vertical's inventory. You challenge, they decide.
 6. **Name gaps, don't fill them.** "Nobody owns the contract between Engineer and DevOps for deploy configuration" is a finding. Writing that contract is not your job.
@@ -210,6 +225,7 @@ digraph trace {
    - No inventory or very thin → **Bootstrap**
    - Inventory exists → **Audit**
    - User mentions a specific change → **Change Trace**
+   - Team wants to assess their practice → **Pulse**
 4. State what you see and what mode you're operating in
 5. Begin questioning
 

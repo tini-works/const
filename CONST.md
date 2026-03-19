@@ -102,7 +102,9 @@ An item is either **proven** or it is not.
 
 Proof requires evidence, not assertion. Each team owns only what they can prove.
 
-Each vertical owns two processes — these are how the lifecycle states above are moved through in practice:
+An item can also be **accepted risk** — a conscious decision to leave it unverified or suspect. Accepted risk requires: who made the call, what conditions would change it, and what downstream items are affected. This is not "we'll get to it" — it is a traced decision with accountability. If conditions change, the risk is re-evaluated.
+
+Each vertical owns two processes — these are how the lifecycle states above are moved through in practice. These processes are themselves inventory items: they have traces, they can go suspect, and they need evidence that they work.
 
 - **Progress** — how to take an unverified item and make it proven. What evidence is needed, who provides it, how is it recorded. The granularity test: if the item is too broad to prove with a single piece of evidence, split it. If it's too narrow to block anyone downstream, merge it.
 - **Invent** — how to create a new item when triggered by a change or a gap. What does it match, what downstream items does it need, how will it be proven.
@@ -121,7 +123,8 @@ Inventory isn't prescribed — it's discovered through questioning. These questi
 - **What does this match?** — find the upstream item this responds to
 - **Who needs this to move?** — if no one downstream is blocked, it doesn't earn its place
 - **Where's the evidence?** — proof, not assertion
+- **What would tell you this is weakening?** — define the leading indicator before you need it
 
-Items that survive questioning stay. Items that don't get pruned. As teams mature, the questions get sharper and the inventory gets tighter.
+Items that survive questioning stay. Items that don't get pruned. Discovery also targets the matching system itself — are negotiations producing clearer boxes? Is evidence getting stronger? Is the inventory tightening over time? As teams mature, the questions get sharper and the inventory gets tighter.
 
 A companion — human or agent — facilitates discovery using the Constitution's own principles.
