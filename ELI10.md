@@ -4,7 +4,7 @@ Imagine you're building a treehouse with your friends. Each person has a job, an
 
 ---
 
-## The Four Rules
+## Three Rules
 
 ### 1. Check, don't copy
 
@@ -14,75 +14,72 @@ Instead, figure out **what needs to be true** when you're done. These are your c
 
 A checkbox is either checked or not. There's no "kinda checked."
 
-### 2. Listen to the person who wants the treehouse
+### 2. Know where things come from
 
-The kid who wants the treehouse says: *"I want to sit up there and read books without getting rained on."* They don't know about nails, angles, or waterproofing. They just know what they want.
+The kid who wants the treehouse says: *"I want to sit up there and read books without getting rained on."* That wish is the **origin** — a real thing that happened that made everyone start working.
 
-Everyone on the team hears the same wish. Each person figures out what it means for their part:
+Origins are facts you received. You don't control them. But what you *do* about them — that's your responsibility. "Needs a roof that keeps rain out" is your response to the wish. The wish is the origin. The roof plan is your inventory.
 
-- "Needs a roof" (the planner)
-- "Roof should be sloped so water runs off" (the designer)
-- "Use plywood with tar paper" (the builder)
-- "Test it with a garden hose" (the tester)
-- "Check it after every big storm" (the maintainer)
+Sometimes your own team discovers an origin. You notice "our ladder is wobbly" — that discovery is just as real as the kid's wish. It flows through the team the same way.
 
-They all work from the same wish — not from each other's answers.
+### 3. Keep your warehouse organized
 
-### 3. Keep your stuff organized
+Each person keeps a **warehouse** of everything they're responsible for — things they built, things they proved, things they maintain. Not the wishes themselves, but what they did about them.
 
-Each person keeps a list of everything they're responsible for. Like a warehouse — you know what's on every shelf, and you check regularly:
+Every item in your warehouse has breadcrumbs called **traces**: where it came from, what checkbox it satisfies, who checked it. When something changes, follow the breadcrumbs to find everything that might need fixing.
 
-- **Is anything old and useless?** Throw it out.
-- **Is anything broken?** Fix it or flag it.
-- **Is anything missing?** Add it.
-
-Every item on your list has a note about:
-- Where it came from (which wish or checkbox)
-- What it matches (which checkbox it satisfies)
-- Who checked it (a real person said "yes, this works")
-
-These notes are called **traces**. They're like breadcrumbs. When something changes, you follow the breadcrumbs to find everything else that might need fixing.
-
-### 4. Work together, own your part
-
-Everyone works at the same time — not in a line where one person finishes before the next one starts. The planner, designer, and builder talk to each other while they work.
-
-But each person owns their part. The designer doesn't tell the builder how to hammer nails. The builder doesn't tell the designer what the treehouse should look like. They agree on checkboxes at the boundaries, then each does their own work.
-
-You can't skip the agreeing part. If the builder builds something the designer never agreed to, nobody knows if it's right.
+Items earn their place. If nobody downstream needs it, toss it — it's clutter. Even your *processes* (how you build, how you check) are warehouse items. If your process goes stale, that's a problem too.
 
 ---
 
 ## The Five Jobs
 
-Each person faces a different direction:
+Each person faces a different direction and **translates** what they receive into something the next person can use:
 
-- **Planner** — faces the kid who wants the treehouse. Makes sure we're building what they actually asked for.
-- **Designer** — faces what the treehouse looks and feels like. Every room, every ladder, every railing.
-- **Builder** — faces how it's constructed. The wood, the nails, the structure.
-- **Tester** — faces the truth. Checks that every checkbox is actually checked — not just claimed.
-- **Maintainer** — faces the real world. Makes sure the treehouse stands up in weather, and that you can tell when something breaks.
+- **Planner** — faces the kid who wants the treehouse. Translates what customers need and grown-ups require into promises the team can check against.
+- **Designer** — faces what the treehouse feels like. Translates the planner's promises into what you actually see, climb, and touch.
+- **Builder** — faces how it's constructed. Translates upstream promises into the wood, nails, and structure that make it real.
+- **Tester** — faces the truth. Translates every checkbox across every job into a test that proves it holds — and watches for when it doesn't.
+- **Maintainer** — faces the real world. Translates what was built into what keeps running — the checks after storms, the signals that something is weakening.
 
 ---
 
-## How It Works
+## Four Mechanics
 
-### When something changes
+### Bootstrap — look inward first
 
-If the builder changes how the roof is built, everyone who had a checkbox about the roof needs to re-check their work. The traces (breadcrumbs) tell you exactly who needs to look again.
+Before you start building, look at what you already have. Maybe there's wood in the garage. Maybe someone already drew plans.
 
-You can't just say "it's fine." You have to actually check — pour water on it, test it, look at it. Then write down that you checked, when you checked, and what you found.
+1. Gather what exists — wishes, old materials, stuff people just *know*.
+2. Turn those into warehouse items you actually control.
+3. Talk across jobs — "I have this, can you match it?" Expect to revise as you talk.
+4. Define how you'll work — these processes are warehouse items too.
+5. Notice the **hot paths** — chains of breadcrumbs that show how a change in one place ripples to others.
 
-### Proven means proven
+### Lifecycle — five states
 
-Something is either proven or it's not. There's no "probably fine" or "I think it works."
+Every item in your warehouse has a status:
 
-To prove something, you need **evidence** — you actually tested it, you actually reviewed it, someone actually saw it work. Writing "it works" in a notebook without testing it is not proof.
+1. **Unverified** — you wrote it down but haven't checked it yet.
+2. **Proven** — someone actually tested it with real evidence. Not "I think it's fine." You poured water on the roof and it didn't leak.
+3. **Suspect** — something it depends on changed. You need to re-check.
+4. **Broke** — the check failed. Figure out *why* before you fix it. Just patching isn't fixing.
+5. **Accepted risk** — you decided to leave it unchecked *on purpose*. You wrote down who decided, what would change your mind, and what else might break. This isn't "we'll get to it" — it's a real decision with a trail.
 
-If something changes and you haven't re-checked yet, your proof is expired. You need a new one.
-
-### Freedom
+### Freedom — the reward
 
 Here's the cool part: if all your checkboxes are checked and proven, you can do whatever you want with your part. The builder can rip out all the wood and rebuild with bamboo — without asking anyone — as long as every checkbox still checks out.
 
-Freedom is the reward for keeping your checkboxes honest.
+The moment a checkbox breaks, your freedom shrinks until you fix it. Freedom is the reward for keeping your warehouse honest.
+
+### Discovery — five questions
+
+Your warehouse isn't a homework assignment someone gives you. You figure out what belongs by asking five questions:
+
+1. **What's the origin?** — what real thing started this?
+2. **What does this match?** — which checkbox upstream does it answer?
+3. **Who needs this to move?** — if nobody downstream is waiting, it doesn't earn its place.
+4. **Where's the evidence?** — proof, not "trust me."
+5. **What would tell you this is weakening?** — what's the early warning sign, before it actually breaks?
+
+Items that survive the questions stay. Items that don't get pruned. As your team gets better, the questions get sharper and the warehouse gets tighter.

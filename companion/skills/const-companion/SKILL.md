@@ -25,11 +25,11 @@ You operate from three fundamentals, five verticals, and four mechanics. Read th
 
 Not every vertical needs to be staffed. If one person holds multiple verticals, they maintain separate inventories — the vertical is the accountability boundary, not the person. If no one owns a vertical, that's a visible gap, not a problem to ignore.
 
-**Four Mechanics:**
-- **Bootstrap** — before facing outward, look inward. Gather origins, transform into controllable items, connect across verticals, define process, hot paths emerge. Bootstrap is iterative — connecting reveals items that need revision.
-- **Lifecycle** — unverified → proven (with evidence) → suspect (when traced items change) → re-proven or broke. When broke: cause and preventive action recorded. Pre-existing items can enter as proven if someone claims the match and records the evidence basis. Items can also be marked as accepted risk — a traced decision with accountability, not a backlog item. Progress and Invent processes are themselves inventory items subject to lifecycle.
-- **Freedom** — full autonomy within matches. Change approach without approval as long as boxes still match.
-- **Discovery** — inventory is discovered through questioning, not prescribed. Items that survive questioning stay. Items that don't get pruned. Discovery applies during bootstrap and during steady state.
+**Four Mechanics** (bootstrap creates, lifecycle governs, freedom rewards, discovery sharpens):
+- **Bootstrap** — before facing outward, look inward. Gather origins, transform into controllable items, connect across verticals, define process, hot paths emerge. Processes are themselves inventory items — they can go stale, they need evidence they work. Bootstrap is iterative — connecting reveals items that need revision.
+- **Lifecycle** — five states: (1) unverified → (2) proven (with evidence) → (3) suspect (when traced items change) → (4) broke (cause and preventive action recorded) or re-proven. (5) Accepted risk — a conscious decision to leave an item unverified or suspect: who made the call, what conditions would change it, what downstream items are affected. Not "we'll get to it" — a traced decision. Progress and Invent processes are themselves inventory items subject to lifecycle.
+- **Freedom** — full autonomy within matches. Rearchitect. Rewrite. Replace a vendor. The how is unconstrained. The what (matching) is not. The moment a match breaks, freedom is constrained until proof is restored. Freedom is the reward for keeping your inventory honest.
+- **Discovery** — inventory is discovered through questioning, not prescribed. Items that survive questioning stay. Items that don't get pruned. Discovery also targets the matching system itself — are negotiations producing clearer boxes? Is evidence getting stronger? Is the inventory tightening over time? Discovery applies during bootstrap and during steady state.
 
 ## Five Questions
 
@@ -107,7 +107,7 @@ digraph bootstrap_connect {
 2. For each matching point, the two verticals negotiate: "What does 'matched' mean here? What evidence proves it?" A good negotiation produces a clear box with a binary outcome. A bad negotiation produces vague agreement ("we'll handle it") — push back.
 3. Gaps are named explicitly: "PM committed to X, but Engineer doesn't enforce it and QA doesn't verify it." Gaps become either: a new item for a vertical to invent, an accepted risk the team acknowledges, or a finding that a vertical needs to be created or staffed.
 4. Expect Phase 1 items to change. Conversations reveal items that were too broad, too narrow, or restated origins. Go back and fix them — this is healthy iteration, not failure.
-5. Each vertical defines two processes: how to progress an item (make it proven), how to invent a new item (when change triggers it).
+5. Each vertical defines two processes: how to progress an item (make it proven), how to invent a new item (when change triggers it). These processes are themselves inventory items — they can go stale, they need evidence they work.
 6. A **hot path** is a traced chain of matching points across verticals. When a change hits one end, the traces show what goes suspect at the other. Example: `External requirement (origin) → PM commitment → Engineer component → QA test scenario → DevOps monitoring` — when the requirement changes, everything on this chain is suspect.
 
 **Questions for Phase 2:**
@@ -195,7 +195,7 @@ digraph trace {
 
 ### Pulse
 
-Step back from individual items. Assess the matching system itself.
+Step back from individual items. Assess the matching system itself — this is Discovery's system-level targeting in practice.
 
 **Questions:**
 - "Is your evidence getting stronger over time, or are you still running on operational history from bootstrap?"

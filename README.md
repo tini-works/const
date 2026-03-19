@@ -10,7 +10,7 @@ The Constitution replaces handoffs with **matching**. Each team independently di
 
 | Document | What it is | Start here if... |
 |----------|-----------|------------------|
-| [CONST.md](CONST.md) | The framework — 3 fundamentals, 5 verticals, mechanics | You want the full operating model |
+| [CONST.md](CONST.md) | The framework — 3 fundamentals, 5 verticals, 4 mechanics | You want the full operating model |
 | [ELI10.md](ELI10.md) | The same thing, explained with a treehouse | You want to understand the ideas first |
 | [examples/](examples/) | Working examples — real-world events driving real inventories | You want to see it in practice |
 
@@ -20,12 +20,16 @@ The Constitution replaces handoffs with **matching**. Each team independently di
 
 2. **Start from the source.** Every piece of work has an origin — a change in reality that demands a response. Each vertical matches against verified items — from the origin, from other verticals, or both. They don't control what arrives. They control what they choose to match.
 
-3. **Own your inventory.** Each team keeps a warehouse of their work — with breadcrumbs showing where each item came from, what it matches, and who verified it. When something changes, the breadcrumbs tell you what else needs checking.
+3. **Own your inventory.** Each team keeps a warehouse of their work — with traces showing where each item came from, what it matches, and who verified it. When something changes, the traces tell you what else needs checking.
 
 ## Examples
 
-### [Clinic Check-In](examples/clinic-checkin/)
-A clinic patient check-in system that evolved through 10 rounds of complaints, bugs, features, compliance mandates, and business changes. A patient complained about re-entering data. Then a bug broke the receptionist's screen. Then another patient's data leaked. Then the clinic opened a second location. Then it acquired another practice with 4,000 patients. Five teams responded — each maintaining their own inventory. **Stresses:** external customers, healthcare compliance, data sensitivity, gradual evolution.
+### [PickRight Logistics](examples/pickright/)
+A 3PL warehouse (~15 people, 1 site) running an off-the-shelf WMS for 5 clients — cosmetics with lot tracking, high-volume electronics, cold chain specialty food, and two clients migrated from a competitor. Evolved through 15 rounds: a mispick crisis, a cold chain onboarding, a competitor acquisition, and recovery. Five verticals responded — inventories grew from basic to battle-tested. **Stresses:** multi-client complexity, regulatory compliance (lot traceability, cold chain), crisis and recovery, competitor migration under pressure.
 
-### [Pave — Internal Deploy Platform](examples/pave/)
-An internal deploy platform serving ~20 product teams at a mid-size tech company. A Friday deploy broke checkout. Then a team SSH'd to prod to bypass the platform. Then the platform's own database migration took it down for 4 hours. Then the VP mandated deploy frequency as a KPI and teams gamed it. Then the CTO proposed replacing the whole thing with a managed platform. Six platform engineers responded — each proving their work against internal customers who think they know better. **Stresses:** internal customers, origin ambiguity, platform eating itself, political pressure, existential justification.
+### [NeoLedger Core Banking](examples/core-banking/)
+A Series A fintech platform (25 people) providing deposit accounts, card programs, and payments-as-a-service to 3 live clients via REST API. Sponsor bank holds the charter. SOC 2 audit in 4 months, PCI-DSS required, BSA/AML obligations. Evolved through 5 rounds of steady improvement with a skeleton crew — 2 engineers, no dedicated QA or DevOps. **Stresses:** heavy regulatory surface (OCC, PCI, SOC 2, BSA/AML), understaffed verticals, sponsor bank dependency, multiple client SLAs.
+
+## Companion
+
+The [const-companion](companion/skills/const-companion/SKILL.md) is a Socratic skill that helps teams discover, audit, and maintain their inventory. Four modes: **Bootstrap** (build inventory from scratch), **Audit** (prune ceremony, surface gaps), **Change Trace** (follow a change through matched items), **Pulse** (health check across verticals). It questions — it never prescribes.
