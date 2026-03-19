@@ -17,3 +17,10 @@ As a practice owner, I want user is able to request participation, so that contr
 ### Acceptance Criteria
 
 1. Given a Patient, when the user initiates a Teilnahmeantrag, then the request is created and queued for transmission
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `CreatePatientEnrollment` creates the participation request and persists it. `SendParticipation` queues and transmits the request to HPM. `ReSubmitAllEnrollments` supports batch resubmission.

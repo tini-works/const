@@ -17,3 +17,9 @@ As a practice doctor, I want confirmed diagnoses ('G') is documented as terminal
 ### Acceptance Criteria
 
 1. Given a gesicherte Diagnose ('G'), when it is a Gruppencode, then validation rejects it and requests an Endstellencode
+
+### Actual Acceptance Criteria
+
+1. The `coding_rule.ValidateCodingRuleByPatientId` enforces terminal code requirements for confirmed diagnoses.
+2. The `coding_rule.GetIcdByCodes` provides metadata to distinguish group from terminal codes.
+3. The `billing_kv.Troubleshoot` surfaces non-terminal code errors.

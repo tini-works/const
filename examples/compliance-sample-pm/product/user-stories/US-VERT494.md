@@ -17,3 +17,10 @@ As a practice owner, I want participation status is checkable, so that contract 
 ### Acceptance Criteria
 
 1. Given a Patient in a Selektivvertrag, when participation status is queried, then the current Teilnahmestatus is returned
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `CheckParticipation` (EnrollmentApp) and `CheckPatientParticipation` (PatientParticipationApp) both query HPM and return the current participation status (`ParticipationStatus`) for a patient in a Selektivvertrag.

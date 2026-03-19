@@ -18,3 +18,7 @@ As a practice doctor, I want the Vertragssoftware sort and filter P4-relevant di
 
 1. Given P4-relevant Krankheitsbilder documented, when the user opens the filter, then a dropdown with counts 0-4+ is available and a checkbox to include current-quarter P3 patterns is present
 2. Given a filter selection, when applied, then only matching disease patterns are shown
+
+### Actual Acceptance Criteria
+
+1. Implemented (backend) -- `billing.AnalyzeForP4Diseases` provides data; UI filter is frontend concern.

@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware validate the completed steuerba
 ### Acceptance Criteria
 
 1. Given a completed steuerbare Hilfsmittel questionnaire, when validation runs before save/print, then non-compliant answers are flagged with a warning
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **HIMI prescription validation** -- The `himi` package supports prescription creation.
+2. **Gap: Questionnaire validation** -- The specific validation of steuerbare Hilfsmittel questionnaire answers against rules, with warnings before save/print, is not verified in the backend.

@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware allow transmission of prescript
 ### Acceptance Criteria
 
 1. Given Verordnungen documented after the contract documentation start date but before the transmission start date, when transmission is triggered, then those prescriptions are included
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/billing`, `api/pvs_billing`, `api/contract`
+
+1. **Date-based filtering** -- The `billing` and `pvs_billing` packages support date-range filtering for billing data. Contract-specific dates are managed in the `contract` package.
+2. **Gap: GueltigAbReferenzdatum enforcement** -- While the contract package stores contract definitions with dates, the specific enforcement of including Verordnungen documented after the contract documentation start date but before the transmission start date requires verification against Selektivvertragsdefinition metadata.

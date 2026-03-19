@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware provide a function to confirm t
 ### Acceptance Criteria
 
 1. Given the employment data confirmation function, when the user confirms currency, then the current date is stored in 'Datum letzte Ueberpruefung'
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/patient_profile`
+
+1. **Patient profile** -- The `patient_profile` package provides data management.
+2. **Gap: Employment confirmation with timestamp** -- The specific 'Datum letzte Ueberpruefung' field and the confirmation function for employment data currency are not verified in the patient profile data model.

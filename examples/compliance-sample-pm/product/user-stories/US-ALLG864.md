@@ -17,3 +17,12 @@ As a practice owner, I want contract-controlling information is accessible, so t
 ### Acceptance Criteria
 
 1. Given Vertragssteuerungsinformationen, when requested, then they are accessible to authorized users
+
+### Actual Acceptance Criteria
+
+| Status | **Implemented** |
+|--------|----------------|
+
+1. Contract-controlling information (Vertragssteuerungsinformationen) is accessible via authenticated RPCs in the `ContractApp` at `backend-core/app/app-core/api/contract/contract.d.go`.
+2. The `GetContracts` and `GetContractsHasFunctions` RPCs are registered with `titan.IsAuthenticated()`, ensuring only authorized users can access contract information.
+3. The contract service exposes contract details, attachments, hints, leaflets, fee schedules, and enrollment form data through various service methods.

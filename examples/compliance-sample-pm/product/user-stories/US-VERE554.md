@@ -17,3 +17,10 @@ As a patient, I want correct enrollment form variant is available per contract, 
 ### Acceptance Criteria
 
 1. Given a Vertrag with a specific TE-Formular, when TE is created, then the correct form variant is selected
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `contract.GetContracts` and `contract.GetContractById` retrieve contract definitions.
+2. `contract.GetContractsHasFunctions` checks contract feature availability.
+3. `enrollment.CreatePatientEnrollment` initiates enrollment.
+4. `enrollment.PreviewForm` generates form previews.

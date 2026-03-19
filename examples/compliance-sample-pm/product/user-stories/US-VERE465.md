@@ -17,3 +17,8 @@ As a patient, I want enrollment declaration full print, so that my enrollment is
 ### Acceptance Criteria
 
 1. Given a Teilnahmeerklärung, when full print is requested, then the complete TE document is printed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.PrintForm` and `enrollment.PrintMutipleForms` support form printing per contract template.
+2. `form.Print` and `form.PrintPlainPdf` generate PDF output.

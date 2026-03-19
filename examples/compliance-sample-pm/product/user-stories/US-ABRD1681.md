@@ -17,3 +17,7 @@ As a practice doctor, I want fAV service documentation include real-time online 
 ### Acceptance Criteria
 
 1. Given a FAV-Leistung entry, when the system checks Teilnahmestatus online, then a real-time HPM response confirms or denies participation
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `billing.SubmitPreParticipateService` performs real-time HPM check with `PreParticipationValidator`.

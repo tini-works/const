@@ -17,3 +17,10 @@ As a practice owner, I want contract feature gate, so that contract participatio
 ### Acceptance Criteria
 
 1. Given a Vertrag with feature gates, when a gated feature is accessed, then it is only available if the contract supports it
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetContractsHasFunctions` acts as a feature gate by checking `FunctionIds` against contract `ContractFuntions`. `IsPracticeSupportHpmFunction` checks if a practice supports specific HPM functions. `IsPracticeSupportCompliance` verifies compliance support per contract.

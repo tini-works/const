@@ -17,3 +17,7 @@ As a practice doctor, I want preventive case billing automatically add billing c
 ### Acceptance Criteria
 
 1. Given a Vorsorge-Behandlungsfall, when billing is generated, then code 80092.2 is automatically added
+
+### Actual Acceptance Criteria
+
+1. Not yet implemented -- no matching endpoint/service found for automatic addition of billing code 80092.2 to preventive case (Vorsorge-Behandlungsfall) billing.

@@ -18,3 +18,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a function to fil
 
 1. Given a first-in-quarter confirmed diagnosis from the AKA Diagnosenliste, when documented, then the 'Praeventionsverordnung' form auto-opens
 2. Given the form, when filled, then it can be printed and saved per AKA rules
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Praeventionsverordnung form (defined as `BKK_BOSCH_VAG_BW_Praeventionsverordnung_V1` FormName constant per AKA-Basisdatei)
+2. The `FormAPP.PrescribeV2` endpoint saves the form and `FormAPP.Print` generates the printable PDF per AKA rules
+3. The auto-open behavior when a confirmed diagnosis from the AKA-Basisdatei Diagnosenliste is first documented in the quarter is a client-side UI concern -- no backend trigger exists for automatic form opening based on diagnosis events

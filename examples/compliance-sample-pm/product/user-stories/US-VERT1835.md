@@ -17,3 +17,10 @@ As a practice owner, I want substitute doctor status is tracked, so that contrac
 ### Acceptance Criteria
 
 1. Given a Vertreterarzt, when they act for a Stammpraxis, then the substitute status is tracked and visible
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetDoctorsCanTreatAsDeputy` (PatientParticipationApp) returns profiles of doctors who can act as substitutes for a given doctor/contract. `CheckPotentialVerah` (EnrollmentApp) verifies potential Vertreterarzt status. Both endpoints are registered and active.

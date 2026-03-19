@@ -17,3 +17,12 @@ As a practice staff (MFA), I want when printing a medication or vaccine prescrip
 ### Acceptance Criteria
 
 1. Given a contract participant, when a medication/vaccine prescription is printed on KV or BTM recipe, then contract-specific printing rules are applied
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the prescription form (KV via `Muster_16`/`Muster_16A`, BTM via `Btm_Rezept_Print`) scoped by contract via `contractId` parameter
+2. The `MedicineApp.Prescribe` endpoint applies contract-specific printing rules when generating medication/vaccine prescriptions
+3. The `FormAPP.Print` and `FormAPP.PrintPlainPdf` endpoints produce PDF output with contract-specific formatting applied
+4. The `HasSupportForm907()` helper on `FormName` returns true for `KREZ` (Muster_16) and `BTM` form types, confirming contract-aware prescription rule support

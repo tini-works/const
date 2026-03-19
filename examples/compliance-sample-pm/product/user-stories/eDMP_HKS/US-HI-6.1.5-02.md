@@ -18,3 +18,11 @@ As a practice doctor, I want to document the NYHA classification in the HI anamn
 
 1. Given an eDMP HI documentation form, when the anamnesis section is displayed, then a NYHA classification field is available with options I through IV
 2. Given a NYHA class is selected, when the XML is generated, then the classification value is encoded in the correct observation element
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint (NATS topic `api.app.app_core.EDMPApp.SaveDocumentationOverview`) persists Herzinsuffizienz Anamnese/clinical data fields submitted in the `DocumentationOverview.fields` array with the correct field identifiers.
+2. **Field-Level Plausibility**: The `EDMPApp.CheckPlausibility` endpoint validates each clinical data field against the Herzinsuffizienz plausibility catalog; out-of-range or missing mandatory values produce `FieldValidationResult` entries identifying the specific field and rule violation.
+3. **Save-Retrieve Roundtrip**: Call `EDMPApp.SaveDocumentationOverview`, then `EDMPApp.GetIncompleteDocumentationOverviews` (or `GetCompleteDocumentationOverviews` after finishing) with `DMPLabelingValue = "HERZINSUFFIZIENZ"` and verify the stored field values match the submitted data.
+4. **XML Encoding**: Call `EDMPApp.FinishDocumentationOverview` and verify the returned `CheckPlausibilityResponse.billingFile` contains the correctly encoded field values in the Herzinsuffizienz XML structure.
+5. **Negative Test**: Submit a documentation overview with out-of-range or missing mandatory field values and confirm `CheckPlausibility` returns specific `FieldValidationResult` errors for each invalid field.

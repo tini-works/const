@@ -17,3 +17,10 @@ As a practice owner, I want fAV participation status is verifiable, so that cont
 ### Acceptance Criteria
 
 1. Given a FAV-Patient, when participation verification is triggered, then the current FAV-Teilnahmestatus is confirmed via HPM
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** FAV participation verification is supported through `CheckParticipation` (EnrollmentApp) and `ActionOnFavContract`. The `service_fav.go` handles FAV-specific participation flows via HPM.

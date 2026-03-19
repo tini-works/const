@@ -17,3 +17,8 @@ As a practice doctor, I want material costs associated with services is document
 ### Acceptance Criteria
 
 1. Given a Leistung with Sachkosten, when material details are entered, then manufacturer, supplier, and article fields are persisted
+
+### Actual Acceptance Criteria
+
+1. Partially implemented -- `MaterialCosts` exists with Amount/Description via `catalog_material_cost`.
+2. `patient_encounter.GetMaterialCosts` retrieves entries but manufacturer/supplier/article fields not confirmed.

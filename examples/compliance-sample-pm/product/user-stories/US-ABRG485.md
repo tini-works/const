@@ -17,3 +17,7 @@ As a practice doctor, I want provide connectivity testing capability before bill
 ### Acceptance Criteria
 
 1. Given a billing submission attempt, when the user triggers connectivity test, then the system reports connection status before proceeding
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.CheckHpmConnection` operation in `backend-core/app/app-core/api/billing/billing.d.go` provides connectivity testing before billing submission, returning an `HpmStatusResponse`.

@@ -17,3 +17,12 @@ As a practice staff, I want prescription data transmission, so that the software
 ### Acceptance Criteria
 
 1. Given Verordnungsdaten ready, when transmission is triggered, then the data is sent via the configured channel
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/billing`, `api/pvs_billing`, `api/billing_kv`
+
+1. **Billing transmission** -- The `billing`, `pvs_billing`, and `billing_kv` packages implement billing data transmission workflows.
+2. **Gap: Verordnungsdaten-specific transmission** -- The specific transmission channel and format for prescription data (Verordnungsdaten) within the Selektivvertrag context needs verification.

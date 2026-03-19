@@ -17,3 +17,7 @@ As a practice doctor, I want warn when a specialty contract service is billed wi
 ### Acceptance Criteria
 
 1. Given a FAV-Leistung (AOK/BKK BW) without Überweiser, when billing validation runs, then a warning about missing referral is shown
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `ABRD1544Validator` warns on missing referral for AOK/BKK BW contracts.

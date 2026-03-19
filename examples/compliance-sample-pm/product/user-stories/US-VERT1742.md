@@ -17,3 +17,10 @@ As a practice owner, I want the Vertragssoftware enable enrollment and activatio
 ### Acceptance Criteria
 
 1. Given a physician with multiple Betriebsstaetten using the same software, when contract participation is activated for a patient, then it applies across all Betriebsstaetten of that LANR without separate per-location activation
+
+
+### Actual Acceptance Criteria
+
+**Status: Not Implemented**
+
+1. **Not met.** No cross-Betriebsstaetten propagation logic found. The enrollment and participation services operate per care provider context. No mechanism propagates contract participation activation across multiple Betriebsstaetten of the same LANR.

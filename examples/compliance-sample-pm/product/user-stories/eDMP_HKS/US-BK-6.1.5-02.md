@@ -18,3 +18,11 @@ As a practice doctor, I want to document Receptor status including Oestrogenreze
 
 1. Given an eDMP Brustkrebs Anamnese is documented, when Receptor status is recorded, then Oestrogenrezeptor, Progesteronrezeptor, and HER2 status are each documented
 2. Given any receptor status field is missing, when validated, then an error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint (NATS topic `api.app.app_core.EDMPApp.SaveDocumentationOverview`) persists Brustkrebs Anamnese/clinical data fields submitted in the `DocumentationOverview.fields` array with the correct field identifiers.
+2. **Field-Level Plausibility**: The `EDMPApp.CheckPlausibility` endpoint validates each clinical data field against the Brustkrebs plausibility catalog; out-of-range or missing mandatory values produce `FieldValidationResult` entries identifying the specific field and rule violation.
+3. **Save-Retrieve Roundtrip**: Call `EDMPApp.SaveDocumentationOverview`, then `EDMPApp.GetIncompleteDocumentationOverviews` (or `GetCompleteDocumentationOverviews` after finishing) with `DMPLabelingValue = "BRUSTKREBS"` and verify the stored field values match the submitted data.
+4. **XML Encoding**: Call `EDMPApp.FinishDocumentationOverview` and verify the returned `CheckPlausibilityResponse.billingFile` contains the correctly encoded field values in the Brustkrebs XML structure.
+5. **Negative Test**: Submit a documentation overview with out-of-range or missing mandatory field values and confirm `CheckPlausibility` returns specific `FieldValidationResult` errors for each invalid field.

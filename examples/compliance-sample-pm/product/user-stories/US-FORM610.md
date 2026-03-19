@@ -17,3 +17,10 @@ As a practice staff (MFA), I want muster 52.2 form is fillable and printable, so
 ### Acceptance Criteria
 
 1. Given Muster 52.2 selected, when patient data is loaded, then all fields are pre-filled and the form is printable
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves Muster 52.2 (defined as `Muster_52_2_V3` FormName constant) with patient data pre-fill
+2. The `FormAPP.Print` and `FormAPP.PrintPlainPdf` endpoints produce printable PDF output of the filled Muster 52.2 form

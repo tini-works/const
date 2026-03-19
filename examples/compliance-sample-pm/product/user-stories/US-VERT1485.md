@@ -17,3 +17,10 @@ As a practice owner, I want pTV import is supported, so that contract participat
 ### Acceptance Criteria
 
 1. Given a valid PTV file, when import is triggered, then all participation records are imported and persisted
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `ImportParticipants` processes classified participants: auto-imports matched patients, handles conflicts with user prompts, and persists all imported records. The import tracker (`ImportHistoryTracker`) manages the full import lifecycle with status tracking.

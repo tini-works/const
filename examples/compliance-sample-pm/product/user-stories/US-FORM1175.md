@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a function to fil
 ### Acceptance Criteria
 
 1. Given a patient, when the 'Befundbogen entzuendliche Gelenkerkrankungen' form is opened, then it can be filled, printed as Volldruck per AKA template, and saved to the patient
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Befundbogen entzuendliche Gelenkerkrankungen form (defined as `AOK_FA_OC_BW_BKK_FA_OC_BW_Befundbogen_entzuendliche_Gelenkerkrankungen_V3` FormName constant per AKA-Basisdatei)
+2. The `FormAPP.PrescribeV2` endpoint saves the form to the patient record with timeline integration
+3. The `FormAPP.Print` endpoint generates Volldruck PDF output per the AKA template

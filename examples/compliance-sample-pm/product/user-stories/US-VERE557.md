@@ -17,3 +17,8 @@ As a patient, I want tE editing is restricted based on current status, so that m
 ### Acceptance Criteria
 
 1. Given a TE in status Erfolgreich, when the user attempts editing, then modifications are blocked
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.UpdatePatientEnrollment` modifies enrollment data.
+2. `enrollment.GetPatientEnrollment` retrieves current enrollment for editing.

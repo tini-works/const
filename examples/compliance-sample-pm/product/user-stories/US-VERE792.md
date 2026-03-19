@@ -17,3 +17,9 @@ As a patient, I want module contract enrollment is supported, so that my enrollm
 ### Acceptance Criteria
 
 1. Given a Modulvertrag, when enrollment is initiated, then a module-specific TE is created linked to the Hauptvertrag
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CreatePatientEnrollment` creates enrollment per contract.
+2. `contract.GetContracts` provides available contracts.
+3. `enrollment.GetPatientContractGroups` retrieves patient contract group assignments.

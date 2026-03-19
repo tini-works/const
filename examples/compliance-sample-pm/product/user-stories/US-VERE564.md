@@ -17,3 +17,7 @@ As a patient, I want tE deletion follow defined rules, so that my enrollment is 
 ### Acceptance Criteria
 
 1. Given a TE, when deletion is attempted, then only TEs in permitted status are deletable; others are blocked
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.UpdatePatientEnrollment` supports status-based updates including deletion rules based on enrollment state.

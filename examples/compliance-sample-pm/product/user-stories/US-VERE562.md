@@ -18,3 +18,9 @@ As a patient, I want failed TEs is retryable; successful TEs is blocked from re-
 
 1. Given a failed TE, when retry is attempted, then re-send proceeds
 2. Given a successful TE, when re-send is attempted, then it is blocked
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.SendParticipation` handles submission with retry.
+2. `enrollment.ReSubmitAllEnrollments` resubmits failed enrollments.
+3. `hpm_check_history.GetHpmCheckHistory` tracks submission history.

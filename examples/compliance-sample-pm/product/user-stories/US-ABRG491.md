@@ -17,3 +17,7 @@ As a practice doctor, I want user see confirmation of successful billing transmi
 ### Acceptance Criteria
 
 1. Given a billing transmission, when it succeeds, then a confirmation message with timestamp and summary is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp` emits `BillingSubmissionResponse` events via `BillingSocketNotifier.NotifyUserBillingSubmissionResponse` and `NotifyDeviceBillingSubmissionResponse` in `backend-core/app/app-core/api/billing/billing.d.go`, delivering real-time confirmation to the user's session after successful transmission.

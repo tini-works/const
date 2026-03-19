@@ -18,3 +18,11 @@ As a practice owner, I want if the participation status cannot be determined bec
 
 1. Given a patient without eGK-Nummer, when participation status is being determined, then the hint 'Der Teilnahmestatus kann nicht ermittelt werden, da keine gueltige eGK-Versichertennummer vorliegt' is displayed
 2. Given the status is not being actively queried, then the hint does not appear
+
+
+### Actual Acceptance Criteria
+
+**Status: Not Implemented**
+
+1. **Not met.** No backend logic found that generates the specific hint message 'Der Teilnahmestatus kann nicht ermittelt werden, da keine gueltige eGK-Versichertennummer vorliegt' when a patient lacks an eGK-Nummer.
+2. **N/A.** Depends on criterion 1.

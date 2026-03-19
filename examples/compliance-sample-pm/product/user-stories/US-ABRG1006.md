@@ -17,3 +17,7 @@ As a practice doctor, I want show hint about KV services when patient has contra
 ### Acceptance Criteria
 
 1. Given a Patient with Selektivvertrag-Teilnahme, when KV-Leistungen are documented, then a hint about contract participation is shown
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The timeline validation system includes validators for both KV (`service_code/kv/`) and SV (`service_code/sv/`) tracks. The `PreParticipationValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/preparticipation.validator.go` checks contract participation. A specific hint shown when KV services are documented for a patient with active contract participation was not explicitly found but may be covered by the KV precondition validators.

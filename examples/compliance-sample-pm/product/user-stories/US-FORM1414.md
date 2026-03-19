@@ -17,3 +17,11 @@ As a practice staff (MFA), I want hint when filling Muster 52.2, so that forms a
 ### Acceptance Criteria
 
 1. Given Muster 52.2 being filled, when the user opens the form, then a filling-guidance hint is displayed
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. The Muster 52.2 form (`Muster_52_2_V3` FormName constant) is retrievable and fillable via `FormAPP.GetForm`
+2. The `FormType_contract_hint` FormType exists in the domain model for hint infrastructure
+3. The actual filling-guidance hint display when Muster 52.2 is opened is a client-side UI concern -- no backend endpoint specifically generates a fill-time hint for Muster 52.2

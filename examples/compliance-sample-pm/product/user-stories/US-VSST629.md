@@ -17,3 +17,12 @@ As a practice staff, I want when prescribing a steuerbare Hilfsmittel, the Vertr
 ### Acceptance Criteria
 
 1. Given a steuerbare Hilfsmittel, when its FRAGEBOGEN column is non-empty, then the system requires the user to fill out the questionnaire
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **Steuerbare HIMI data** -- The `SearchControllableHimi` returns controllable Hilfsmittel data including metadata fields.
+2. **Gap: FRAGEBOGEN column check** -- The specific check of the FRAGEBOGEN column non-emptiness to determine questionnaire requirement needs verification in the steuerbare Hilfsmittel data model.

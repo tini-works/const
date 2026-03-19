@@ -19,3 +19,12 @@ As a practice staff (MFA), I want the Vertragssoftware provide a function to fil
 1. Given a patient, when the 'Ueberleitungsmanagement' form is opened, then it can be filled, printed (Volldruck or Formulardruck), and saved
 2. Given mandatory fields are not yet filled, then printing is still allowed
 3. Given intermediate state, then saving is possible
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Ueberleitungsmanagement form (defined as `AOK_SH_HZV_Ueberleitungsmanagement_V3`, `Ueberleitungsbogen_AOK_KBS_NO_WL_V2`, `RV_KBS_SN_HZV_Ueberleitungsmanagement_Ueberleitungsbogen_V3` FormName constants per AKA-Basisdatei)
+2. The `FormAPP.PrescribeV2` endpoint supports intermediate saving of the form before all mandatory fields are filled
+3. The `FormAPP.Print` endpoint supports both Volldruck and Formulardruck output modes
+4. Printing before all mandatory fields are filled is allowed via the `PrintPlainPdf` endpoint which does not enforce field validation

@@ -17,3 +17,7 @@ As a practice doctor, I want users is able to select or deselect specific cases,
 ### Acceptance Criteria
 
 1. Given billing submission preparation, when the user selects/deselects Fälle or Verträge, then only selected items are included in the submission
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.SubmitBillingV2` and `BillingApp.SubmitBillingToHpm` operations in `backend-core/app/app-core/api/billing/billing.d.go` accept `SubmitBillingToHpmRequest` which allows selection of specific billing data. The `BillingKVApp.TroubleshootRequest` in `backend-core/app/app-core/api/billing_kv/billing_kv.d.go` supports filtering by `Quarter`, `Year`, `BSNRId`, `NBSNRIds`, and `ScheinsIdsSkip` for case/contract selection before submission.

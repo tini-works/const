@@ -18,3 +18,11 @@ As a practice owner, I want when requesting HzV participation, the Vertragssoftw
 
 1. Given HzV participation is requested, when the HPM returns no active participation, then the message 'Der Patient ist derzeit kein aktiver Vertragsteilnehmer' is shown
 2. Given active participation exists, then the appropriate status message is displayed
+
+
+### Actual Acceptance Criteria
+
+**Status: Partially Implemented**
+
+1. **Partially met.** `CheckParticipation` queries HPM and returns status with `Reason` and `ErrorMessages`. The specific German message 'Der Patient ist derzeit kein aktiver Vertragsteilnehmer' is not confirmed in the codebase -- the message text likely comes from HPM response or frontend localization.
+2. **Met.** When active participation exists, the status and reason are returned and displayed.

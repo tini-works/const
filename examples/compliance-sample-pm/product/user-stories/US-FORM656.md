@@ -17,3 +17,11 @@ As a practice staff (MFA), I want contractual forms is printable, so that forms 
 ### Acceptance Criteria
 
 1. Given a Vertragsformular filled with patient data, when print is requested, then the form is printed correctly
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.Print` endpoint produces PDF output of filled contractual forms
+2. The `FormAPP.PrintPlainPdf` endpoint generates plain PDF output with configurable `formSetting`, `formName`, and optional `isRemoveBackground` parameters
+3. The `PrinterApp.FindPrinterProfiles` and `PrinterApp.FindPrinterProfileGroupsByFormId` endpoints provide printer configuration for correct physical printing

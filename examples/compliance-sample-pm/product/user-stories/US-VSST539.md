@@ -17,3 +17,12 @@ As a practice staff, I want in practice-level and patient-level medication lists
 ### Acceptance Criteria
 
 1. Given a medication of category Gruen or Blau, when displayed in practice/patient lists or search results, then 'rabattiert' is shown instead of the price
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/hpm_check_history`
+
+1. **Medication display infrastructure** -- The `medicine` API provides medication search and list display. Price handling exists in the data model.
+2. **Gap: 'rabattiert' display for Gruen/Blau** -- The specific UI logic to replace price with 'rabattiert' for medications in categories 'Gruen' and 'Blau' in practice-level and patient-level lists is a frontend/HPM integration feature. The HPM integration for category-based price suppression is not verified in the backend.

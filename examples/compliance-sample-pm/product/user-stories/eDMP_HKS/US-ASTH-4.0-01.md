@@ -18,3 +18,10 @@ As a practice software, I want to produce eDMP Asthma XML documents following th
 
 1. Given an eDMP Asthma documentation is generated, when the XML is produced, then it contains a valid clinical_document_header and body as top-level elements
 2. Given the XML is missing clinical_document_header or body, when validated, then a structural error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint produces eDMP Asthma XML documents following the CDA levelone structure (clinical_document_header + body) when `DMPLabelingValue = "ASTHMA"` is provided.
+2. **Schema Validation**: The `EDMPApp.CheckPlausibility` endpoint (NATS topic `api.app.app_core.EDMPApp.CheckPlausibility`) validates the generated XML against the CDA schema; structural errors produce `FieldValidationResult` entries with `isPlausible = false`.
+3. **Billing File Generation**: Call `EDMPApp.FinishDocumentationOverview` and verify the `CheckPlausibilityResponse.billingFile` contains a structurally valid CDA document with clinical_document_header and body.
+4. **Negative Test**: Submit a documentation overview with missing clinical_document_header or body and confirm `CheckPlausibility` returns specific structural validation errors.

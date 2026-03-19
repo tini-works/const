@@ -17,3 +17,8 @@ As a practice doctor, I want billing justification text is capturable for servic
 ### Acceptance Criteria
 
 1. Given a Leistung requiring Begründungstext, when no justification is entered, then validation warns before submission
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `FreeText` field and `AdditionalInfoValidator` enforce justification when required by contract.
+2. Blocks submission when justification missing.

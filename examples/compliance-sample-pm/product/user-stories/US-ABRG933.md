@@ -17,3 +17,7 @@ As a practice doctor, I want automatically display the transmission protocol as 
 ### Acceptance Criteria
 
 1. Given successful billing transmission, when the process completes, then a PDF Übertragungsprotokoll is automatically displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.GetBillingPDF` operation in `backend-core/app/app-core/api/billing/billing.d.go` retrieves billing PDFs by `BillingHistoryId` and `IndexFile`. The `BillingApp.DownloadAllProtocols` supports bulk PDF protocol download. The `BillingSubmissionResponse` event notifies the user upon completion, enabling automatic display of the transmission protocol.

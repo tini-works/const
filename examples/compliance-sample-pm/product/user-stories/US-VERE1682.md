@@ -17,3 +17,8 @@ As a patient, I want fAV auto-activation occur on transmission, so that my enrol
 ### Acceptance Criteria
 
 1. Given a FAV-TE transmitted, when transmission succeeds, then the Teilnahme is auto-activated
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.ActionOnFavContract` and `enrollment.ActionOnFavContractGroup` handle FAV contract lifecycle.
+2. `enrollment.SendParticipation` submits to HPM.

@@ -18,3 +18,11 @@ As a practice software, I want to validate all eDMP Brustkrebs documents against
 
 1. Given an eDMP Brustkrebs document is completed, when plausibility validation is run, then all EXT_ITA_VGEX_Plausi_eDMP_Uebergreifend rules are evaluated
 2. Given a cross-programme plausibility rule is violated, when validation completes, then the specific rule violation and affected field are reported to the user
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CheckPlausibility` endpoint applies all Brustkrebs-specific plausibility rules (EXT_ITA_VGEX_Plausi_eDMP_Brustkrebs) when `DMPLabelingValue = "BRUSTKREBS"` is specified in the `CheckPlausibilityRequest`.
+2. **Disease-Specific Validation**: The `CheckPlausibilityResponse.fieldValidationResults` array contains entries for each Brustkrebs-specific rule violation, identifying the affected field and the specific plausibility rule.
+3. **Sequential Validation**: Cross-program rules (P-01) are applied before Brustkrebs-specific rules (P-02); the document must pass both validation stages before `FinishDocumentationOverview` succeeds.
+4. **Billing File Generation**: When all plausibility rules pass, `CheckPlausibilityResponse.billingFile` contains the generated Brustkrebs billing XML file ready for transmission.
+5. **Negative Test**: Submit a documentation overview that violates a Brustkrebs-specific rule (e.g., invalid field combination for the disease type) and confirm `CheckPlausibility` returns the specific Brustkrebs rule violation.

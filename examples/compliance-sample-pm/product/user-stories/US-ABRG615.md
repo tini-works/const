@@ -17,3 +17,7 @@ As a practice doctor, I want integrate with HPM billing validation module (Abrec
 ### Acceptance Criteria
 
 1. Given billing data, when HPM Abrechnungsprüfmodul is invoked, then validation results are returned and displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.TestSubmitBillings` and `BillingApp.TestSubmitBilling` operations in `backend-core/app/app-core/api/billing/billing.d.go` invoke HPM validation (Abrechnungspruefmodul) returning `TestBillingSubmissionResponse` with validation results. The `BillingApp.SubmitBillingToHpm` sends data to HPM for validation, and `HandleEventBillingResponse` processes HPM responses.

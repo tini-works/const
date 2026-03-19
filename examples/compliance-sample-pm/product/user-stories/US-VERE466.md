@@ -17,3 +17,9 @@ As a patient, I want tE is saveable for current patient, so that my enrollment i
 ### Acceptance Criteria
 
 1. Given a Teilnahmeerklärung for the current Patient, when saved, then it is persisted and retrievable
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CreatePatientEnrollment` creates enrollment records; `enrollment.GetPatientEnrollment` retrieves them.
+2. `enrollment.UpdatePatientEnrollment` modifies enrollment data.
+3. `enrollment.SaveOfflineEnrollment` supports offline enrollment scenarios.

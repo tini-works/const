@@ -17,3 +17,7 @@ As a patient, I want display daily notification for unsent TEs, so that my enrol
 ### Acceptance Criteria
 
 1. Given unsent TEs exist, when the user logs in daily, then a notification listing unsent TEs is displayed
+
+### Actual Acceptance Criteria
+
+1. Not yet implemented -- no daily notification/alerting mechanism found for enrollment status changes.

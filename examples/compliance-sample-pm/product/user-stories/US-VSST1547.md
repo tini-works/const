@@ -17,3 +17,12 @@ As a practice staff, I want the following DMPs is integrated per KBV specificati
 ### Acceptance Criteria
 
 1. Given the Vertragssoftware, when DMP functionality is accessed, then eDMP Diabetes Mellitus Type 1 and Type 2 are available per KBV specifications
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/edmp`, `api/edoku`
+
+1. **eDMP Diabetes modules** -- The `edmp` package supports DMP Diabetes Mellitus Type 1 and Type 2 via `DMPLabelingValue`. The full documentation workflow (Enroll, CreateDocument, Save/Finish DocumentationOverview, CheckPlausibility) applies to Diabetes DMPs.
+2. **KBV compliance** -- The eDMP system generates KBV-compliant documentation with plausibility checks.

@@ -17,3 +17,12 @@ As a practice staff, I want contract-specific prescription data requirements (de
 ### Acceptance Criteria
 
 1. Given contract-specific prescription data requirements, when Verordnungsdaten are processed, then the requirements are enforced
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/contract`, `api/enrollment`, `api/patient_participation`, `api/medicine`
+
+1. **Contract-specific data handling** -- The `contract` API package manages Selektivvertragsdefinition data. The `enrollment` and `patient_participation` packages handle contract participant management.
+2. **Gap: Contract-specific prescription data requirements** -- The specific contract-dependent prescription data fields and their enforcement need verification against each Selektivvertrag's requirements.

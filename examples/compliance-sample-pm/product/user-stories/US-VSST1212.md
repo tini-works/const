@@ -18,3 +18,13 @@ As a practice staff, I want for contract participants aged 12 to 17, deviating f
 
 1. Given a participant aged 12-17, when OTC medication is prescribed, then it is automatically placed on Muster 16 (Kassenrezept)
 2. Given manual override needed, then the prescription type can be changed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/form`, `api/patient_profile`
+
+1. **Prescription type handling** -- The `medicine` and `form` packages handle prescription forms including Muster 16 (Kassenrezept).
+2. **Patient age** -- The `patient_profile` package provides patient age.
+3. **Gap: Age 12-17 automatic Kassenrezept for OTC** -- The specific automatic placement of OTC medications on Muster 16 for contract participants aged 12-17, with manual override capability, needs verification.

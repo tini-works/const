@@ -17,3 +17,9 @@ As a patient, I want warning is displayed for missing therapy/diagnosis data, so
 ### Acceptance Criteria
 
 1. Given a TE with missing Therapie/Diagnose data, when transmission is attempted, then a warning about missing data is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CheckParticipation` verifies eligibility.
+2. `enrollment.SendParticipation` submits enrollment.
+3. `enrollment.Prescribe` and `form.PrescribeV2` handle form generation.

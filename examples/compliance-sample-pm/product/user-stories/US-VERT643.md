@@ -17,3 +17,10 @@ As a practice owner, I want check participation status, so that contract partici
 ### Acceptance Criteria
 
 1. Given a Patient, when Teilnahmestatus check is invoked, then the system queries HPM and returns the current status
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `CheckPatientParticipation` (PatientParticipationApp) queries HPM and returns current status. `CheckParticipation` (EnrollmentApp) also provides status checks with `ParticipationStatus` response.

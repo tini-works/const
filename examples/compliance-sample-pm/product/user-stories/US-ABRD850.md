@@ -17,3 +17,7 @@ As a practice doctor, I want a cover letter is supportable for FAV referrals wit
 ### Acceptance Criteria
 
 1. Given a FAV-Überweisung, when a Begleitbrief is created, then it includes clinical context and contract-specific fields
+
+### Actual Acceptance Criteria
+
+1. Not yet implemented -- no matching endpoint/service found for generating FAV referral cover letters (Begleitbriefe).

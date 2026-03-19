@@ -17,3 +17,7 @@ As a practice doctor, I want generate a detailed transmission protocol documenti
 ### Acceptance Criteria
 
 1. Given a billing transmission, when completed, then a detailed Übertragungsprotokoll with content and timestamps is generated
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.GetBillingPDF` operation in `backend-core/app/app-core/api/billing/billing.d.go` retrieves transmission protocols by `BillingHistoryId` and `IndexFile`. The `BillingApp.DownloadAllProtocols` supports bulk download of all protocols. The `BillingApp.GetBillingHistories` and `GetBillingHistoriesByReferenceId` provide history data with timestamps documenting what was transmitted and when.

@@ -17,3 +17,10 @@ As a practice owner, I want iCode is enterable and saveable, so that contract pa
 ### Acceptance Criteria
 
 1. Given a Teilnahmevorgang, when the user enters an ICode, then the value is persisted and associated with the participation record
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** ICode (RetrievalCode) is enterable and persisted in the PTV import flow. `GetCodePtvByDoctor` retrieves the stored ICode. `createPtvImport` stores `RetrievalCode` in the `PtvImport` record. The `GetPtvContractByDoctorRequest` accepts `Code` (ICode) as input.

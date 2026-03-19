@@ -17,3 +17,9 @@ As a practice doctor, I want fAV service documentation verify patient's active F
 ### Acceptance Criteria
 
 1. Given a Patient without active FAV-Teilnahme, when a FAV-Leistung is entered, then the system blocks entry with a participation error
+
+### Actual Acceptance Criteria
+
+1. The `billing.GetPatientProfileByIds` retrieves FAV enrollment status.
+2. The `billing.PreConditionSvBilling` verifies active FAV participation.
+3. The `billing.SubmitPreParticipateService` handles pre-participation flows.

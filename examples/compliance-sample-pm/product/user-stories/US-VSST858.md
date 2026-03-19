@@ -17,3 +17,12 @@ As a practice staff, I want the Pruef- und Abrechnungsmodul returns co-payment (
 ### Acceptance Criteria
 
 1. Given insurance-specific medication recommendations, when displayed, then a Zuzahlung column is shown
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/hpm_check_history`, `api/medicine`
+
+1. **HPM integration** -- Same infrastructure as VSST855.
+2. **Gap: Zuzahlung column display** -- The specific co-payment column display in recommendations is not verified.

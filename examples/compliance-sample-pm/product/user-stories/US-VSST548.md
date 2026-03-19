@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware display medications sorted star
 ### Acceptance Criteria
 
 1. Given medication search results, when displayed, then Gruen and Blau categories appear first, or a filter limits display to those categories with a 'Show all' override available
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/medicine`
+
+1. **Medication search** -- The `medicine` API provides search capabilities.
+2. **Gap: Gruen/Blau priority sorting or filtering** -- The specific sorting of search results to prioritize Gruen and Blau categories, or the filter-based approach with 'Show all' override, is not verified in the backend search implementation.

@@ -17,3 +17,12 @@ As a practice owner, I want mandatory audit/billing module is integrated, so tha
 ### Acceptance Criteria
 
 1. Given the PVS, when the audit/billing module is required, then it is integrated and functional
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented (as external module)** |
+|--------|----------------------------------------|
+
+1. There is no external Prufmodul (audit/billing module) integrated as a separate module.
+2. The system has native billing validation logic in `backend-core/service/timeline_validation/` and `backend-core/service/billing_kv/`, but these are built-in services, not an externally integrated Prufmodul.
+3. **Gap**: The compliance requirement refers to integrating the mandatory HAVG Prufmodul as an external audit/billing module. The system uses its own billing validation instead.

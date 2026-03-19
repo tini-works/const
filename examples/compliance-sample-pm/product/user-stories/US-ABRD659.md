@@ -17,3 +17,10 @@ As a practice doctor, I want patient-related documentation is maintained, so tha
 ### Acceptance Criteria
 
 1. Given a Behandlungsfall, when services are documented, then patient-related documentation is persisted and retrievable
+
+### Actual Acceptance Criteria
+
+1. The timeline service provides full CRUD for diagnoses, services, and procedures with quarter grouping.
+2. The `billing_patient.GetBillingPatient` and `billing_patient.GetBillingPatientPrintContent` provide patient billing documentation.
+3. The `billing_history.Create` and `billing_history.Search` maintain searchable billing history.
+4. The `billing_patient.PrintBillingPatient` supports printing.

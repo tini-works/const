@@ -17,3 +17,12 @@ As a practice staff (MFA), I want on a separate document without fixed layout, a
 ### Acceptance Criteria
 
 1. Given a FaV patient, when the supplementary document is created, then lab values and current medication can be loaded from the patient record and printed with an appropriate hint text
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` and `FormAPP.Print` endpoints handle the supplementary FaV document generation and printing
+2. The `MedicineApp.GetMedicationPrescribe` and `MedicineApp.GetShoppingBag` endpoints provide current medication data from the patient record
+3. Lab values can be loaded from the patient record via the document management service for inclusion in the supplementary document
+4. The `FormAPP.PrintPlainPdf` endpoint supports free-layout document printing with configurable `formSetting` JSON for hint text inclusion

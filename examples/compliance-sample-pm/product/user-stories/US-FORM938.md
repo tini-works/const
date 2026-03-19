@@ -17,3 +17,11 @@ As a practice staff (MFA), I want when opening the 'Schnellinformation zur Patie
 ### Acceptance Criteria
 
 1. Given the Schnellinformation form is opened, when it loads, then a hint window appears stating the Patientenmerkblatt signature requirement for billing the Patientenbegleitung service
+
+### Actual Acceptance Criteria
+
+**Status: Not implemented**
+
+1. No backend endpoint exists to display a hint window when the Schnellinformation form is opened
+2. The `FormType_contract_hint` FormType constant exists in the form domain model, suggesting the infrastructure for contract hints is partially in place
+3. The actual hint display ('Patientenmerkblatt signature required for Patientenbegleitung billing') must be implemented as a client-side UI behavior triggered when the form loads

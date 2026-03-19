@@ -17,3 +17,7 @@ As a practice doctor, I want check pre-participation status before allowing bill
 ### Acceptance Criteria
 
 1. Given a billing attempt for a Selektivvertrag, when Teilnahmestatus is not active, then billing is blocked
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `PreParticipationValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/preparticipation.validator.go` checks pre-participation (Teilnahme) status before allowing SV billing. The `BillingApp.SubmitPreParticipateService` and `ReSubmitPreParticipateService` operations in `backend-core/app/app-core/api/billing/billing.d.go` handle pre-participation service submissions.

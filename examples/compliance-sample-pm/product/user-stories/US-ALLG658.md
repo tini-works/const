@@ -17,3 +17,12 @@ As a practice owner, I want for FaV, system manage a MEDIVERBUND-ID per physicia
 ### Acceptance Criteria
 
 1. Given a FaV-Arzt record, when MEDIVERBUND-ID is entered, then the 8-digit numeric ID is persisted
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented** |
+|--------|-------------------|
+
+1. No MEDIVERBUND-ID field was found in the physician/employee data models.
+2. The codebase references MEDIVERBUND only in AKA XML contract definitions and test data CSV files, not as a managed physician identifier.
+3. **Gap**: The system does not store or manage an 8-digit numeric MEDIVERBUND-ID per physician for FaV contracts.

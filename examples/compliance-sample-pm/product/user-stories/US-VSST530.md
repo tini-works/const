@@ -17,3 +17,13 @@ As a practice staff, I want the Vertragssoftware prevent transmission of Hilfsmi
 ### Acceptance Criteria
 
 1. Given a Hilfsmittelverordnung, when prescription data transmission runs, then Hilfsmittel prescriptions are excluded from the transmission
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/himi`, `api/billing`, `api/pvs_billing`
+
+1. **Hilfsmittel management** -- The `himi` API package implements Hilfsmittelverordnung (HIMI) management with search, prescribe, and print functionality.
+2. **Transmission exclusion** -- The billing pipeline processes Verordnungsdaten for transmission.
+3. **Gap: Explicit HIMI exclusion from transmission** -- While HIMI prescriptions are managed separately from medication prescriptions, the explicit exclusion of Hilfsmittelverordnungen from prescription data transmission needs verification in the billing transmission logic.

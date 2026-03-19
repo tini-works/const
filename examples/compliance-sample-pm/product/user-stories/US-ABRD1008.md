@@ -17,3 +17,8 @@ As a practice doctor, I want post-submission modification of services and diagno
 ### Acceptance Criteria
 
 1. Given a submitted Medi-Vertrag Abrechnung, when the user modifies services/diagnoses, then a Korrekturlieferung is generated
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `billing.ReSubmitBillings` / `billing.ReSubmitBilling` support post-submission correction.
+2. `pvs_billing.ReopenWholeBilling` reopens completed billing cycles.

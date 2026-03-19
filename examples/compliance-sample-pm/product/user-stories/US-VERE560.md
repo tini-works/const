@@ -17,3 +17,9 @@ As a patient, I want transmission prerequisites is met before TE can be sent, so
 ### Acceptance Criteria
 
 1. Given a TE for transmission, when prerequisites are unmet, then transmission is blocked with a checklist of missing items
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CheckParticipation` verifies patient eligibility.
+2. `enrollment.CheckHpmServiceConnection` tests HPM connectivity.
+3. `enrollment.SendParticipation` submits verified enrollments.

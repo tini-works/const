@@ -17,3 +17,10 @@ As a practice owner, I want when creating a KV Schein or first documenting KV se
 ### Acceptance Criteria
 
 1. Given a KV Schein is created or KV services first documented, when the patient's Kassen-IK is in Selektivvertragsdefinitionen Kostentraegerdaten, then both FaV and HzV participation are checked online via HPM
+
+
+### Actual Acceptance Criteria
+
+**Status: Partially Implemented**
+
+1. **Partially met.** `CheckParticipation` supports checking both HzV and FaV participation via HPM. `GetContractsHasFunctions` can determine if contracts apply. However, the automatic trigger upon KV Schein creation or first KV service documentation (matching Kassen-IK against Selektivvertragsdefinitionen Kostentraegerdaten) is not explicitly wired into Schein creation.

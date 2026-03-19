@@ -17,3 +17,7 @@ As a practice doctor, I want transmitted billing data is marked as transmitted, 
 ### Acceptance Criteria
 
 1. Given successful Abrechnungsübertragung, when the process completes, then all transmitted records are marked with Übertragungsstatus
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp` emits `BillingHistoryChange` events via `BillingNotifier.NotifyBillingHistoryChange` and tracks billing history through `GetBillingHistories` and `GetBillingHistoriesByReferenceId` in `backend-core/app/app-core/api/billing/billing.d.go`. Transmitted records are tracked in `BillingHistoriesResponse`.

@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a patient-specifi
 ### Acceptance Criteria
 
 1. Given a FaV PNP patient, when the Befundbericht is generated, then it contains at minimum: patient master data and diagnoses
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. The `FormAPP.GetForm` endpoint can retrieve FaV specialty report forms, and `FormAPP.GetIcdForm` returns ICD codes per contract
+2. The `FormAPP.Print` endpoint generates the Befundbericht PDF with patient master data and diagnoses
+3. No dedicated PNP-specific (`Befundbericht FaV - PNP`) endpoint exists -- the generic form infrastructure handles it via form configuration, and the minimum content (patient master data, diagnoses) is supported through form field mapping on the client side

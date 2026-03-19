@@ -17,3 +17,13 @@ As a practice staff, I want the KBV Heilmittel catalog requirements apply analog
 ### Acceptance Criteria
 
 1. Given the KBV Heilmittel catalog requirements, when Heilmittel prescriptions are processed, then all listed functions apply unless HAEVG specifies otherwise
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/heimi`
+
+1. **Heilmittel (Heimi) module** -- The `heimi` API package implements comprehensive Heilmittel functionality: GetHeimiArea, GetDiagnoseLabel, GetDiagnoseGroup, GetKeySymptoms, GetRemedy, GetTherapyFrequency, Prescribe, Print, and more.
+2. **Catalog integration** -- The Heimi module includes diagnosis-based remedy lookup, therapy frequency management, and prescription statistics.
+3. **KBV-compliant workflow** -- The prescription workflow follows KBV Heilmittel patterns with diagnosis groups, key symptoms, remedy selection, and indicator prescriptions.

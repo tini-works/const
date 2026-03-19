@@ -17,3 +17,7 @@ As a practice doctor, I want billing process controls per contract, so that bill
 ### Acceptance Criteria
 
 1. Given a Selektivvertrag with billing controls, when Abrechnung runs, then contract-specific process controls are applied
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.PreConditionSvBilling` operation in `backend-core/app/app-core/api/billing/billing.d.go` returns `PreConditionSvBillingResponse` applying contract-specific pre-conditions before billing. Contract rules are loaded via `ContractApp.GetContractById` which includes `ContractRules` (excluded services, included diagnoses, doctor function types) per Selektivvertrag.

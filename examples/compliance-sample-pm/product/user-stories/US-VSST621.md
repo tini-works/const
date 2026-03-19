@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware prevent issuing an AU or eAU wh
 ### Acceptance Criteria
 
 1. Given a patient with empty or outdated employment data, when an AU or eAU issuance is attempted, then the system blocks issuance until employment data is current
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/eau`, `api/patient_profile`
+
+1. **eAU workflow** -- The `eau` package provides AU/eAU creation with validation.
+2. **Gap: Employment data blocking** -- The specific blocking of AU/eAU issuance when employment data is not filled or not current is not verified as a validation rule in the eAU creation flow.

@@ -17,3 +17,8 @@ As a patient, I want enrollment procedure type is selectable per contract, so th
 ### Acceptance Criteria
 
 1. Given a Vertrag with multiple Einschreibeverfahren, when TE is created, then the correct procedure type is selectable
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CreatePatientEnrollment` creates enrollment.
+2. `contract.GetContracts` and `contract.GetContractsHasFunctions` provide contract configuration.

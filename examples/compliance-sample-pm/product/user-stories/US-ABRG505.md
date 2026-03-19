@@ -17,3 +17,7 @@ As a practice doctor, I want verify diagnosis prerequisites for service P3 (code
 ### Acceptance Criteria
 
 1. Given Leistung P3 (code 0003) documented, when diagnosis prerequisites are missing, then validation blocks billing
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `IncludedDiagnoseValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/included.diagnose.validator.go` enforces diagnosis prerequisites for SV service codes including P3 (code 0003). It validates against `RegelDiagnoseeinschlussTyp` rules from the contract definition, checking required diagnoses by code, certainty, and permanence.

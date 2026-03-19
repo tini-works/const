@@ -18,3 +18,10 @@ As a practice software, I want to include a correct eHeader with DM2-specific di
 
 1. Given an eDMP DM2 document is generated, when the eHeader is written, then it contains DM2-specific code and version identifiers
 2. Given an eHeader missing DM2-specific fields, when validated, then an error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint generates the clinical_document_header conforming to the eHeader specification with Diabetes mellitus Typ 2-specific differences when `DMPLabelingValue = "DM2"` is provided in the `DocumentationOverview`.
+2. **Enrollment Prerequisite**: The `EDMPApp.Enroll` endpoint (NATS topic `api.app.app_core.EDMPApp.Enroll`) must be called first with `EnrollmentInfoRequest` containing the Diabetes mellitus Typ 2 DMP labeling; the returned `EnrollResponse.ids` confirm enrollment.
+3. **Header Validation**: The `EDMPApp.CheckPlausibility` endpoint validates Diabetes mellitus Typ 2-specific header field values differ correctly from the generic eHeader specification; mismatches produce `FieldValidationResult` errors.
+4. **GetEnrollment Verification**: Call `EDMPApp.GetEnrollment` with the patient's ID and verify the returned `EnrollmentWithDocumentModels` list includes an active Diabetes mellitus Typ 2 enrollment.

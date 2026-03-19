@@ -17,3 +17,7 @@ As a practice doctor, I want billing data include required referral documentatio
 ### Acceptance Criteria
 
 1. Given a Leistung requiring Überweisung, when billing data is generated, then referral documentation fields are included
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The `ScheinApp` in `backend-core/app/app-core/api/schein/` manages billing cases (Scheine) which can include referral (Ueberweisung) data. The `fav.referral_doctor.validator.go` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/` validates FAV referral doctor requirements. Full referral documentation field inclusion in billing data needs verification in the HPM builder (`backend-core/service/domains/internal/billing/hpm_next_builder/`).

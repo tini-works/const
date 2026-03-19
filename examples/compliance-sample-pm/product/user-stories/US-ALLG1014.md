@@ -17,3 +17,13 @@ As a practice owner, I want during initial contract setup, only contracts valid 
 ### Acceptance Criteria
 
 1. Given initial Vertragseinrichtung, when the contract list is displayed, then only contracts valid for the Praxis KV-Region (BSNR) are shown first
+
+### Actual Acceptance Criteria
+
+| Status | **Partially Implemented** |
+|--------|--------------------------|
+
+1. KV region (KvRegion) filtering exists in contract lookup logic, as evidenced by tests in `backend-core/service/contract/contract/service_test.go` that verify contracts are filtered by KvRegion.
+2. A BSNR service exists at `backend-core/service/bsnr/` that provides practice BSNR data.
+3. The `GetSupportedContracts` method filters contracts, and test cases confirm KvRegion-based filtering works.
+4. **Gap**: It is unclear whether the initial contract setup UI specifically shows only KV-region-valid contracts first (as a prioritized display), since this depends on frontend implementation. The backend filtering capability exists.

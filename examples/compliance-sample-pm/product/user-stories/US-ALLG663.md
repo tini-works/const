@@ -17,3 +17,12 @@ As a practice owner, I want contract documents marked as "Public" is printable a
 ### Acceptance Criteria
 
 1. Given a public Vertragsdokument, when print is requested, then it prints successfully
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented** |
+|--------|-------------------|
+
+1. No print functionality for contract documents was found in the backend codebase.
+2. While the system can retrieve contract attachments and documents, there is no print endpoint or print-formatting service for public Vertragsdokumente.
+3. **Gap**: The requirement to print public contract documents at any time is not implemented.

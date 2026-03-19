@@ -17,3 +17,7 @@ As a practice doctor, I want additional contract-defined information is capturab
 ### Acceptance Criteria
 
 1. Given a Selektivvertrag requiring Zusatzinformationen, when the field is marked mandatory, then the system enforces entry before submission
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `AdditionalInfoValidator` enforces mandatory contract-defined fields, blocking submission when missing.

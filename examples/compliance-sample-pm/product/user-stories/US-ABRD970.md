@@ -17,3 +17,8 @@ As a practice doctor, I want care facility name and location is required for hom
 ### Acceptance Criteria
 
 1. Given a Hausbesuch-Leistung, when facility name/location is missing, then validation blocks submission
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `ABRD970Validator` checks CareFacility Name and Ort with test coverage.
+2. Part of the billing validation pipeline.

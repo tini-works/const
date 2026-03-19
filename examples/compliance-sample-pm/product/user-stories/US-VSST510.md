@@ -17,3 +17,13 @@ As a practice staff, I want in addition to KBV AVWG function P2-130, the Vertrag
 ### Acceptance Criteria
 
 1. Given the medication database, when an update cycle runs, then updates are applied at least every 14 days or quarterly at minimum
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/medicine_kbv`, `api/etl`
+
+1. **Medication database integration** -- The `medicine` and `medicine_kbv` API packages provide full medication catalog access with search, lookup, and KBV-compliant data structures.
+2. **Catalog update mechanism** -- The `medicine` service in `backend-core/service/medicine/` provides medication data management. The system supports catalog imports via ETL (`backend-core/service/etl/`).
+3. **Gap: Automated 14-day update cycle** -- While medication data can be imported, the automated scheduling of updates every 14 days (or quarterly minimum) is a deployment/operations concern. The AVWG P2-130 update frequency enforcement is not verified as an automated scheduled task within the codebase.

@@ -17,3 +17,7 @@ As a practice doctor, I want provide a summary view aggregating case counts, ser
 ### Acceptance Criteria
 
 1. Given billing data for a Quartal, when summary is requested, then case counts, Leistungssummen, and financial totals are displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.CalculateBillingSummary` operation in `backend-core/app/app-core/api/billing/billing.d.go` returns `CalculateBillingSummaryResponse` aggregating case counts, service totals, and financial summaries. The `BillingKVApp.Troubleshoot` in `backend-core/app/app-core/api/billing_kv/billing_kv.d.go` also provides summary data including `TotalScheins`, `TotalPatients`, `TotalErrors`, `TotalWarnings`, and `TotalHints`.

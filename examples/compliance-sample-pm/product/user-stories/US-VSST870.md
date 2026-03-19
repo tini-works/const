@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware automatically and immediately d
 ### Acceptance Criteria
 
 1. Given insurance-specific medication data, when available, then categories and recommendations are displayed automatically and immediately without requiring user interaction
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/hpm_check_history`
+
+1. **Medication display** -- The `medicine` API provides medication data.
+2. **Gap: Automatic display without user interaction** -- The specific requirement that insurance-specific medication categories and recommendations display automatically and immediately without requiring user interaction is a UI/frontend requirement not verified in the backend.

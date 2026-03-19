@@ -17,3 +17,8 @@ As a practice doctor, I want referral form hint text is displayed when applicabl
 ### Acceptance Criteria
 
 1. Given an Überweisungsschein is being created, when contract rules require hint text, then the hint text is visible before printing
+
+### Actual Acceptance Criteria
+
+1. The `schein` API supports referral schein creation and updates (`CreateSchein`, `UpdateSchein`), but no dedicated endpoint for displaying referral form hint text was found in the billing or schein APIs.
+2. Form generation exists via `form.GetForm` and `form.Print` but specific referral hint text rendering is not explicitly exposed as a standalone API operation in the current codebase.

@@ -17,3 +17,7 @@ As a practice doctor, I want during billing validation, system perform multimorb
 ### Acceptance Criteria
 
 1. Given Abrechnungsvalidierung, when a patient has 3+ Krankheitsbilder, then the multimorbidity flag is set on the billing case
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `billing.AnalyzeForP4Diseases` identifies 3+ disease groups; `billing.CalculateBillingSummary` calculates surcharge.

@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware display HPM medication recommen
 ### Acceptance Criteria
 
 1. Given HPM medication recommendation results, when displayed, then they appear in a table grouped by ATC group sorted ascending by priority, with medications color-coded by category
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/hpm_check_history`, `api/medicine`
+
+1. **HPM result handling** -- The `hpm_check_history` package exists for tracking HPM interactions.
+2. **Gap: Tabular ATC-grouped display** -- The specific display of HPM medication recommendations in tabular form, grouped by ATC, sorted by priority, and color-coded by category is a frontend feature. The backend data structures for HPM results need verification for supporting this display format.

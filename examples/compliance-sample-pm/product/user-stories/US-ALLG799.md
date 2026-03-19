@@ -17,3 +17,12 @@ As a practice owner, I want user manual is provided, so that general compliance 
 ### Acceptance Criteria
 
 1. Given the software, when delivered, then a Benutzerhandbuch covering all contract-relevant functions is included
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented** |
+|--------|-------------------|
+
+1. No user manual (Benutzerhandbuch) was found in the repository.
+2. This is a documentation deliverable requirement, not a code implementation.
+3. **Gap**: A Benutzerhandbuch covering all contract-relevant functions must be created and delivered with the software.

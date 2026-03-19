@@ -17,3 +17,8 @@ As a patient, I want tE identifier is persisted, so that my enrollment is proces
 ### Acceptance Criteria
 
 1. Given a TE created, when saved, then a unique TE-Kennung is generated and persisted
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CreatePatientEnrollment` creates enrollment.
+2. `enrollment.GetPatientEnrollment` retrieves enrollment data.

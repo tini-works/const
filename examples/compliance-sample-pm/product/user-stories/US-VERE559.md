@@ -17,3 +17,9 @@ As a patient, I want enrollment form variant per contract, so that my enrollment
 ### Acceptance Criteria
 
 1. Given different Verträge, when TE is created, then each Vertrag uses its specific form variant
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `contract.GetContracts` and `contract.GetContractById` retrieve contract definitions.
+2. `contract.GetContractsHasFunctions` checks feature availability.
+3. `enrollment.CreatePatientEnrollment` initiates enrollment per contract.

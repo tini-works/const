@@ -17,3 +17,10 @@ As a practice owner, I want block services/diagnoses documented outside the pati
 ### Acceptance Criteria
 
 1. Given a Leistung dated outside the Teilnahme-Aktivierungsfenster, when saved, then the system blocks with a date-range error
+
+
+### Actual Acceptance Criteria
+
+**Status: Not Implemented**
+
+1. **Not met.** No evidence of date-range validation logic that blocks services/diagnoses documented outside the patient's contract activation window (Teilnahme-Aktivierungsfenster). The Schein and billing services do not contain explicit activation-window enforcement.

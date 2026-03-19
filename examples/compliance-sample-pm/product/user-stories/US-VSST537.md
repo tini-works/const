@@ -17,3 +17,12 @@ As a practice staff, I want insurance-specific drug categories is displayed, so 
 ### Acceptance Criteria
 
 1. Given a Verordnung for a specific Kasse, when drug selection is shown, then insurance-specific Arzneimittelkategorien are displayed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/medicine_kbv`, `api/hpm_check_history`
+
+1. **Medication catalog with categories** -- The `medicine` API provides drug search and display. The `medicine_kbv` package includes KBV-specific medication data.
+2. **Gap: Insurance-specific Arzneimittelkategorien display** -- The HPM-based insurance-specific medication categories (Gruen, Blau, Rot, Orange) require HPM integration. The HPM check history package exists (`hpm_check_history`), but the specific display of insurance-specific categories per Kasse needs verification.

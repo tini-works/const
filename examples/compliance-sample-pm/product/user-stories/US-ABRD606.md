@@ -17,3 +17,9 @@ As a practice doctor, I want service lookup filter by IK assignment, so that bil
 ### Acceptance Criteria
 
 1. Given a Patient with a specific IK-Zuordnung, when the user searches Leistungen, then only services matching that IK are shown
+
+### Actual Acceptance Criteria
+
+1. The `billing.GetBillableEncounters` retrieves encounters filtered by patient and contract context including IK-based assignment.
+2. The timeline service supports filtering by patient insurance context.
+3. The `billing.GetContractTypeByIds` provides contract metadata including IK assignment.

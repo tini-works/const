@@ -17,3 +17,7 @@ As a practice doctor, I want age precondition is validated per KV region rules, 
 ### Acceptance Criteria
 
 1. Given a Leistung with KV-regional age rules, when patient age is outside the allowed range, then validation blocks the service
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `KvAbrd1564Validator` and `AgeValidator` enforce age-based billing rules for KV/SV.

@@ -17,3 +17,10 @@ As a practice owner, I want display participation status, so that contract parti
 ### Acceptance Criteria
 
 1. Given a Patient with one or more Verträge, when the patient view is opened, then all Teilnahmestatus values are visible
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetPatientParticipation` returns all participation statuses for a patient. `GetPatientContractGroups` returns contract groups with participation info. `PatientParticipationChange` events notify the frontend of status changes via WebSocket for real-time display.

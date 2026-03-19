@@ -17,3 +17,9 @@ As a patient, I want hZV signature requires 2 signatures plus TE-Code, so that m
 ### Acceptance Criteria
 
 1. Given an HZV-Teilnahmeerklärung, when submitted, then 2 Unterschriften and a TE-Code are required
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.SendParticipation` submits enrollment to HPM.
+2. `enrollment.ActionOnHzvContract` performs HZV contract actions.
+3. Open API `/enrollment/hzv-contract/action` exposes this externally.

@@ -19,3 +19,12 @@ As a practice staff, I want after successful real-data transmission of prescript
 1. Given successful real-data prescription transmission, when complete, then the count of transmitted prescriptions is shown
 2. Given test transmission, then count is not shown
 3. Given deleted prescriptions, then they are excluded from the count
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/billing`, `api/pvs_billing`
+
+1. **Billing transmission** -- The `billing` and `pvs_billing` packages handle data transmission.
+2. **Gap: Transmission count display** -- The specific display of transmitted prescription count after real-data transmission, exclusion of deleted prescriptions, and suppression of count for test transmissions is not verified.

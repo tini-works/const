@@ -17,3 +17,13 @@ As a practice staff, I want when prescribing a Hilfsmittel, the Vertragssoftware
 ### Acceptance Criteria
 
 1. Given a Hilfsmittel being prescribed, when its 7-digit Positionsnummer matches the steuerbare list, then additional data fields per the list specification are displayed and required
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **Controllable HIMI check** -- The `SearchControllableHimi` method checks against the steuerbare Hilfsmittel list.
+2. **7-digit Positionsnummer matching** -- The `SearchHimiMatchingTable` method provides matching table lookup for steuerbare Hilfsmittel.
+3. **Additional data collection** -- The prescription workflow (`Prescribe` method) collects additional data fields as specified by the steuerbare list.

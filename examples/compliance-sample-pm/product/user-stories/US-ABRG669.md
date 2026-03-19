@@ -17,3 +17,7 @@ As a practice doctor, I want chronic care flat-rate require at least one confirm
 ### Acceptance Criteria
 
 1. Given a Chronikerpauschale billed, when only akute Diagnosen exist as Dauerdiagnose, then billing is blocked with a diagnosis-type error
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `IncludedDiagnoseValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/included.diagnose.validator.go` enforces that chronic care flat-rate services require at least one confirmed permanent diagnosis. The contract rules include `Permanent` flag and `Certainty` requirements in `IIncludedDiagnoses` at `backend-core/app/app-core/api/contract/contract.d.go`. Billing is blocked if only acute diagnoses exist as Dauerdiagnose.

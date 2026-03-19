@@ -17,3 +17,9 @@ As a practice doctor, I want services submitted for billing is protected from de
 ### Acceptance Criteria
 
 1. Given a Leistung already submitted for Abrechnung, when a user attempts deletion, then deletion is blocked and an audit entry is preserved
+
+### Actual Acceptance Criteria
+
+1. The `schein.MarkBill` and `schein.MarkNotBilled` control billed status, protecting submitted services from modification.
+2. The `billing_history.Create` and `billing_history.Search` maintain audit trail for submissions.
+3. The timeline service enforces deletion protection for billed services.

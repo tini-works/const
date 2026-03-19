@@ -17,3 +17,10 @@ As a practice owner, I want contract participation is tracked, so that contract 
 ### Acceptance Criteria
 
 1. Given Vertragsteilnahme lifecycle events, when they occur, then all state changes are tracked with timestamps
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** Participation lifecycle is fully tracked. `ActionOnHzvContract`/`ActionOnFavContract` handle state transitions. `PatientParticipationChange` events are published. The enrollment repository persists all state changes. `GetPatientParticipation` returns historical participation data.

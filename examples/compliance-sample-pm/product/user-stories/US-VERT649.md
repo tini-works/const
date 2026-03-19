@@ -17,3 +17,10 @@ As a practice owner, I want check for insurance changes and trigger re-enrollmen
 ### Acceptance Criteria
 
 1. Given a Kassenwechsel detected, when the patient has active Teilnahme, then a re-enrollment notice is triggered
+
+
+### Actual Acceptance Criteria
+
+**Status: Not Implemented**
+
+1. **Not met.** No Kassenwechsel (insurance change) detection or re-enrollment notice triggering logic found. The system does not monitor for insurance provider changes to automatically flag affected participations.

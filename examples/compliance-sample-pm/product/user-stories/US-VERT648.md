@@ -17,3 +17,10 @@ As a practice owner, I want participation window is enforced, so that contract p
 ### Acceptance Criteria
 
 1. Given a Vertrag with defined Teilnahmezeitraum, when actions are attempted outside the window, then they are blocked
+
+
+### Actual Acceptance Criteria
+
+**Status: Not Implemented**
+
+1. **Not met.** No participation window (Teilnahmezeitraum) enforcement logic found in the codebase. There is no validation that blocks actions attempted outside a defined participation window.

@@ -17,3 +17,9 @@ As a practice doctor, I want warn when the same diagnosis with certainty 'V' (su
 ### Acceptance Criteria
 
 1. Given a Verdachtsdiagnose ('V') present in 2+ consecutive Quartale, when the user opens the Diagnose, then a review warning is shown
+
+### Actual Acceptance Criteria
+
+1. The timeline service supports quarter grouping for cross-quarter diagnosis analysis.
+2. The `coding_rule.GetCodingRuleOverviewByQuarter` provides quarterly compliance overview.
+3. The `coding_rule.ValidateCodingRuleByPatientId` may include multi-quarter suspected diagnosis checks.

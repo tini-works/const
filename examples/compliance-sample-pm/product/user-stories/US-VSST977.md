@@ -18,3 +18,13 @@ As a practice staff, I want instead of KBV AVWG P3-130 for OTC exception indicat
 
 1. Given an OTC exception indication per AM-RL Anlage I, when the patient is a contract participant under 18, then the indication is not displayed
 2. Given age 18+, then it is displayed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine_kbv`, `api/patient_profile`
+
+1. **Medication rules** -- The `medicine_kbv` package implements KBV AVWG rules.
+2. **Patient age access** -- The `patient_profile` package provides patient age data.
+3. **Gap: Age-18+ OTC exception rule** -- The specific rule that AM-RL Anlage I OTC exception indication display applies only to contract participants aged 18+ needs verification in the medication rule engine.

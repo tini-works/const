@@ -17,3 +17,8 @@ As a patient, I want fAV signature requires 1 signature plus TE-Code, so that my
 ### Acceptance Criteria
 
 1. Given a FAV-Teilnahmeerklärung, when submitted, then 1 Unterschrift and a TE-Code are required
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.SendParticipation` submits enrollment.
+2. `enrollment.ActionOnFavContract` and `enrollment.ActionOnFavContractGroup` handle FAV-specific actions.

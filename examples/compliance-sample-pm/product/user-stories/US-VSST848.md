@@ -17,3 +17,12 @@ As a practice staff, I want when ICD-10 codes F32.9 or F33.9 (unspecified depres
 ### Acceptance Criteria
 
 1. Given ICD-10 F32.9 or F33.9 documented, when a Folge-AU is issued, then the hint about considering targeted diagnostic/therapeutic measures for unspecific depression is displayed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/eau`, `api/sdicd`
+
+1. **eAU creation with ICD codes** -- The `eau` package creates eAU documents with form data that includes ICD codes.
+2. **Gap: F32.9/F33.9 follow-up AU hint** -- The specific detection of ICD-10 codes F32.9 or F33.9 and the display of the depression-specific hint from the first follow-up AU onward is not verified in the eAU creation logic.

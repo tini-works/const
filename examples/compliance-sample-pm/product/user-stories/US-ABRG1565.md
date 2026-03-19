@@ -17,3 +17,7 @@ As a practice doctor, I want billing validation rule, so that billing submission
 ### Acceptance Criteria
 
 1. Given Abrechnungsvalidierung, when contract-specific rules are applied, then violations are reported with rule references
+
+### Actual Acceptance Criteria
+
+1. Implemented. The timeline validation framework in `backend-core/service/timeline_validation/service/validation_timeline/validations/` applies comprehensive billing validation rules. SV-specific validators in `service_code/sv/` include: `IncludedDiagnoseValidator`, `ExcludedServiceValidator`, `ExcludedDiagnoseValidator`, `AgeValidator`, `GenderValidator`, `NumberValidator`, `ConditionValidator`, `PreParticipationValidator`, and `ABRG664Validator`. KV validators in `service_code/kv/precondition/` cover OPS, SDKV, age, gender, and number rules. Violations are reported with rule references.

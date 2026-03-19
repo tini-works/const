@@ -17,3 +17,11 @@ As a practice staff (MFA), I want when opening Muster 10 or Muster 10A lab refer
 ### Acceptance Criteria
 
 1. Given an active HZV/FaV/BV/IV participant, when Muster 10 or 10A is opened, then the AKA-Basisdatei Hinweistext for lab referrals is displayed
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. Muster 10 and Muster 10A are defined as `FormName` constants (`Muster_10`, `Muster_10A`) and retrievable via `FormAPP.GetForm`
+2. The `FormType_contract_hint` FormType constant exists in the domain model for Hinweistext infrastructure
+3. The actual hint text display from AKA-Basisdatei Hinweistexte when Muster 10/10A is opened for an active HZV/FaV/BV/IV participant is a client-side UI concern -- no backend endpoint specifically returns the Hinweistext for lab referral forms

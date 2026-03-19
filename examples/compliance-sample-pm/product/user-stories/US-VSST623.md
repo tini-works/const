@@ -17,3 +17,13 @@ As a practice staff, I want the Vertragssoftware integrate the Hilfsmittelkatalo
 ### Acceptance Criteria
 
 1. Given the AKA Hilfsmittelkatalog, when the system loads, then the catalog is available for Hilfsmittel selection with the specified search and display functions
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/himi`, `service/himi`
+
+1. **Hilfsmittelkatalog integration** -- The `himi` API package implements comprehensive Hilfsmittel catalog functionality with the `SearchGruppe`, `SearchOrt`, `SearchArt`, `SearchOrtByGruppe`, `SearchUnterByGruppeOrt`, `SearchProductByBaseAndArt`, and `SearchHimiMatchingTable` methods.
+2. **HIMI service** -- The `backend-core/service/himi/` domain service provides the Hilfsmittel catalog data backend.
+3. **Prescription support** -- `Prescribe` and `GetPrescribe` methods handle Hilfsmittel prescriptions with print support.

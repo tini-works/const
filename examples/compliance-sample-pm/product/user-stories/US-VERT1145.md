@@ -17,3 +17,10 @@ As a practice owner, I want available contracts is displayed to user, so that co
 ### Acceptance Criteria
 
 1. Given a Praxis with configured Verträge, when the user opens contract view, then all available Selektivverträge are listed
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetContracts` (ContractApp) returns all available `Selektivvertraege` as `ContractMetaData` (contractId, contractName, contractType, chargeSystems, kvRegion). Contracts are loaded from XML Selektivvertragsdefinitionen and served to the user.

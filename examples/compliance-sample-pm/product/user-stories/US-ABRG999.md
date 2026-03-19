@@ -17,3 +17,7 @@ As a practice doctor, I want flag missing billing justification documentation fo
 ### Acceptance Criteria
 
 1. Given a Leistung requiring Begründung, when justification text is missing, then validation flags it
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `AdditionalInfoValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/additionalInfo.validator.go` flags missing billing justification (Begruendung) documentation for services requiring it. The SDEBM additional field rule configuration at `backend-core/service/domains/repos/masterdata_repo/sdebm/additional_field/rule_config.go` defines which services require justification text.

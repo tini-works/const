@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a function to fil
 ### Acceptance Criteria
 
 1. Given a patient, when the 'Bericht Hausarzt Psychiater' form is opened, then it can be filled, printed as Volldruck per AKA template, and saved to the patient
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Bericht Hausarzt Psychiater form (defined as `BKK_VAG_FA_PT_BW_Bericht_Hausarzt_Psychiater_V2` and `BKK_GWQ_FA_PT_BW_Bericht_Hausarzt_Psychiater_V2` FormName constants per AKA-Basisdatei)
+2. The `FormAPP.PrescribeV2` endpoint saves the form to the patient record with timeline integration
+3. The `FormAPP.Print` endpoint generates Volldruck PDF output per the AKA template

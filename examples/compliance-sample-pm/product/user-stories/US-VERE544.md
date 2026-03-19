@@ -17,3 +17,8 @@ As a patient, I want enrollment declaration full print variant, so that my enrol
 ### Acceptance Criteria
 
 1. Given a contract-specific TE variant, when full print is requested, then the correct variant layout is used
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.PrintForm` and `enrollment.PrintMutipleForms` generate contract-specific forms.
+2. `contract.GetContracts` and `contract.GetContractById` provide contract definitions for form generation.

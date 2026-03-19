@@ -17,3 +17,10 @@ As a practice owner, I want module contract prerequisite — main contract is ac
 ### Acceptance Criteria
 
 1. Given a Modulvertrag, when the Hauptvertrag is not active, then module contract activation is blocked
+
+
+### Actual Acceptance Criteria
+
+**Status: Partially Implemented**
+
+1. **Partially met.** Contract data model includes `ModuleChargeSystems` separate from main `ChargeSystems`, indicating module contract awareness. However, no explicit enforcement logic found that blocks module contract activation when the Hauptvertrag (main contract) is not active.

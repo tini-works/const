@@ -18,3 +18,10 @@ As a practice doctor, I want to document Gesamtbeurteilung Haut auffaellig as Ja
 
 1. Given an HKS-A document is created, when Gesamtbeurteilung Haut auffaellig is recorded, then exactly one of Ja or Nein is selected
 2. Given no value is selected, when validated, then an error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint (NATS topic `api.app.app_core.EDMPApp.SaveDocumentationOverview`) persists the eHKS documentation fields in the `DocumentationOverview` payload.
+2. **Field Encoding**: The `EDMPApp.CreateDocument` endpoint encodes all clinical data fields using the correct XML observation structure when generating the eHKS document.
+3. **Plausibility Check**: The `EDMPApp.CheckPlausibility` endpoint validates that all required observation elements are present and correctly structured; missing or malformed elements produce `FieldValidationResult` errors.
+4. **Case Number Uniqueness**: The `EDMPApp.IsDMPCaseNumberExist` endpoint (NATS topic `api.app.app_core.EDMPApp.IsDMPCaseNumberExist`) verifies the case number is unique before document creation; duplicates return `isExist = true`.

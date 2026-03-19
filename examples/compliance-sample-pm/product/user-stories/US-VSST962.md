@@ -17,3 +17,12 @@ As a practice staff, I want the Hilfsmittelkatalog and catalog searches is stric
 ### Acceptance Criteria
 
 1. Given the Hilfsmittelkatalog, when a search is performed, then results are sorted strictly by Produktgruppe, Anwendungsort, Untergruppe, Produktart
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **Hierarchical catalog structure** -- The `himi` API provides searches organized by Produktgruppe (SearchGruppe), Anwendungsort (SearchOrt/SearchOrtByGruppe), Untergruppe (SearchUnterByGruppeOrt), and Produktart (SearchArt/SearchProductByBaseAndArt).
+2. **Structured navigation** -- The `BaseHimiSearch` struct with Gruppe/Ort/Unter fields enforces the hierarchical sort order in catalog navigation.

@@ -18,3 +18,11 @@ As a practice doctor, I want to document Thrombozytenaggregationshemmer medicati
 
 1. Given an eDMP KHK documentation form, when the medication section is displayed, then a Thrombozytenaggregationshemmer field with options Nein, Ja, Kontraindikation, and orale Antikoagulation is available
 2. Given a selection is made, when the XML is generated, then the Thrombozytenaggregationshemmer value is encoded correctly
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint persists KHK therapy/medication fields submitted in the `DocumentationOverview.fields` array with the correct medication field identifiers.
+2. **Field-Level Plausibility**: The `EDMPApp.CheckPlausibility` endpoint validates medication field values against the KHK permitted value set (e.g., Bei Bedarf, Dauermedikation, Keine, Kontraindikation); invalid selections produce `FieldValidationResult` errors.
+3. **Mandatory Selection**: The `CheckPlausibility` endpoint enforces that exactly one option is selected for single-choice medication fields; missing selections produce mandatory field errors.
+4. **XML Encoding**: Call `EDMPApp.FinishDocumentationOverview` and verify the returned `CheckPlausibilityResponse.billingFile` contains correctly encoded medication field values in the KHK Medikamente XML section.
+5. **Negative Test**: Submit a documentation overview with no medication selection for a mandatory field and confirm `CheckPlausibility` returns a specific `FieldValidationResult` error.

@@ -17,3 +17,12 @@ As a practice owner, I want if physician has MEDIVERBUND-ID but no specialist VP
 ### Acceptance Criteria
 
 1. Given an Arzt with MEDIVERBUND-ID but no specialist VP-ID, when triggered, then the system retrieves it via HPM
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented** |
+|--------|-------------------|
+
+1. Similar to US-ALLG1851, no VP-ID retrieval logic for specialists with MEDIVERBUND-ID was found.
+2. No HPM endpoint call exists to retrieve specialist VP-ID based on MEDIVERBUND-ID.
+3. **Gap**: The system does not automatically retrieve a specialist VP-ID via HPM when a physician has a MEDIVERBUND-ID but no VP-ID.

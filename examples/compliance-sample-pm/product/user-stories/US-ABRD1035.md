@@ -17,3 +17,7 @@ As a practice doctor, I want additional information fields is supported per cont
 ### Acceptance Criteria
 
 1. Given a Vertrag defining Zusatzinformationsfelder, when the user opens a Behandlungsfall, then the additional fields are displayed and editable
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `AdditionalInfos` and `AdditionalInfoValidator` enforce contract-defined fields per service code.

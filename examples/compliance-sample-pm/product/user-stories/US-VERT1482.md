@@ -17,3 +17,10 @@ As a practice owner, I want the Vertragssoftware allow the user to query via HTT
 ### Acceptance Criteria
 
 1. Given a Vertragspartner VP-ID, when the user queries available directories via HPM, then the system shows which contracts have downloadable Patiententeilnehmerverzeichnisse and which have already been imported
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetPtvContractByDoctor` queries HPM via `GetPTVFoldersByDoctor` (HTTP POST) to check available Patiententeilnehmerverzeichnisse. It cross-references with locally imported data (`GetPtvImportByDoctorId`) to show import status. New/updated directories are identified by version comparison.

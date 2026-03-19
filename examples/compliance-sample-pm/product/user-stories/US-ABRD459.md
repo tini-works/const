@@ -17,3 +17,8 @@ As a practice doctor, I want referral doctor LANR and BSNR is required when cont
 ### Acceptance Criteria
 
 1. Given a Vertrag requiring Überweiser-LANR/BSNR, when a referral service is documented without them, then validation blocks submission
+
+### Actual Acceptance Criteria
+
+1. The `schein` API handles referral schein creation (`CreateSchein`, `UpdateSchein`) and the `schein.IsValid` operation performs validation on schein data, which can enforce required fields such as LANR and BSNR.
+2. The `billing_kv.Troubleshoot` and `billing_kv.GetError` operations detect and surface billing errors including missing referral doctor identifiers before KV submission.

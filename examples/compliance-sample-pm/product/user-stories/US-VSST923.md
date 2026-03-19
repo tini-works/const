@@ -17,3 +17,12 @@ As a practice staff, I want high-volume prescription control warn the user, so t
 ### Acceptance Criteria
 
 1. Given a Verordnung exceeding volume thresholds, when saved, then a Hochvolumen warning is displayed to the user
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/coding_rule`
+
+1. **Prescription validation** -- The `medicine` and `coding_rule` packages provide prescription validation rules.
+2. **Gap: High-volume threshold warning** -- The specific Hochvolumen warning when prescriptions exceed volume thresholds needs verification in the prescription validation logic.

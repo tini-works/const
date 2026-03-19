@@ -17,3 +17,7 @@ As a practice doctor, I want prevent duplicate billing submissions by blocking r
 ### Acceptance Criteria
 
 1. Given Abrechnungsdaten already transmitted, when re-submission is attempted, then the system blocks with a duplicate-submission error
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The `BillingApp.ReSubmitBillings` operation in `backend-core/app/app-core/api/billing/billing.d.go` handles re-submission via `ReBillingSubmissionRequest`, and `BillingHistories` tracking with `GetBillingHistories` and `GetBillingHistoriesByReferenceId` enables detection of already-transmitted data. Explicit duplicate-blocking logic would need verification in the internal billing service.

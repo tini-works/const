@@ -17,3 +17,12 @@ As a practice staff, I want the following DMP is integrated per KBV specificatio
 ### Acceptance Criteria
 
 1. Given the Vertragssoftware, when DMP functionality is accessed, then eDMP Koronare Herzkrankheit is available per KBV specifications
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/edmp`, `api/edoku`, `api/billing_edoku`
+
+1. **eDMP KHK** -- The `edmp` package supports multiple DMP types via `DMPLabelingValue`. Koronare Herzkrankheit (KHK) is supported as one of the DMP labeling values.
+2. **KBV-compliant documentation** -- The eDMP documentation workflow (CreateDocument, SaveDocumentationOverview, FinishDocumentationOverview, CheckPlausibility) applies to all DMP types including KHK.

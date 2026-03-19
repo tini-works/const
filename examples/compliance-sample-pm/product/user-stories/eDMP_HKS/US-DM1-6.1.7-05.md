@@ -18,3 +18,11 @@ As a practice doctor, I want to document Thiaziddiuretika as Nein, Ja, or Kontra
 
 1. Given an eDMP DM1 Medikamente section is documented, when Thiaziddiuretika is recorded, then exactly one of Nein, Ja, or Kontraindikation is selected
 2. Given no value is selected, when validated, then an error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint persists Diabetes mellitus Typ 1 therapy/medication fields submitted in the `DocumentationOverview.fields` array with the correct medication field identifiers.
+2. **Field-Level Plausibility**: The `EDMPApp.CheckPlausibility` endpoint validates medication field values against the Diabetes mellitus Typ 1 permitted value set (e.g., Bei Bedarf, Dauermedikation, Keine, Kontraindikation); invalid selections produce `FieldValidationResult` errors.
+3. **Mandatory Selection**: The `CheckPlausibility` endpoint enforces that exactly one option is selected for single-choice medication fields; missing selections produce mandatory field errors.
+4. **XML Encoding**: Call `EDMPApp.FinishDocumentationOverview` and verify the returned `CheckPlausibilityResponse.billingFile` contains correctly encoded medication field values in the Diabetes mellitus Typ 1 Medikamente XML section.
+5. **Negative Test**: Submit a documentation overview with no medication selection for a mandatory field and confirm `CheckPlausibility` returns a specific `FieldValidationResult` error.

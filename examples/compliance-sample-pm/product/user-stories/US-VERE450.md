@@ -17,3 +17,8 @@ As a patient, I want enrollment receipt is printable (DIN A6), so that my enroll
 ### Acceptance Criteria
 
 1. Given a completed Teilnahmeerklärung, when the user prints the receipt, then a DIN-A6 Empfangsbestätigung is generated
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.PrintForm` and `enrollment.PrintMutipleForms` generate printable enrollment forms.
+2. `form.Print` and `form.PrintPlainPdf` produce PDF output for enrollment documents.

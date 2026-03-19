@@ -17,3 +17,7 @@ As a practice doctor, I want ensure all diagnosed conditions are included in bil
 ### Acceptance Criteria
 
 1. Given a Behandlungsfall with documented Diagnosen, when billing is generated, then all Diagnosen are included in the Abrechnungsfall
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `DiagnoseValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/diagnose.validator.go` validates that all documented diagnoses are included in billing cases. The Schein model in `backend-core/service/domains/api/schein_common/schein_common.d.go` links diagnoses to billing cases, and the HPM builder at `backend-core/service/domains/internal/billing/hpm_next_builder/builder.go` includes all diagnoses in the billing data.

@@ -17,3 +17,14 @@ As a practice staff, I want the following DMPs is integrated per KBV specificati
 ### Acceptance Criteria
 
 1. Given the Vertragssoftware, when DMP functionality is accessed, then eDMP modules for Diabetes Type 1, Type 2, KHK, Asthma, COPD, and Brustkrebs are available per KBV specifications
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/edmp`, `api/edoku`, `api/billing_edoku`
+
+1. **eDMP module** -- The `edmp` API package implements a comprehensive eDMP system with: Enroll, Terminate, CreateDocument, GetEnrollment, SaveDocumentationOverview, FinishDocumentationOverview, CheckPlausibility, and DMP billing workflows.
+2. **DMP labeling** -- The system supports multiple DMP types via `DMPLabelingValue` field, covering Diabetes Type 1/2, KHK, Asthma, COPD, and Brustkrebs.
+3. **KBV-compliant documentation** -- The `edoku` and `billing_edoku` packages handle eDoku documentation per KBV specifications.
+4. **DMP billing** -- Full DMP billing workflow with validation, KIM mail transmission, and billing history.

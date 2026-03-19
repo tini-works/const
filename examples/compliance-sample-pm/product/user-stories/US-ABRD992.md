@@ -17,3 +17,8 @@ As a practice doctor, I want oPS documentation validity is checked, so that bill
 ### Acceptance Criteria
 
 1. Given an OPS-Code entered, when it is not in the current OPS-Katalog, then a validation error is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- OPS validity checked against `SdopsService` catalog.
+2. `patient_encounter.SearchOps` provides OPS lookup for documentation.

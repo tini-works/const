@@ -17,3 +17,12 @@ As a practice staff, I want in practice-level and patient-level medication lists
 ### Acceptance Criteria
 
 1. Given a medication of category Gruen, when displayed in practice/patient lists or search results, then 'rabattiert' is shown instead of the price
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/hpm_check_history`
+
+1. **Medication display infrastructure** -- Same as VSST539. The `medicine` API provides medication lists.
+2. **Gap: 'rabattiert' display for Gruen only** -- The specific UI logic to replace price with 'rabattiert' for Gruen category medications is a frontend/HPM feature not verified in the backend.

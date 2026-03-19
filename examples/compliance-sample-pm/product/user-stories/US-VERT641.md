@@ -17,3 +17,10 @@ As a practice owner, I want user is able to request participation, so that contr
 ### Acceptance Criteria
 
 1. Given a Patient eligible for a Vertrag, when the user submits a Teilnahmeantrag, then the request is persisted and sent to HPM
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `CreatePatientEnrollment` creates the participation request and persists it. `SendParticipation` transmits the request to HPM. The full flow (create + send) is available via the EnrollmentApp API.

@@ -18,3 +18,12 @@ As a practice staff, I want the Vertragssoftware currently not allow transmissio
 
 1. Given the current system state, when the user attempts to transmit Verordnungsdaten, then transmission is blocked
 2. Given the documentation structure, then it supports future retroactive transmission
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/billing_edoku`, `api/billing`, `api/medicine`
+
+1. **Transmission blocking** -- The current system architecture supports prescription data documentation without immediate transmission. The `billing_edoku` package handles eDoku documentation separately from transmission.
+2. **Retroactive transmission support** -- The data model stores Verordnungsdaten with documentation dates, supporting future retroactive transmission. The `billing` pipeline can process historical data.

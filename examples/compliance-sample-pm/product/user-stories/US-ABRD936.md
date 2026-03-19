@@ -18,3 +18,8 @@ As a practice doctor, I want blank billing codes is correctly managed based on a
 
 1. Given a Blanko-Abrechnungscode, when its status is inactive, then it cannot be used for billing
 2. When active, then it is selectable
+
+### Actual Acceptance Criteria
+
+1. Implemented -- Contract XML definitions drive Blanko code active/inactive status via Selektivvertragsdefinition parsing.
+2. The `billing.GetBillableEncounters` and timeline validation enforce contract-scoped service code availability.

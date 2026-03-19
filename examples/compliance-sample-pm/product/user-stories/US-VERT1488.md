@@ -17,3 +17,10 @@ As a practice owner, I want the Vertragssoftware provide an overview of all prev
 ### Acceptance Criteria
 
 1. Given imported Patiententeilnehmerverzeichnisse exist, when the user opens the overview, then each entry shows contract, physician name/LANR, quarter/year, importing user, import date/time, and protocol link
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetListPtvImportHistory` returns paginated import history records (`PtvImportHistory`) including contract, quarter/year, version, and import status. The `ImportHistoryTracker` records document ID, doctor ID, contract ID, year, quarter, code, and version for each import.

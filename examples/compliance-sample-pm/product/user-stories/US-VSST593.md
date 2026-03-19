@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware provide a function to document 
 ### Acceptance Criteria
 
 1. Given a patient, when the employment documentation function is opened, then fields for employment status, weekly hours, occupation description, occupation type, and related data are editable and saveable
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/patient_profile`, `api/patient_encounter`
+
+1. **Patient profile management** -- The `patient_profile` API package provides comprehensive patient data management including profile editing.
+2. **Gap: Employment data fields** -- The specific fields for employment status (yes/no), weekly hours, occupation description, occupation type (physical/mental) need verification in the patient profile data model. The patient_profile package exists but the employment-specific fields are not confirmed.

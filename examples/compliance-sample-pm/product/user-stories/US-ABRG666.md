@@ -17,3 +17,7 @@ As a practice doctor, I want include all acute and permanent diagnoses documente
 ### Acceptance Criteria
 
 1. Given akute and Dauerdiagnosen in a Quartal, when billing data is generated, then both types are included
+
+### Actual Acceptance Criteria
+
+1. Implemented. The encounter model at `backend-core/service/domains/repos/app_core/patient_encounter/encounter_common.d.go` distinguishes acute and permanent (Dauerdiagnose) diagnosis types with certainty indicators. The `DiagnoseValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/diagnose.validator.go` processes both types, and the billing builder includes all quarter-relevant diagnoses in billing output.

@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware integrate the list of steerable
 ### Acceptance Criteria
 
 1. Given the AKA steuerbare Hilfsmittel list, when the system loads, then the list is integrated and available for prescription checks
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **Steuerbare Hilfsmittel** -- The `SearchControllableHimi` method in the `HimiApp` interface specifically handles steuerbare Hilfsmittel list searches.
+2. **Catalog integration** -- The HIMI service integrates the steuerbare Hilfsmittel list from AKA-Basisdatei.

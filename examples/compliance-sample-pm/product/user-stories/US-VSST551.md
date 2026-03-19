@@ -17,3 +17,12 @@ As a practice staff, I want when prescribing medications of categories 'Gruen', 
 ### Acceptance Criteria
 
 1. Given a medication of category Gruen, GruenBerechnet, or Blau being prescribed, when the Pruef- und Abrechnungsmodul returns messages, then those messages are displayed to the user
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/hpm_check_history`, `api/medicine`
+
+1. **HPM message handling** -- The `hpm_check_history` package tracks HPM interactions.
+2. **Gap: Display of Pruef- und Abrechnungsmodul messages** -- The specific retrieval and display of HPM messages for Gruen/GruenBerechnet/Blau medications via substitution and list endpoints needs verification.

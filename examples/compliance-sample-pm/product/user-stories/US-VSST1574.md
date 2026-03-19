@@ -17,3 +17,12 @@ As a practice staff, I want vERAH TopVersorgt list, so that the software meets r
 ### Acceptance Criteria
 
 1. Given VERAH TopVersorgt patients, when the list is opened, then all eligible patients are shown with status
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/patient_search`, `api/patient_overview`
+
+1. **Patient lists** -- The `patient_search` and `patient_overview` packages provide patient listing capabilities.
+2. **Gap: VERAH TopVersorgt patient list** -- A dedicated list showing all VERAH TopVersorgt eligible patients with status is not verified in the codebase.

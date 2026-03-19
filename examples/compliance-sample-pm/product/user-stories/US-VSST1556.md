@@ -17,3 +17,9 @@ As a practice staff, I want vERAH TopVersorgt feature, so that the software meet
 ### Acceptance Criteria
 
 1. Given VERAH TopVersorgt enabled, when the feature is accessed, then TopVersorgt functions are available
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+1. **Gap: VERAH TopVersorgt feature** -- The VERAH TopVersorgt functionality (care management features for eligible patients) is not verified as a distinct feature in the codebase.

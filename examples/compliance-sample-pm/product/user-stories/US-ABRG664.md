@@ -17,3 +17,7 @@ As a practice doctor, I want warn when billing services older than 4 quarters (b
 ### Acceptance Criteria
 
 1. Given Leistungen older than 4 Quartale, when billing is attempted, then a Nachreichungsfrist warning is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented. A dedicated `ABRG664Validator` exists at `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/abrg664/validator.go`. It uses `YearQuarter` to calculate quarter offsets and warns when billing services exceed the late-submission window (4 quarters / Nachreichungsfrist).

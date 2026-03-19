@@ -17,3 +17,8 @@ As a practice doctor, I want multimorbidity check is available in the diagnosis 
 ### Acceptance Criteria
 
 1. Given a Patient with documented Diagnosen, when Multimorbidity check is triggered, then patients with 3+ Krankheitsbilder are flagged
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `billing.AnalyzeForP4Diseases` returns DiseaseGroups per patient for multimorbidity.
+2. `billing.CalculateBillingSummary` aggregates disease group counts.

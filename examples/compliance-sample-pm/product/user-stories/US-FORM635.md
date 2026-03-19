@@ -19,3 +19,12 @@ As a practice staff (MFA), I want the Vertragssoftware provide the FaV cover let
 1. Given a FaV patient, when the Begleitschreiben is opened, then it can be saved to the patient record
 2. Given stored Dauerdiagnosen and allergies exist, then those fields are pre-filled
 3. Given other fields, then they remain manually editable
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Begleitschreiben FaV form (defined as `Begleitschreiben_FaV_V4` FormName constant) with patient data loaded
+2. The `FormAPP.PrescribeV2` endpoint saves the form to the patient record, returning `timelineId` for patient timeline integration
+3. The `FormAPP.Print` endpoint generates the printable Begleitschreiben with Dauerdiagnosen and allergy fields auto-filled from the patient record
+4. Other fields remain editable via the form's `formSetting` JSON payload in `PrintPlainPdfRequest`

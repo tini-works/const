@@ -17,3 +17,10 @@ As a practice owner, I want participation status management — user is able to 
 ### Acceptance Criteria
 
 1. Given a Patient with Vertragsteilnahme, when the user opens status view, then the current Teilnahmestatus is displayed
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetPatientParticipation` (PatientParticipationApp) returns current participation status. `GetPatientEnrollment` returns enrollment details including status. `GetContractInformationFromAppCore` provides contract-level participation views.

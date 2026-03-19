@@ -17,3 +17,9 @@ As a patient, I want tE status lifecycle is managed (Erzeugt → Gedruckt → Fe
 ### Acceptance Criteria
 
 1. Given a TE, when it transitions through Erzeugt/Gedruckt/Fehlerhaft/Erfolgreich, then each status change is tracked and displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.CreatePatientEnrollment` creates enrollment; `enrollment.PrintForm` prints declaration.
+2. `enrollment.SendParticipation` submits to HPM.
+3. `enrollment.GetPatientEnrollment` retrieves status; `hpm_check_history.GetHpmCheckHistory` provides HPM check history.

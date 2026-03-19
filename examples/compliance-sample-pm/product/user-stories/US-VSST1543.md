@@ -17,3 +17,12 @@ As a practice staff, I want aVWG including ARV, so that the software meets regul
 ### Acceptance Criteria
 
 1. Given a Verordnung, when AVWG rules including ARV are checked, then violations are flagged
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine_kbv`, `api/coding_rule`
+
+1. **AVWG rule integration** -- The `medicine_kbv` package implements KBV AVWG medication rules.
+2. **Gap: ARV inclusion** -- The specific inclusion of ARV (Arzneiverordnungs-Richtlinie) rules alongside AVWG rules needs verification for completeness.

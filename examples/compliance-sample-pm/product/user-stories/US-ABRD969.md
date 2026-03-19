@@ -17,3 +17,8 @@ As a practice doctor, I want warn when an acute diagnosis is marked as permanent
 ### Acceptance Criteria
 
 1. Given an akute Diagnose being set as Dauerdiagnose, when saved, then a plausibility warning is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `DiagnoseValidator` checks ABRD969 compliance via `CheckExistAnforderung`.
+2. Invoked during `billing_kv.Troubleshoot` and `billing.SubmitBilling`.

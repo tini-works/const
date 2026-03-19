@@ -17,3 +17,7 @@ As a practice doctor, I want show a hint when service code 0008 (home visit) is 
 ### Acceptance Criteria
 
 1. Given Leistung 0008 (Hausbesuch) is documented, when saved, then a contextual hint about home visit requirements is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `ABRD1062Validator` generates info hint for service 0008 during billing validation.

@@ -17,3 +17,12 @@ As a practice staff, I want when prescribing a steuerbare Hilfsmittel, the Vertr
 ### Acceptance Criteria
 
 1. Given a steuerbare Hilfsmittel prescription, when the user is prescribing, then the fax instruction hint is displayed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/himi`
+
+1. **HIMI prescription** -- The `himi` package handles prescription workflows.
+2. **Gap: Fax instruction hint** -- The specific hint 'Please fax the prescription (Muster 16) and any questionnaire...' for steuerbare Hilfsmittel is a UI-level requirement not verified in the backend.

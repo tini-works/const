@@ -17,3 +17,9 @@ As a practice doctor, I want billing data is labeled/identified per contract, so
 ### Acceptance Criteria
 
 1. Given Abrechnungsdaten for a Selektivvertrag, when the data is generated, then it contains the correct Vertragskennzeichen
+
+### Actual Acceptance Criteria
+
+1. The `billing.GetContractTypeByIds` operation retrieves contract type metadata, ensuring billing data is associated with specific contract identifiers.
+2. The `billing.SubmitBilling` / `billing.SubmitBillingV2` and `billing.SubmitBillingToHpm` operations handle SV billing submission with contract-specific labeling.
+3. The `billing.GetBillableEncounters` operation retrieves encounters filtered by contract context for billing data generation.

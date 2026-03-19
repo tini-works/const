@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the user is able to fill and print a Teilnahme
 ### Acceptance Criteria
 
 1. Given a patient, when the Teilnahmeerklaerung is opened, then it can be filled and printed as Volldruck per AKA template; the form is stored locally, not transmitted
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Teilnahmeerklaerung form (multiple variants defined as FormName constants per AKA-Basisdatei, e.g., `Versichertenteilnahmeerklaerung_Online_Variante_A_V12`, `AWH_01_Versichertenteilnahmeerklaerung_Volldruck_V13`, and many insurance-specific variants)
+2. The `FormAPP.Print` endpoint generates Volldruck PDF output per AKA template
+3. The form is stored locally (not transmitted) -- `FormAPP.PrescribeV2` saves to patient timeline without external transmission

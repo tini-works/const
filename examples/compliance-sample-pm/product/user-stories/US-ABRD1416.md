@@ -17,3 +17,7 @@ As a practice doctor, I want oPS code 5035 is required for specialty service cod
 ### Acceptance Criteria
 
 1. Given a specialty code (E3a, A3a, etc.) documented, when OPS 5035 is missing, then validation blocks with a mandatory-OPS error
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `ABRD1416Validator` requires OPS 5035 for specialty codes.

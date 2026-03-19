@@ -17,3 +17,11 @@ As a practice staff (MFA), I want form validation per contract, so that forms ar
 ### Acceptance Criteria
 
 1. Given a Vertragsformular, when submitted, then contract-specific validation rules are applied before acceptance
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.BuildBundleAndValidation` endpoint accepts a `Prescribe` payload with `PrintOption` and returns `EAUValidation`, implementing contract-scoped form validation before acceptance
+2. The `BuildBundleAndValidationRequest` includes `Prescribe` (with form and patient data) and `PrintOption` to validate against contract-specific rules
+3. The `BuildBundleAndValidationResponse` returns `EAUValidation` results indicating validation pass/fail per contract rules

@@ -17,3 +17,7 @@ As a practice doctor, I want pre-participation check variant, so that billing su
 ### Acceptance Criteria
 
 1. Given a billing pre-check variant, when triggered, then the contract-specific participation verification logic is applied
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `PreParticipationValidator` in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/preparticipation.validator.go` implements the pre-participation check variant using `ZifferartTyp` from the contract model. The `BillingApp.SubmitPreParticipateService` in `backend-core/app/app-core/api/billing/billing.d.go` supports the variant submission flow.

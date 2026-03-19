@@ -18,3 +18,11 @@ As a practice owner, I want when requesting FaV participation, the Vertragssoftw
 
 1. Given FaV participation is requested, when the HPM returns no active participation, then the message 'Der Patient ist derzeit kein aktiver Vertragsteilnehmer' is shown
 2. Given active participation exists, then the appropriate status message is displayed
+
+
+### Actual Acceptance Criteria
+
+**Status: Partially Implemented**
+
+1. **Partially met.** `ActionOnFavContract` and FAV-specific enrollment flows exist in `service_fav.go`. `CheckParticipation` can query FAV participation via HPM. However, the specific German hint message is not confirmed in backend code.
+2. **Met.** Active FAV participation status is returned and displayed via `CheckParticipationResponse`.

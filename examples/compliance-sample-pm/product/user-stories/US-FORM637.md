@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a patient-specifi
 ### Acceptance Criteria
 
 1. Given a FaV gastroenterology patient, when the Befundbericht is generated, then it contains: patient master data, diagnoses, ICD codes, anamnesis, lab values, findings, assessment, and therapy proposal
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the FaV Gastroenterology report form, and `FormAPP.GetIcdForm` provides ICD codes per contract
+2. The `FormAPP.Print` endpoint generates the Befundbericht PDF with patient master data and diagnoses
+3. No dedicated gastroenterology-specific endpoint exists -- specialty-specific content composition (anamnesis, lab values, findings, assessment, therapy proposal) relies on client-side form field mapping within the generic form framework

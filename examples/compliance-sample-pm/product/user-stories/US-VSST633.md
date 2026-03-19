@@ -18,3 +18,12 @@ As a practice staff, I want hilfsmittel prescriptions for contract participants 
 
 1. Given a Hilfsmittel prescription for a participant, when the form is printed, then it contains quantity, Positionsnummer, period, product description, and diagnosis
 2. Given missing elements, then a warning is shown
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/himi`, `api/form`
+
+1. **HIMI prescription data** -- The `himi` `Prescribe` method creates Hilfsmittel prescriptions. The `Print` method generates prescription output.
+2. **Gap: Minimum field validation** -- The specific validation that Hilfsmittel prescriptions contain quantity, Positionsnummer, period, product description, and diagnosis with warnings for missing elements needs verification in the prescription validation logic.

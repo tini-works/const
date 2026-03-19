@@ -17,3 +17,10 @@ As a practice owner, I want contract-specific features is gated by contract supp
 ### Acceptance Criteria
 
 1. Given a Vertrag not supporting a specific feature, when the user attempts to use it, then access is blocked
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `GetContractsHasFunctions` checks which contracts support specific features (identified by `FunctionIds`). `IsPracticeSupportHpmFunction` verifies if a practice supports a specific HPM function. `ContractFuntions` and `HpmFunctionType` model feature gates per contract.

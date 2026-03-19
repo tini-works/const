@@ -17,3 +17,7 @@ As a practice doctor, I want referral form hint text variant, so that billing do
 ### Acceptance Criteria
 
 1. Given a contract-specific Überweisungsschein variant, when the form is displayed, then the correct hint text variant is shown
+
+### Actual Acceptance Criteria
+
+1. Not yet implemented -- no referral form hint text variant logic found in the codebase.

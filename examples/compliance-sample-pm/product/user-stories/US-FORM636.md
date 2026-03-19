@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a patient-specifi
 ### Acceptance Criteria
 
 1. Given a FaV cardiology patient, when the Befundbericht is generated, then it contains: patient master data, diagnoses, ICD codes, anamnesis, pre-medication, lab values, findings, assessment, therapy proposal, and 'Teilnahme am Facharztvertrag' note
+
+### Actual Acceptance Criteria
+
+**Status: Partially implemented**
+
+1. The `FormAPP.GetForm` endpoint can retrieve FaV specialty report forms, and `FormAPP.GetIcdForm` returns ICD codes for a given `contractId`
+2. The `FormAPP.Print` endpoint generates the Befundbericht PDF with patient master data and diagnoses populated
+3. No dedicated cardiology-specific (`Befundbericht FaV - Kardiologie`) endpoint exists -- the generic form infrastructure handles it via form configuration, but specialty-specific field composition (anamnesis, pre-medication, lab values, findings, assessment, therapy proposal, Teilnahme note) relies on client-side form field mapping

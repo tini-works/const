@@ -17,3 +17,7 @@ As a practice doctor, I want billing process is controllable per contract rules,
 ### Acceptance Criteria
 
 1. Given contract-specific Abrechnungsregeln, when the billing process runs, then only contract-permitted operations are executed
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The `BillingApp.SubmitBillingToHpm` operation in `backend-core/app/app-core/api/billing/billing.d.go` submits billing per contract, and `ContractApp.GetContractById` in `backend-core/app/app-core/api/contract/contract.d.go` provides contract-specific rules including `ContractRules` with excluded services, included diagnoses, and doctor function types. The SV timeline validators in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/` enforce contract-specific rules (excluded services, included diagnoses, age, gender, number limits).

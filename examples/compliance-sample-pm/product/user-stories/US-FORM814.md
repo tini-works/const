@@ -17,3 +17,11 @@ As a practice staff (MFA), I want the Vertragssoftware provide a function to fil
 ### Acceptance Criteria
 
 1. Given a patient, when the 'Schnellinformation zur Patientenbegleitung' is opened, then the form can be filled, printed as Volldruck per AKA template, and saved to the patient
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForm` endpoint retrieves the Schnellinformation zur Patientenbegleitung form (defined as `BKK_VAG_BW_Schnellinformation_Patientenbegleitung_V5`, `BKK_BOSCH_BW_Schnellinfo_Patientenbegleitung_V6`, `BKK_VAG_HE_Schnellinformation_Patientenbegleitung_V1`, and `BKK_BY_HZV_Schnellinfo_Patientenbegleitung_V6` FormName constants per AKA-Basisdatei)
+2. The `FormAPP.Print` endpoint generates Volldruck PDF output matching the AKA template
+3. The `FormAPP.PrescribeV2` endpoint saves the form to the patient record via timeline integration

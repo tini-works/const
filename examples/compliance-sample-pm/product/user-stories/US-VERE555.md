@@ -17,3 +17,8 @@ As a patient, I want enrollment declaration printing, so that my enrollment is p
 ### Acceptance Criteria
 
 1. Given a Teilnahmeerklärung, when print is requested, then the document is printed correctly
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.PrintForm` and `enrollment.PrintMutipleForms` produce contract enrollment forms.
+2. `form.Print` and `form.PrintPlainPdf` generate PDF output.

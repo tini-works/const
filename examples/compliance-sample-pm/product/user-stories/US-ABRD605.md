@@ -17,3 +17,9 @@ As a practice doctor, I want service documentation is only permitted when the pa
 ### Acceptance Criteria
 
 1. Given a Patient without active Teilnahmestatus, when a Selektivvertrag-Leistung is entered, then the system blocks the entry
+
+### Actual Acceptance Criteria
+
+1. The `billing.GetPatientProfileByIds` retrieves patient participation profiles to verify enrollment status.
+2. The `billing.PreConditionSvBilling` enforces pre-conditions including active patient participation.
+3. The `billing.SubmitPreParticipateService` handles pre-participation service submission.

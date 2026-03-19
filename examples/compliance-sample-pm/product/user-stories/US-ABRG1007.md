@@ -17,3 +17,7 @@ As a practice doctor, I want the Vertragssoftware always transmit all services (
 ### Acceptance Criteria
 
 1. Given an Abrechnungsfall with multiple Leistungen, when billing data is transmitted, then all services for that case are included in the transmission without omissions
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.SubmitBillingToHpm` and `BillingApp.SubmitBillingV2` operations in `backend-core/app/app-core/api/billing/billing.d.go` transmit all services for a billing case. The HPM builder at `backend-core/service/domains/internal/billing/hpm_next_builder/builder.go` constructs the complete billing payload including all Leistungen for each Abrechnungsfall. The `BillingApp.GetBillableEncounters` retrieves all billable encounters for transmission.

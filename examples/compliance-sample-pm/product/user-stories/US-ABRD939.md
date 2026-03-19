@@ -17,3 +17,8 @@ As a practice doctor, I want blank billing codes is assigned to the correct fee 
 ### Acceptance Criteria
 
 1. Given a Blanko-Code activation, when it is assigned to a Gebührenordnung, then it appears in the correct schedule with proper availability dates
+
+### Actual Acceptance Criteria
+
+1. Implemented -- Contract XML assigns Blanko codes to fee schedules via Selektivvertragsdefinition parsing.
+2. The `billing.GetContractTypeByIds` provides fee schedule associations.

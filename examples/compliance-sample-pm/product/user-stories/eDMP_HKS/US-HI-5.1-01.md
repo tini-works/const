@@ -18,3 +18,10 @@ As a practice software, I want to generate the eHeader with Herzinsuffizienz-spe
 
 1. Given an eDMP HI documentation is exported, when the eHeader is generated, then HI-specific KBV module identifiers are included
 2. Given the eHeader, when compared to the general eDMP eHeader, then all HI-specific deviations per V1.03 are applied
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint generates the clinical_document_header conforming to the eHeader specification with Herzinsuffizienz-specific differences when `DMPLabelingValue = "HERZINSUFFIZIENZ"` is provided in the `DocumentationOverview`.
+2. **Enrollment Prerequisite**: The `EDMPApp.Enroll` endpoint (NATS topic `api.app.app_core.EDMPApp.Enroll`) must be called first with `EnrollmentInfoRequest` containing the Herzinsuffizienz DMP labeling; the returned `EnrollResponse.ids` confirm enrollment.
+3. **Header Validation**: The `EDMPApp.CheckPlausibility` endpoint validates Herzinsuffizienz-specific header field values differ correctly from the generic eHeader specification; mismatches produce `FieldValidationResult` errors.
+4. **GetEnrollment Verification**: Call `EDMPApp.GetEnrollment` with the patient's ID and verify the returned `EnrollmentWithDocumentModels` list includes an active Herzinsuffizienz enrollment.

@@ -18,3 +18,10 @@ As a practice doctor, I want to record the enrollment reason selecting from Prim
 
 1. Given a new eDMP Brustkrebs documentation is created, when the administrative section is filled, then exactly one of Primaertumor, Kontralateraler Brustkrebs, Lokoregionaeres Rezidiv, or Fernmetastasen is selected as Einschreibung reason
 2. Given no Einschreibung reason is selected, when validated, then an error is raised
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint automatically sets the "Einschreibung wegen" administrative field to "Brustkrebs" when `DMPLabelingValue = "BRUSTKREBS"` is provided in the `DocumentationOverview`.
+2. **Enrollment Validation**: The `EDMPApp.CheckPlausibility` endpoint validates that "Einschreibung wegen" matches the expected Brustkrebs value; mismatches produce `FieldValidationResult` errors.
+3. **Enrollment Cross-Check**: Call `EDMPApp.GetEnrollment` with the patient's ID and verify the enrollment record's `DMPLabelingValue` matches the administrative field in the documentation.
+4. **Negative Test**: Submit a documentation overview where "Einschreibung wegen" contains a value different from the enrolled DMP and confirm `CheckPlausibility` flags the inconsistency.

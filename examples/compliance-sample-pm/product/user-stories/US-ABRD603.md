@@ -17,3 +17,9 @@ As a practice doctor, I want service lookup filter by KV region, so that billing
 ### Acceptance Criteria
 
 1. Given a Praxis in KV-Region X, when the user searches Leistungen, then only services valid for that KV-Region are shown
+
+### Actual Acceptance Criteria
+
+1. The `billing_kv.GetGroupEABServiceCode` retrieves KV-specific service codes grouped by region.
+2. The `point_value.GetPointValues` and `point_value.GetPointValueByYear` provide KV region-specific point values.
+3. The timeline service enforces region-scoped service filtering during documentation.

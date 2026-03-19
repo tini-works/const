@@ -17,3 +17,7 @@ As a practice doctor, I want prevent billing of services that fail HPM validatio
 ### Acceptance Criteria
 
 1. Given HPM validation returning errors, when the user attempts submission, then billing is blocked until errors are corrected
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.TestSubmitBillings` operation in `backend-core/app/app-core/api/billing/billing.d.go` performs pre-submission HPM validation. The `BillingCaseErrorChange` event system propagates validation errors to the UI. The `BillingKVApp.Troubleshoot` in `backend-core/app/app-core/api/billing_kv/billing_kv.d.go` flags errors per patient and tracks resolution via `ToggleResolveBillingError`, blocking submission until errors are resolved.

@@ -17,3 +17,8 @@ As a practice doctor, I want disease pattern check (Krankheitsbildprüfung) is a
 ### Acceptance Criteria
 
 1. Given a Behandlungsfall, when Krankheitsbildprüfung is triggered via HPM, then the validation result (pass/fail with reasons) is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `billing.AnalyzeForP4Diseases` provides disease pattern analysis via HPM.
+2. `patient_sidebar.GetP4ValidationReport` and `GetP4ValidationReportByQuarter` provide P4 results.

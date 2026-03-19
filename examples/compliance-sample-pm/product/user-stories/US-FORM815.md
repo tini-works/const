@@ -17,3 +17,10 @@ As a practice staff (MFA), I want if the 'Schnellinformation zur Patientenbeglei
 ### Acceptance Criteria
 
 1. Given the Schnellinformation form is not printed, when the user closes it, then a confirmation dialog asks whether the user intentionally skips, explaining that early insurer intervention may help
+
+### Actual Acceptance Criteria
+
+**Status: Not implemented**
+
+1. No backend endpoint exists to trigger a confirmation dialog when the Schnellinformation form is not printed
+2. This requirement is a client-side UI concern: the confirmation dialog asking whether the user intentionally skips sending the quick information must be implemented in the frontend/companion application

@@ -17,3 +17,7 @@ As a practice doctor, I want offline billing via data carrier is supported, so t
 ### Acceptance Criteria
 
 1. Given no network connectivity, when billing is triggered via Datenträger export, then a valid billing file is generated on the carrier
+
+### Actual Acceptance Criteria
+
+1. Not yet implemented -- no matching endpoint/service found for offline billing via data carrier (Datentraeger) export.

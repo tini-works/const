@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware enable launching the PraCMan-Co
 ### Acceptance Criteria
 
 1. Given a contract participant, when the user launches PraCMan-Cockpit, then the software passes the required parameters per AKA interface specification
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/enrollment`, `api/patient_participation`, `api/settings`
+
+1. **Contract participant access** -- The `enrollment` and `patient_participation` packages identify contract participants.
+2. **Gap: PraCMan-Cockpit launch with parameters** -- The specific launching of PraCMan-Cockpit with AKA interface specification parameters for contract participants is not verified.

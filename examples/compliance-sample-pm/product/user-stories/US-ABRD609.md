@@ -17,3 +17,8 @@ As a practice doctor, I want permanent diagnoses is carried over between quarter
 ### Acceptance Criteria
 
 1. Given Dauerdiagnosen from previous Quartal, when a new Quartal begins, then all Dauerdiagnosen are automatically carried forward
+
+### Actual Acceptance Criteria
+
+1. The timeline service supports quarter grouping for diagnoses and carry-over for permanent diagnoses (Dauerdiagnosen).
+2. The `schein.TakeOverScheinDiagnosis` handles diagnosis carry-over between scheins/quarters.

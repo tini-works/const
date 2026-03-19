@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware provide a function to print the
 ### Acceptance Criteria
 
 1. Given a steuerbare Hilfsmittel prescription, when the user requests the Merkblatt, then the Merkblatt Versicherter Hilfsmittel per AKA-Basisdatei is printed
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/himi`, `api/printer`, `api/form`
+
+1. **HIMI printing** -- The `HimiApp.Print` method generates printed output for Hilfsmittel prescriptions with `PrintOption` support.
+2. **Gap: Merkblatt Versicherter Hilfsmittel** -- The specific 'Merkblatt Versicherter Hilfsmittel' document generation per AKA-Basisdatei for steuerbare prescriptions needs verification as a specific print template.

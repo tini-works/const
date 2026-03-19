@@ -17,3 +17,11 @@ As a practice staff, I want the Vertragssoftware display the following hint in t
 ### Acceptance Criteria
 
 1. Given insurance-specific medication recommendations are displayed, when the user views them, then the hint about verifying medical feasibility of substitutions is shown
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/hpm_check_history`
+
+1. **Gap: Substitution feasibility hint** -- The specific hint text 'Please verify whether the suggested substitution is medically feasible...' in the context of insurance-specific medication recommendations is a UI-level requirement. No backend evidence of this specific hint text was found.

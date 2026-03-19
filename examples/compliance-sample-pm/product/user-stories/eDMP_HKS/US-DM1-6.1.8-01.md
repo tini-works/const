@@ -18,3 +18,11 @@ As a practice doctor, I want to document empfohlene Schulungen selecting from Ke
 
 1. Given an eDMP DM1 Schulung section is documented, when empfohlene Schulung is recorded, then one or more of Keine, Diabetes-Schulung, or Hypertonie-Schulung is selected
 2. Given "Keine" is selected together with a specific Schulung, when validated, then an error is reported
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.SaveDocumentationOverview` endpoint persists Diabetes mellitus Typ 1 Schulung (training) recommendation fields in the `DocumentationOverview.fields` array.
+2. **Field-Level Plausibility**: The `EDMPApp.CheckPlausibility` endpoint validates training recommendation fields against the Diabetes mellitus Typ 1 permitted value set; missing mandatory selections produce `FieldValidationResult` errors.
+3. **Mandatory Selection Enforcement**: The `CheckPlausibility` endpoint enforces that Schulung fields with Ja/Nein options have exactly one value selected; empty submissions produce mandatory field errors.
+4. **Save-Retrieve Roundtrip**: Call `EDMPApp.SaveDocumentationOverview`, then retrieve via `EDMPApp.GetIncompleteDocumentationOverviews` with `DMPLabelingValue = "DM1"` and verify training field values are correctly persisted.
+5. **Negative Test**: Submit a documentation overview with missing Schulung selection and confirm `CheckPlausibility` flags the specific mandatory field.

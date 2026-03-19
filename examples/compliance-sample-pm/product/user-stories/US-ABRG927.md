@@ -17,3 +17,7 @@ As a practice doctor, I want allow users to select transmission channel (online/
 ### Acceptance Criteria
 
 1. Given billing ready for submission, when the user selects online or offline Übertragungsweg, then the chosen channel is used
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The `BillingApp.SubmitBillingToHpm` in `backend-core/app/app-core/api/billing/billing.d.go` handles online submission via HPM. The `BillingKVApp.GetEncryptCONFile` in `backend-core/app/app-core/api/billing_kv/billing_kv.d.go` supports encrypted CON file generation for KV billing. However, an explicit user-facing channel selection (online vs. offline Datentraeger) UI control was not found.

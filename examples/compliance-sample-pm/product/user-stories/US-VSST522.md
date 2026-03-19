@@ -17,3 +17,12 @@ As a practice staff, I want arriba target path, so that the software meets regul
 ### Acceptance Criteria
 
 1. Given arriba integration configured, when the user triggers arriba, then the correct target path is resolved and opened
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Implemented
+
+**Relevant Codebase Packages:** `api/arriba`, `service/arriba`
+
+1. **arriba target path resolution** -- The `arriba` API package (`backend-core/app/app-core/api/arriba/`) implements `StartArriba` with patient context. The `backend-core/service/arriba/` service contains the arriba CLI integration (`arribadoc-cli-arriba-lib-3.12.0`) with path configuration.
+2. **Configuration management** -- The arriba service includes `arriba.go` and `arriba_service.go` with path builder logic in `builder.go`.

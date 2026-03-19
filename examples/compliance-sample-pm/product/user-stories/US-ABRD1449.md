@@ -17,3 +17,7 @@ As a practice doctor, I want a warning display if no physician-patient contact c
 ### Acceptance Criteria
 
 1. Given a FAV-Abrechnungsfall without Arzt-Patienten-Kontakt code, when Abrechnung is triggered, then a warning is displayed
+
+### Actual Acceptance Criteria
+
+1. Implemented -- validated during `validateSubmissionRequests` in the billing pipeline.

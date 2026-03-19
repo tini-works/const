@@ -18,3 +18,10 @@ As a practice software, I want the administrative data field "Einschreibung wege
 
 1. Given an eDMP Asthma document is created, when the administrative section is generated, then "Einschreibung wegen" contains "Asthma bronchiale"
 2. Given any other value in "Einschreibung wegen", when validated, then an error is raised
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint automatically sets the "Einschreibung wegen" administrative field to "Asthma" when `DMPLabelingValue = "ASTHMA"` is provided in the `DocumentationOverview`.
+2. **Enrollment Validation**: The `EDMPApp.CheckPlausibility` endpoint validates that "Einschreibung wegen" matches the expected Asthma value; mismatches produce `FieldValidationResult` errors.
+3. **Enrollment Cross-Check**: Call `EDMPApp.GetEnrollment` with the patient's ID and verify the enrollment record's `DMPLabelingValue` matches the administrative field in the documentation.
+4. **Negative Test**: Submit a documentation overview where "Einschreibung wegen" contains a value different from the enrolled DMP and confirm `CheckPlausibility` flags the inconsistency.

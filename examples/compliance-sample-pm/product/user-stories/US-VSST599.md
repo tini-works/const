@@ -17,3 +17,12 @@ As a practice staff, I want when issuing an AU or eAU, the Vertragssoftware disp
 ### Acceptance Criteria
 
 1. Given empty or outdated (>1 year) employment data, when an AU or eAU is issued, then a hint requests the user to fill in employment data before issuing
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/eau`, `api/patient_profile`
+
+1. **eAU creation** -- The `eau` package provides eAU creation with form data.
+2. **Gap: Employment data validation hint** -- The specific hint display when employment data is empty or older than 1 year during AU/eAU issuance is not verified in the backend. This requires date comparison logic against 'Datum letzte Ueberpruefung'.

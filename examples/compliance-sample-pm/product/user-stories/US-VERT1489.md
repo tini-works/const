@@ -17,3 +17,10 @@ As a practice owner, I want the Vertragssoftware provide a list of all patients 
 ### Acceptance Criteria
 
 1. Given an active HZV contract, when the user opens the patient list, then all patients with status Beantragt/Aktiviert/Beendet are shown with name, Versichertennummer, birth date, status, dates, and Betreuarzt
+
+
+### Actual Acceptance Criteria
+
+**Status: Partially Implemented**
+
+1. **Partially met.** `GetPatientContractGroups` returns contract groups per patient. `GetPatientParticipation` returns participation data. However, a unified list showing all patients per HZV contract with status (Beantragt/Aktiviert/Beendet), name, Versichertennummer, birth date, dates, and Betreuarzt is not available as a single endpoint -- it requires combining data from multiple services.

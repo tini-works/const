@@ -17,3 +17,9 @@ As a practice doctor, I want diagnosis marker 'Z' not be used for acute diseases
 ### Acceptance Criteria
 
 1. Given a Diagnose with Zusatzkennzeichen 'Z' (Zustand nach), when the ICD-Code is classified as akut, then a warning is displayed
+
+### Actual Acceptance Criteria
+
+1. The timeline validation engine enforces diagnosis marker compatibility with disease classification.
+2. The `coding_rule.ValidateCodingRuleByPatientId` validates marker/diagnosis type consistency.
+3. The `coding_rule.GetIcdByCodes` provides classification metadata for marker validation.

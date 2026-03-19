@@ -17,3 +17,12 @@ As a practice staff, I want the Vertragssoftware allow managing the URL for the 
 ### Acceptance Criteria
 
 1. Given the PraCMan-Cockpit URL is configured, when the user manages it, then the URL can be set, updated, and used to launch PraCMan from the software
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Not Yet Implemented
+
+**Relevant Codebase Packages:** `api/settings`
+
+1. **Settings infrastructure** -- The `settings` API package provides system configuration management.
+2. **Gap: PraCMan-Cockpit URL management** -- The specific management of PraCMan-Cockpit URL within settings per AKA-Basisdatei interface specification is not verified.

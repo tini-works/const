@@ -17,3 +17,8 @@ As a patient, I want enrollment declaration hint is shown (DIN A4), so that my e
 ### Acceptance Criteria
 
 1. Given TE-Erstellung for a HZV-Vertrag, when the DIN-A4 Teilnahmeerklärung is shown, then the hint text is visible
+
+### Actual Acceptance Criteria
+
+1. Implemented -- `enrollment.PreviewForm` and `enrollment.GetPreviewFormUrl` generate enrollment form previews including hint text display.
+2. `enrollment.PrintForm` produces the DIN-A4 Teilnahmeerklaerung with hint text visible.

@@ -17,3 +17,12 @@ As a practice owner, I want advertising prohibition is enforced in software, so 
 ### Acceptance Criteria
 
 1. Given the software UI, when reviewed, then no Werbung for third-party products is present in any contract-related screen
+
+### Actual Acceptance Criteria
+
+| Status | **Not Implemented (UI Policy)** |
+|--------|-------------------------------|
+
+1. This is a UI/design policy requirement: no advertising for third-party products may appear in contract-related screens.
+2. The backend codebase contains no advertising logic or third-party product promotion code, which is consistent with compliance.
+3. **Note**: Full verification requires UI/frontend review. The backend does not serve or inject any advertising content. This requirement is met by design absence rather than explicit enforcement code.

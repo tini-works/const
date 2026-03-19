@@ -17,3 +17,10 @@ As a practice staff (MFA), I want form feature per contract, so that forms are g
 ### Acceptance Criteria
 
 1. Given a contract defining form features, when form access is attempted, then only enabled forms are shown
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. The `FormAPP.GetForms` endpoint accepts `contractId`, `oKV`, `ikNumber`, `chargeSystemId`, and `moduleChargeSystemId` to filter forms per contract definition
+2. The `FormAPP.GetAllForms` endpoint provides the full form catalog; contract-scoped filtering ensures only enabled forms are shown

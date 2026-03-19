@@ -17,3 +17,7 @@ As a practice doctor, I want all billing and prescription data by a substitute p
 ### Acceptance Criteria
 
 1. Given Vertreterarzt billing data, when transmitted, then the Vertreter-LANR is used in all relevant fields
+
+### Actual Acceptance Criteria
+
+1. Partially implemented. The employee profile includes LANR fields in `backend-core/service/domains/repos/profile/employee/employee.d.go`. The HPM builder at `backend-core/service/domains/internal/billing/hpm_next_builder/mapper.go` maps LANR to billing transmissions. The `ContractRules.RequiredInformation` in `backend-core/app/app-core/api/contract/contract.d.go` includes `RequiredLanr` and `RequiredBsnr` flags per service code.

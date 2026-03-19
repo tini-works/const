@@ -17,3 +17,7 @@ As a practice doctor, I want perform comprehensive billing validation covering a
 ### Acceptance Criteria
 
 1. Given Abrechnungsdaten, when HPM validation runs, then all contract-specific rules are checked and results returned
+
+### Actual Acceptance Criteria
+
+1. Implemented. The `BillingApp.TestSubmitBillings` and `BillingApp.SubmitBillingToHpm` operations in `backend-core/app/app-core/api/billing/billing.d.go` invoke HPM validation covering contract-specific rules. The SV validators in `backend-core/service/timeline_validation/service/validation_timeline/validations/service_code/sv/` apply comprehensive contract rules including: `IncludedDiagnoseValidator`, `ExcludedServiceValidator`, `AgeValidator`, `GenderValidator`, `NumberValidator`, `PreParticipationValidator`, `ConditionValidator`, and `CustodianServiceValidator`.

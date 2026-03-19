@@ -17,3 +17,12 @@ As a practice staff, I want when issuing a repeat prescription (Wiederholungsrez
 ### Acceptance Criteria
 
 1. Given a repeat prescription, when issued, then current insurance-specific recommendations are retrieved, category changes are checked, and substitution options are displayed per interface specification
+
+### Actual Acceptance Criteria
+
+**Implementation Status:** Partially Implemented
+
+**Relevant Codebase Packages:** `api/medicine`, `api/hpm_check_history`
+
+1. **Prescription management** -- The `medicine` package handles prescription workflows including repeat prescriptions.
+2. **Gap: Repeat prescription HPM category check** -- The specific retrieval of current insurance-specific recommendations during repeat prescription issuance, category change detection, and substitution option display per interface specification is not fully verified.

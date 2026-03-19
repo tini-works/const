@@ -17,3 +17,10 @@ As a practice owner, I want standard import rules is applied during data synchro
 ### Acceptance Criteria
 
 1. Given a Datensynchronisation, when import runs, then standard import rules are applied to all incoming records
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** The PTV import service in `service.go` applies standard import rules during data synchronization. The `ParticipantClassifier.Classify` method applies classification rules (auto-import, conflict, missing, same-eGK) to all incoming records. `ImportParticipants` processes them according to these rules.

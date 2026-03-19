@@ -18,3 +18,10 @@ As a practice software, I want to generate eDMP Herzinsuffizienz export files wi
 
 1. Given an eDMP HI documentation is exported, when the file is created, then the filename follows the KBV XML-Schnittstellen naming pattern
 2. Given a file with incorrect naming, when validation is run, then an error is reported before transmission
+
+### Actual Acceptance Criteria
+
+1. **API Coverage**: The `EDMPApp.CreateDocument` endpoint (NATS topic `api.app.app_core.EDMPApp.CreateDocument`) generates Herzinsuffizienz export files with KBV-conformant naming when `DMPLabelingValue = "HERZINSUFFIZIENZ"` is specified in the `DocumentationOverview`.
+2. **File Naming Validation**: The `EDMPApp.CheckPlausibility` endpoint validates that generated XML file names follow the KBV XML-Schnittstellen naming pattern before transmission; non-conforming names produce `FieldValidationResult` errors.
+3. **Integration Verification**: Call `EDMPApp.FinishDocumentationOverview` with a complete Herzinsuffizienz documentation overview and verify the returned `CheckPlausibilityResponse.billingFile` has a correctly-named file.
+4. **Negative Test**: Submit a `CreateDocumentRequest` with missing or malformed `DMPLabelingValue` and confirm the API returns a validation error before any file is created.

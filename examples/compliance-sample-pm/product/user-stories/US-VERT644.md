@@ -17,3 +17,10 @@ As a practice owner, I want user is able to end a contract participation, so tha
 ### Acceptance Criteria
 
 1. Given an active Vertragsteilnahme, when the user triggers Kündigung, then the participation is ended and HPM is notified
+
+
+### Actual Acceptance Criteria
+
+**Status: Implemented**
+
+1. **Met.** `ActionOnHzvContract` and `ActionOnFavContract` support lifecycle actions including termination (Kuendigung). The `EndParticipation`/`CancelParticipation` actions are handled through `ActionOnContractRequest` which is sent to HPM via `service_hzv.go` and `service_fav.go`.
