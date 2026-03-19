@@ -119,9 +119,7 @@ digraph bootstrap_connect {
 
 **Key constraint:** Only pull items into inventory when a downstream match demands it. The goal is not to document — the goal is to unblock.
 
-**Bootstrap is sufficient when:** every vertical has claimed items, matching points are agreed with at least one other vertical, and the team can trace how a hypothetical change would flow through their hot paths. Completeness is not the goal — readiness is.
-
-**The output of bootstrap is readiness** — each vertical knows what it owns, what state it's in, who it connects to, and what to do when something changes.
+**Bootstrap is sufficient when** the team meets the readiness criteria defined in the Constitution's Bootstrap mechanic: claimed items, agreed matching points, and traceable hot paths.
 
 #### Mode Transitions During Bootstrap
 
