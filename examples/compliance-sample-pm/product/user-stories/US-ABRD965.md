@@ -9,6 +9,8 @@
 | Matched by | — |
 | Proven by | — |
 | Confirmed by | — |
+| **Epic** | [E1: Billing Documentation](../epics/E1-billing-documentation.md) |
+| **Data Entity** | DX, PM, BF |
 
 ### User Story
 

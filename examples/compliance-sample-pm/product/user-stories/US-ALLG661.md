@@ -9,6 +9,8 @@
 | Matched by | — |
 | Proven by | — |
 | Confirmed by | — |
+| **Epic** | [E6: General & Documentation](../epics/E6-general-and-documentation.md) |
+| **Data Entity** | VTG, VKZ |
 
 ### User Story
 

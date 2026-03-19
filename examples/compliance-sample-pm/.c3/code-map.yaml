@@ -1,0 +1,116 @@
+# C3 code-map: maps component and ref IDs to source file glob patterns.
+# Edit patterns, then verify with: c3x coverage
+
+# Backend Components (c3-1)
+c3-101:
+  - ares/app/mvz/**
+c3-102:
+  - ares/app/auth/**
+c3-103:
+  - ext/titan/**
+c3-104:
+  - ares/app/mvz/api/billing/**
+  - ares/app/mvz/api/billing_kv/**
+  - ares/app/mvz/api/billing_patient/**
+  - ares/app/mvz/api/billing_history/**
+  - ares/app/mvz/api/bg_billing/**
+c3-105:
+  - ares/app/admin/api/contract/**
+  - ares/app/mvz/api/contract/**
+c3-106:
+  - ares/app/mvz/api/edmp/**
+c3-107:
+  - ares/app/admin/api/mail/**
+  - ares/app/admin/api/kv_connect/**
+c3-108: []
+c3-109:
+  - ares/app/mvz/api/billing_edoku/**
+  - ares/app/mvz/api/billing_patient/**
+c3-110:
+  - ext/goff/**
+  - ares/proto/**
+c3-111:
+  - ares/app/auth/api/auth_app/**
+  - ares/app/auth/api/auth_e2e/**
+c3-112:
+  - ares/pkg/hpm_rest/**
+  - ares/pkg/hpm_service/**
+  - ares/app/mvz/api/hpm_check_history/**
+c3-113:
+  - ares/pkg/repo/**
+c3-114:
+  - ares/service/domains/**
+c3-115:
+  - ares/pkg/event/**
+c3-116:
+  - ares/app/mvz/api/catalog_sdkt/**
+  - ares/app/mvz/api/catalog_sdik/**
+  - ares/app/mvz/api/catalog_sdebm/**
+  - ares/app/mvz/api/catalog_goa/**
+  - ares/app/mvz/api/catalog_sdav/**
+  - ares/app/mvz/api/catalog_omimg_chain/**
+  - ares/app/mvz/api/catalog_hgnc_chain/**
+  - ares/app/mvz/api/catalog_bg_insurance/**
+  - ares/app/mvz/api/catalog_material_cost/**
+  - ares/app/mvz/api/catalog_uv_goa/**
+
+# Frontend Components (c3-2)
+c3-201:
+  - pkgs/pvs-design-system/**
+c3-202:
+  - pkgs/pvs-hermes/**
+c3-203:
+  - pkgs/pvs-infrastructure/**
+c3-210:
+  - pkgs/app_mvz/**
+c3-211: []
+
+# Client Components (c3-3)
+c3-301:
+  - ext/tui/**
+c3-302:
+  - ext/companion/**
+c3-310:
+  - ext/tui/app/**
+  - ext/tui/pages/**
+  - ext/tui/layout/**
+c3-311:
+  - ext/companion/internal/ti_service/**
+  - ext/companion/internal/api_telematik/**
+  - ext/companion/internal/api_telematik_service/**
+  - ext/companion/internal/api_telematik_soap/**
+c3-312:
+  - ext/companion/internal/mail/**
+  - ext/companion/internal/arriba/**
+  - ext/companion/internal/uploader/**
+  - ext/companion/internal/cetp/**
+  - ext/companion/internal/eprescription/**
+
+# Platform Components (c3-4)
+c3-401:
+  - hera/dev/docker-compose*.yml
+c3-402:
+  - ares/db/**
+c3-403:
+  - ares/proxy/gateway/**
+c3-404:
+  - ares/proxy/socket/**
+
+# Exclusions (not counted in coverage)
+_exclude:
+  - "**/*.test.ts"
+  - "**/*_test.go"
+  - "**/node_modules/**"
+  - "**/dist/**"
+  - "**/.next/**"
+  - "**/vendor/**"
+  - .claude/**
+  - .c3/**
+  - .gitlab/**
+  - .yarn/**
+  - "*.md"
+  - "*.yml"
+  - "*.yaml"
+  - "*.json"
+  - "*.lock"
+  - "*.cjs"

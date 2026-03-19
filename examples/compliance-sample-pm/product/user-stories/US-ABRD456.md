@@ -6,9 +6,11 @@
 | **Traced from** | [ABRD456](../compliances/SV/ABRD456.md) |
 | **Source** | AKA Q1-26-1 |
 | **Status** | TBC |
-| Matched by | — |
-| Proven by | — |
-| Confirmed by | — |
+| **Matched by** | — |
+| **Proven by** | — |
+| **Confirmed by** | — |
+| **Epic** | [E1: Billing Documentation](../epics/E1-billing-documentation.md) |
+| **Data Entity** | SVC, BF |
 
 ### User Story
 

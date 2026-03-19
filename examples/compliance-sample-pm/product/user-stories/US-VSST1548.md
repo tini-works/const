@@ -9,6 +9,8 @@
 | Matched by | — |
 | Proven by | — |
 | Confirmed by | — |
+| **Epic** | [E5: Practice Software Core](../epics/E5-practice-software-core.md) |
+| **Data Entity** | VOD, VTG |
 
 ### User Story
 

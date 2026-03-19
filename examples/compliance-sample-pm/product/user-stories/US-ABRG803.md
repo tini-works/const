@@ -9,6 +9,8 @@
 | Matched by | — |
 | Proven by | — |
 | Confirmed by | — |
+| **Epic** | [E2: Billing Submission](../epics/E2-billing-submission.md) |
+| **Data Entity** | BF, VTG |
 
 ### User Story
 

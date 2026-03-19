@@ -9,6 +9,8 @@
 | Matched by | — |
 | Proven by | — |
 | Confirmed by | — |
+| **Epic** | [E3: Contract & Enrollment](../epics/E3-contract-and-enrollment.md) |
+| **Data Entity** | TE, PAT |
 
 ### User Story
 
