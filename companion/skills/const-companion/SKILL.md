@@ -13,7 +13,7 @@ You operate from three fundamentals, five verticals, and four mechanics. Read th
 
 **Three Fundamentals:**
 - **Don't Derive, Match** — receivers negotiate boxes with senders, then match them. Boxes are binary — matched or not. No "partially matched." The result is a web of matched boxes across independent inventories — not a chain. Upstream → downstream → downstream is deriving, not matching.
-- **Start from the Source** — every piece of work traces to an origin: a change in reality that demands a response. Origins are inputs (facts). Inventory is the response (controllable work products). A contract is an origin. "We fulfill orders with lot accuracy" is inventory. Origins are not only external — a reconciliation finding is itself an origin that flows through the matching web.
+- **Start from the Source** — every piece of work traces to an origin: a change in reality that demands a response. Origins are inputs (facts). Inventory is the response (controllable work products). A regulation is an origin. "Data archived and retrievable for 7 years" is inventory. Origins are not only external — a reconciliation finding is itself an origin that flows through the matching web.
 - **Own Your Inventory** — each vertical maintains controllable work products with traces. Not restated origins, not raw facts — things the vertical actively manages, proves, and is accountable for. Every item earns its place by unblocking a downstream match. If no one needs it, it's ceremony — prune it. Think twice, write once — reversing a match cascades.
 
 **Five Verticals (each defines what "proven" means):**
@@ -75,7 +75,7 @@ digraph bootstrap_inward {
 **Key distinction:** Origins are external facts (contracts, events, regulations). Inventory items are work products the vertical controls — things they can change, prove, and be held accountable for. The test: can the vertical change it? Can they prove it? Would someone hold them accountable for it? If yes to all three, it's inventory.
 
 **Common traps during transformation:**
-- "Client A contract requirements" → This restates the origin. Push back: "The contract is a fact. What specific capability do you *deliver* because of it?"
+- "Regulatory requirements" → This restates the origin. Push back: "The regulation is a fact. What specific capability do you *deliver* because of it?"
 - "We handle compliance" → Too vague to prove. Push back: "What specifically can you demonstrate? What evidence would show this is working?"
 - "Order fulfillment system" → This is a system, not a verifiable commitment. Push back: "What does the system guarantee? What would you check to prove it's working correctly?"
 
@@ -104,10 +104,10 @@ digraph bootstrap_connect {
 **Process:**
 1. Each vertical shares what they claimed in Phase 1. Any vertical can match with any other — this is a web, not a chain. Don't force PM → Design → Engineer → QA → DevOps ordering.
 2. For each matching point, the two verticals negotiate: "What does 'matched' mean here? What evidence proves it?" A good negotiation produces a clear box with a binary outcome. A bad negotiation produces vague agreement ("we'll handle it") — push back.
-3. Gaps are named explicitly: "PM committed to lot accuracy, but Engineer doesn't enforce it and QA doesn't verify it." Gaps become either: a new item for a vertical to invent, an accepted risk the team acknowledges, or a finding that a vertical needs to be created or staffed.
+3. Gaps are named explicitly: "PM committed to X, but Engineer doesn't enforce it and QA doesn't verify it." Gaps become either: a new item for a vertical to invent, an accepted risk the team acknowledges, or a finding that a vertical needs to be created or staffed.
 4. Expect Phase 1 items to change. Conversations reveal items that were too broad, too narrow, or restated origins. Go back and fix them — this is healthy iteration, not failure.
 5. Each vertical defines two processes: how to progress an item (make it proven), how to invent a new item (when change triggers it).
-6. A **hot path** is a traced chain of matching points across verticals. When a change hits one end, the traces show what goes suspect at the other. Example: `Client requirement (origin) → PM commitment → Engineer component → QA test scenario → DevOps monitoring` — when the client requirement changes, everything on this chain is suspect.
+6. A **hot path** is a traced chain of matching points across verticals. When a change hits one end, the traces show what goes suspect at the other. Example: `External requirement (origin) → PM commitment → Engineer component → QA test scenario → DevOps monitoring` — when the requirement changes, everything on this chain is suspect.
 
 **Questions for Phase 2:**
 - "PM, does Engineer know about this commitment?"

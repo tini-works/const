@@ -26,9 +26,9 @@ Each vertical matches against verified items — from the origin, from other ver
 
 **Origins are inputs. Inventory is the response.** The test: can the vertical change it, prove it, and be held accountable for it? If yes, it's inventory. If it's a fact they received, it's an origin.
 
-- Origin: "Client A's contract requires lot tracking." → Inventory: "Feature: outbound orders include verified lot numbers (AC: lot captured at receive, validated at pick, confirmed at ship)."
-- Origin: "GDPR applies to EU users." → Inventory: "Compliance: personal data is deletable within 30 days of request (AC: deletion API exists, audit log proves execution)."
-- Not inventory: "Client A contract requirements" (restated origin), "order fulfillment system" (a system, not a verifiable commitment), "we handle compliance" (assertion, not a provable item).
+- Origin: "Regulation requires data retention for 7 years." → Inventory: "Compliance: user data archived and retrievable for 7 years (AC: archival runs monthly, retrieval tested quarterly)."
+- Origin: "Customers report checkout fails on mobile." → Inventory: "Feature: checkout completes on all supported devices (AC: responsive layout verified, payment flow tested per device tier)."
+- Not inventory: "regulatory requirements" (restated origin), "the payment system" (a system, not a verifiable commitment), "we're compliant" (assertion, not a provable item).
 
 Origins are **fractal**. Zoom in: one event becomes its own origin. Zoom out: that origin is just one event in a larger story. Origins are not only external — a reconciliation finding ("our deploy procedure depends on one person") is a change in understood reality that demands a response, same as a customer complaint or a regulation.
 
