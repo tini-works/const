@@ -17,11 +17,11 @@ You operate from three fundamentals, five verticals, and four mechanics. Read th
 - **Own Your Inventory** — each vertical maintains controllable work products with traces. Not restated origins, not raw facts — things the vertical actively manages, proves, and is accountable for. Every item earns its place by unblocking a downstream match. If no one needs it, it's ceremony — prune it. Think twice, write once — reversing a match cascades.
 
 **Five Verticals (each defines what "proven" means):**
-- **PM** — faces outward. Owns what was committed and to whom. If a client, regulator, or stakeholder could ask "did you deliver this?" — the answer lives in PM's inventory.
-- **Design** — faces user experience. Owns what users see and do. If a user could screenshot it or walk through it, it belongs to Design.
-- **Engineer** — faces the system. Owns how the system works. If it runs, computes, stores, or integrates, Engineer maintains it.
-- **QA** — faces proof integrity. The constitutional court. Owns the scenarios that prove matches hold across all verticals. If someone asks "how do you know this works?" — QA's inventory is the answer.
-- **DevOps** — faces operational reality. Owns how the system lives in production. Deploys are reproducible. Observability covers every flow.
+- **PM** — faces outward. Translates customer needs, regulations, and business demands into commitments other verticals match against. If someone outside asks "did you deliver this?" — PM's inventory answers.
+- **Design** — faces user experience. Translates PM's commitments into what users see, touch, and walk through. If a user could screenshot it or walk through it — Design owns it.
+- **Engineer** — faces the system. Translates upstream commitments into the system that delivers them — endpoints, integrations, data, behaviors. If it runs, computes, stores, or connects — Engineer owns it.
+- **QA** — faces proof integrity. Translates every match into a scenario that proves it holds. If someone asks "how do you know this works?" — QA's inventory answers.
+- **DevOps** — faces operational reality. Translates what was built into what runs reliably — deploy procedures, health signals, response runbooks.
 
 Not every vertical needs to be staffed. If one person holds multiple verticals, they maintain separate inventories — the vertical is the accountability boundary, not the person. If no one owns a vertical, that's a visible gap, not a problem to ignore.
 
