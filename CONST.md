@@ -75,6 +75,8 @@ The system runs as designed, not just built as designed. Every deployment path i
 
 ## Mechanics
 
+Four mechanics move inventory from empty to proven to evolving: bootstrap creates it, lifecycle governs it, freedom rewards it, discovery sharpens it.
+
 ### Bootstrap
 
 Before a team can face outward, it must know what it already has. Bootstrap is looking inward.
@@ -82,42 +84,39 @@ Before a team can face outward, it must know what it already has. Bootstrap is l
 1. **Gather origins** — what facts exist? Contracts, systems running, tribal knowledge, existing artifacts. These are inputs, not inventory.
 2. **Transform into controllable items** — for each origin, ask: what do I actually control because of this? What work product do I maintain? That's the inventory item. Items that already work in production enter as proven — the evidence is operational history. Items that are assumed but never verified enter as unverified.
 3. **Connect across verticals** — each vertical shares what they have. Any vertical can match with any other — this is a web, not a chain. "I committed to X. Can you match it?" Agreements on matching points emerge from conversation, not from mapping exercises. Expect to revise step 2 — conversations reveal that items were too broad, too narrow, or restated origins.
-4. **Define process** — each vertical answers two questions: how do I progress an item from unverified to proven? How do I create a new item when change arrives? (See Lifecycle: Progress and Invent.)
-5. **Hot paths emerge** — the connections from step 3 and the processes from step 4 form natural channels. A hot path is a traced chain of matching points across verticals — when a change hits one end, the traces show what goes suspect at the other. These are the prepared channels for future changes.
+4. **Define process** — each vertical defines how they progress items (unverified → proven) and how they invent new items when change arrives. These processes are themselves inventory items — they can go stale, they need evidence they work.
+5. **Hot paths emerge** — the connections from step 3 and the processes from step 4 form natural channels. A hot path is a traced chain of matching points across verticals — when a change hits one end, the traces show what goes suspect at the other.
 
-Bootstrap is iterative, not linear. Steps 2 and 3 feed each other. The output is not documentation — it's readiness. Each vertical knows what it owns, what state it's in, who it connects to, and what to do when something changes.
+Bootstrap is iterative, not linear. Steps 2 and 3 feed each other. The output is not documentation — it's readiness.
 
-Bootstrap is sufficient when: every vertical has claimed items, matching points are agreed with at least one other vertical, and the team can trace how a hypothetical change would flow through their hot paths. Completeness is not the goal — readiness is.
-
-Not every vertical needs to exist. If no one owns a vertical, that's a finding — the accountability gap is visible. If one person holds multiple verticals, they still maintain separate inventories. The vertical is the accountability boundary, not the person.
+Bootstrap is sufficient when: every vertical has claimed items, matching points are agreed with at least one other vertical, and the team can trace how a hypothetical change would flow through their hot paths. Not every vertical needs to exist — if no one owns a vertical, that's a finding. If one person holds multiple verticals, they maintain separate inventories. The vertical is the accountability boundary, not the person.
 
 ### Lifecycle
 
-An item is either **proven** or it is not.
+An item moves through states. Each transition requires a specific trigger and leaves a trace.
 
-1. Enters as **unverified.** Pre-existing items that work in production can enter as proven — operational history is evidence, but only if someone explicitly claims the match and records the basis.
+1. Enters as **unverified.** Pre-existing items can enter as proven if someone explicitly claims the match and records the evidence basis.
 2. A human confirms the match with **evidence** — a test run, a review, a demonstration. Becomes **proven.** Evidence, verifier, and conditions are recorded.
-3. When a traced item changes, dependents become **suspect.** The owning vertical acknowledges, assesses impact, and re-verifies with new evidence. Suspect resolves to either re-proven or broke.
-4. When a match **broke** — cause and preventive action are recorded alongside the new evidence. Re-proving without understanding why is patching, not fixing.
+3. When a traced item changes, dependents become **suspect.** The owning vertical assesses impact and re-verifies with new evidence. Suspect resolves to re-proven or broke.
+4. When a match **broke** — cause and preventive action are recorded. Re-proving without understanding why is patching, not fixing.
+5. An item can be marked **accepted risk** — a conscious decision to leave it unverified or suspect. Who made the call, what conditions would change it, and what downstream items are affected. This is not "we'll get to it" — it is a traced decision. If conditions change, the risk is re-evaluated.
 
 Proof requires evidence, not assertion. Each team owns only what they can prove.
 
-An item can also be **accepted risk** — a conscious decision to leave it unverified or suspect. Accepted risk requires: who made the call, what conditions would change it, and what downstream items are affected. This is not "we'll get to it" — it is a traced decision with accountability. If conditions change, the risk is re-evaluated.
-
-Each vertical owns two processes — these are how the lifecycle states above are moved through in practice. These processes are themselves inventory items: they have traces, they can go suspect, and they need evidence that they work.
+Each vertical owns two processes for moving items through these states:
 
 - **Progress** — how to take an unverified item and make it proven. What evidence is needed, who provides it, how is it recorded. The granularity test: if the item is too broad to prove with a single piece of evidence, split it. If it's too narrow to block anyone downstream, merge it.
 - **Invent** — how to create a new item when triggered by a change or a gap. What does it match, what downstream items does it need, how will it be proven.
 
 ### Freedom
 
-Full autonomy within matches. A vertical can radically change its approach — without approval, **as long as all boxes still match.**
+Full autonomy within matches. A vertical can radically change its approach — without approval, **as long as all boxes still match.** Rearchitect. Rewrite. Replace a vendor. The how is unconstrained. The what (matching) is not.
 
-The moment a match breaks, freedom is constrained until proof is restored.
+The moment a match breaks, freedom is constrained until proof is restored. Freedom is the reward for keeping your inventory honest.
 
 ### Discovery
 
-Inventory isn't prescribed — it's discovered through questioning. These questions apply during Bootstrap (to transform origins into items) and during steady state (to prune and sharpen).
+Inventory isn't prescribed — it's discovered through questioning. Five questions, applied during bootstrap and steady state:
 
 - **What's the origin?** — trace to the change in reality that started this
 - **What does this match?** — find the upstream item this responds to
@@ -125,6 +124,6 @@ Inventory isn't prescribed — it's discovered through questioning. These questi
 - **Where's the evidence?** — proof, not assertion
 - **What would tell you this is weakening?** — define the leading indicator before you need it
 
-Items that survive questioning stay. Items that don't get pruned. Discovery also targets the matching system itself — are negotiations producing clearer boxes? Is evidence getting stronger? Is the inventory tightening over time? As teams mature, the questions get sharper and the inventory gets tighter.
+Items that survive questioning stay. Items that don't get pruned. As teams mature, the questions get sharper and the inventory gets tighter.
 
-A companion — human or agent — facilitates discovery using the Constitution's own principles.
+Discovery also targets the matching system itself — are negotiations producing clearer boxes? Is evidence getting stronger? Is the inventory tightening over time? A companion — human or agent — facilitates discovery using the Constitution's own principles.
