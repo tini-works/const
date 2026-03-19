@@ -1,1 +1,2 @@
 {"run":1,"commit":"f59ad71","metrics":{"self_evidence_score":8,"prescriptiveness":5,"drift_count":0,"workflow_signals":10},"status":"keep","description":"baseline","timestamp":1773903696}
+{"run":2,"commit":"acb3772","metrics":{"self_evidence_score":10,"prescriptiveness":0,"drift_count":0,"workflow_signals":10},"status":"keep","description":"remove prescriptive examples from verticals, replace with natural workflow language + litmus tests","timestamp":1773903801}
