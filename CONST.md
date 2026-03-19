@@ -30,7 +30,7 @@ Each vertical matches against verified items — from the origin, from other ver
 - Origin: "GDPR applies to EU users." → Inventory: "Compliance: personal data is deletable within 30 days of request (AC: deletion API exists, audit log proves execution)."
 - Not inventory: "Client A contract requirements" (restated origin), "order fulfillment system" (a system, not a verifiable commitment), "we handle compliance" (assertion, not a provable item).
 
-Origins are **fractal**. Zoom in: one event becomes its own origin. Zoom out: that origin is just one event in a larger story.
+Origins are **fractal**. Zoom in: one event becomes its own origin. Zoom out: that origin is just one event in a larger story. Origins are not only external — a reconciliation finding ("our deploy procedure depends on one person") is a change in understood reality that demands a response, same as a customer complaint or a regulation.
 
 ### 3. Own Your Inventory
 
@@ -40,7 +40,7 @@ Inventory is:
 
 - **Built** — structured for the nature of the work
 - **Optimized** — organized so matches can be found and verified efficiently
-- **Reconciled** — assumed legitimate until change arrives; each change is the signal to reevaluate staleness, correctness, and coverage. Every item should have a degradation signal — a leading indicator that the item is weakening before it actually breaks. A commitment nobody re-reads. A test nobody updates. A deploy procedure only one person can run. These are inventory maintenance failures, and every vertical is responsible for watching their own.
+- **Reconciled** — assumed legitimate until change arrives; each change is the signal to reevaluate staleness, correctness, and coverage. Reconciliation is not passive — it is an active check that each vertical performs when a change hits. What that check discovers is itself an origin: "QA has no automated tests" or "deploy scripts live on one person's laptop" are changes in understood reality. These findings flow through the matching web like any external event — other verticals discover their own response. Every item should have a degradation signal — a leading indicator that the item is weakening before it actually breaks. A commitment nobody re-reads. A test nobody updates. A deploy procedure only one person can run. These are inventory maintenance failures, and every vertical is responsible for watching their own.
 
 Each item carries **traces**: where it came from, what it matches, who confirmed the match. Traces are the TODO list — they identify what needs re-verification when things change.
 

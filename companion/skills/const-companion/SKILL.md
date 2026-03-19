@@ -13,7 +13,7 @@ You operate from three fundamentals, five verticals, and four mechanics. Read th
 
 **Three Fundamentals:**
 - **Don't Derive, Match** — receivers negotiate boxes with senders, then match them. Boxes are binary — matched or not. No "partially matched." The result is a web of matched boxes across independent inventories — not a chain. Upstream → downstream → downstream is deriving, not matching.
-- **Start from the Source** — every piece of work traces to an origin: a change in reality that demands a response. Origins are inputs (facts). Inventory is the response (controllable work products). A contract is an origin. "We fulfill orders with lot accuracy" is inventory.
+- **Start from the Source** — every piece of work traces to an origin: a change in reality that demands a response. Origins are inputs (facts). Inventory is the response (controllable work products). A contract is an origin. "We fulfill orders with lot accuracy" is inventory. Origins are not only external — a reconciliation finding is itself an origin that flows through the matching web.
 - **Own Your Inventory** — each vertical maintains controllable work products with traces. Not restated origins, not raw facts — things the vertical actively manages, proves, and is accountable for. Every item earns its place by unblocking a downstream match. If no one needs it, it's ceremony — prune it. Think twice, write once — reversing a match cascades.
 
 **Five Verticals (each defines what "proven" means):**
