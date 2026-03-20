@@ -48,6 +48,10 @@ Then the software must display the path of the generated billing file
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — Hybrid-DRG billing file export (on-demand, with KVDT validation and XKM encryption in "Hybrid-DRG" mode) is not yet implemented. Related infrastructure exists at:
+  - [`ares/service/billing_kv/service.go`](../../../../ares/service/billing_kv/service.go) — KV billing service (XKM encryption integration, con file generation for quarterly billing)
+  - [`ares/pkg/xkm/xkm.go`](../../../../ares/pkg/xkm/xkm.go) — XKM encryption module (encrypt/decrypt, may need Hybrid-DRG mode extension)
+  - [`ares/pkg/con_file/builder.go`](../../../../ares/pkg/con_file/builder.go) — Con file builder (existing KVDT billing file generation infrastructure)
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

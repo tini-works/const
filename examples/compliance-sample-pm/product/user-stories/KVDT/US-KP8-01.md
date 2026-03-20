@@ -37,6 +37,7 @@ And compliance with rules and cardinalities is ensured by the software
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — Hybrid-DRG (HDRG) record type support is not yet implemented in the codebase.
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

@@ -37,6 +37,7 @@ And that anesthesia times occurring during anesthesia are not to be specified in
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — Hybrid-DRG anesthesia hours warning (FK 5030) is not yet implemented.
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

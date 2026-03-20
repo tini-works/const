@@ -48,6 +48,9 @@ And transfer the side localization specification in FK 5041
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — Hybrid-DRG OPS code validation (FK 5027, FK 5035 in HDRG context) is not yet implemented. General OPS services exist at:
+  - [`ares/service/domains/sdops/sdops_service/sdops_service.go`](../../../../ares/service/domains/sdops/sdops_service/sdops_service.go) — OPS code lookup/validation (may serve as foundation)
+  - [`ares/service/timeline_validation/service/validation_timeline/validations/service_code/kv/precondition/kv.service.include.ops.validator.go`](../../../../ares/service/timeline_validation/service/validation_timeline/validations/service_code/kv/precondition/kv.service.include.ops.validator.go) — Existing OPS/laterality validation for KV billing
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

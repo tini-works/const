@@ -40,6 +40,11 @@ Then the system uses the updated master file data for spa physician billing
   - Design: [c3-116 Medical Catalogs](../../../.c3/c3-1-backend/c3-116-medical-catalogs.md)
   - Engineer: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:**
+  - `ares/service/domains/sdkv/service.go` — SDKV (KV-Specifika) service logic
+  - `ares/service/domains/repos/masterdata_repo/sdkv/repo.go` — SDKV master data repository
+  - `ares/proto/service/domains/sdkv_common.proto` — SDKV common proto definitions
+  - `ares/proto/app/mvz/sdkv.proto` — SDKV app proto
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

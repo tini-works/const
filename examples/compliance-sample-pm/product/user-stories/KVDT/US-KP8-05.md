@@ -36,6 +36,10 @@ Then the software must provide the functions for billing Hybrid-DRG services in 
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — 1ClickHybridDRG via KIM is not yet implemented. Related 1Click and KIM infrastructure exists at:
+  - [`ares/service/etl/builder/one_click_billing_history.go`](../../../../ares/service/etl/builder/one_click_billing_history.go) — OneClick billing history ETL (existing 1Click pattern)
+  - [`ares/service/billing_history/service/service.go`](../../../../ares/service/billing_history/service/service.go) — Billing history service with 1Click support
+  - [`ares/service/domains/kv_connect/model.go`](../../../../ares/service/domains/kv_connect/model.go) — KIM/KV-Connect messaging model (KIM infrastructure)
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —

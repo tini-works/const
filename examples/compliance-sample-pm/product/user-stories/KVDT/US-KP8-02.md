@@ -47,6 +47,9 @@ And prevent the transfer of the non-terminal code into the billing file
   - Design: [c3-104 Billing System](../../../.c3/c3-1-backend/c3-104-billing-system.md)
   - Engineer: [c3-109 Billing Subsystems](../../../.c3/c3-1-backend/c3-109-billing-subsystems.md)
   - API: [c3-202 Hermes BFF](../../../.c3/c3-2-frontend/c3-202-hermes-bff.md)
+- **Code:** no code match found — Hybrid-DRG ICD-10-GM primary/secondary diagnosis validation (FK 6009, FK 6011) is not yet implemented. General ICD services exist at:
+  - [`ares/service/domains/sdicd/sdicd_service/sdicd_service.go`](../../../../ares/service/domains/sdicd/sdicd_service/sdicd_service.go) — ICD code lookup/validation service (may serve as foundation)
+  - [`ares/service/domains/repos/masterdata_repo/sdicd/repo.go`](../../../../ares/service/domains/repos/masterdata_repo/sdicd/repo.go) — ICD master data repository
 - **Proven by:** —
 - **Verification:** **unverified** — no test cases defined yet.
 - **Confirmed by:** —
